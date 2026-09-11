@@ -1,0 +1,98 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 2129 >>
+stream
+BT
+/F1 22 Tf
+50 750 Td
+(GBODIMOWO ISAAC) Tj
+/F1 11 Tf
+0 -20 Td
+(Software Engineer & Network Systems Specialist | Lagos, Nigeria) Tj
+0 -15 Td
+(Email: isaacgbodimowo@gmail.com | Portfolio: https://isaacgbodimowo.dev) Tj
+/F1 14 Tf
+0 -30 Td
+(PROFESSIONAL SUMMARY) Tj
+/F1 10 Tf
+0 -16 Td
+(Software Engineer with dual expertise in distributed web architecture and enterprise network systems.) Tj
+0 -14 Td
+(Proven track record architecting high-performance Next.js systems, Cisco multi-VLAN enterprise topologies,) Tj
+0 -14 Td
+(HSRP gateway failover, static/dynamic NAT translation, and CompTIA A+ hardware diagnostics.) Tj
+/F1 14 Tf
+0 -30 Td
+(EDUCATION & CREDENTIALS) Tj
+/F1 10 Tf
+0 -16 Td
+(- B.Sc. in Computer Science - Babcock University) Tj
+0 -14 Td
+(- CompTIA A+ Certified - Hardware & Systems Diagnostics Core) Tj
+0 -14 Td
+(- New Horizons Technical Certification - Systems & Networking) Tj
+0 -14 Td
+(- Cisco CCNA 200-301 Candidate) Tj
+/F1 14 Tf
+0 -30 Td
+(FEATURED PROJECTS) Tj
+/F1 11 Tf
+0 -16 Td
+(1. CAR PULL - Peer-to-Peer Commuter Transit & Carpooling Platform) Tj
+/F1 10 Tf
+0 -14 Td
+(   Stack: Next.js, TypeScript, Tailwind CSS, Geospatial Indexing, PostgreSQL) Tj
+0 -14 Td
+(   Features: Real-time corridor matching, 4-tier fare split heuristics, Lagos arterial optimization.) Tj
+/F1 11 Tf
+0 -20 Td
+(2. Enterprise Network Simulation & Defense Topology) Tj
+/F1 10 Tf
+0 -14 Td
+(   Stack: Cisco Packet Tracer, Cisco IOS CLI, CCNA 200-301 Architecture) Tj
+0 -14 Td
+(   Features: Router-on-a-Stick (802.1Q), HSRP v2 failover (<3s), NAT overload, Extended ACLs.) Tj
+/F1 11 Tf
+0 -20 Td
+(3. Client Web Platforms & Enterprise Business Portals - Hoffenheim Tech) Tj
+/F1 10 Tf
+0 -14 Td
+(   Stack: React, Next.js, Node.js, REST APIs, Tailwind CSS, PostgreSQL) Tj
+/F1 14 Tf
+0 -30 Td
+(TECHNICAL MATRIX) Tj
+/F1 10 Tf
+0 -16 Td
+(- Networking: Cisco IOS, VLANs & Trunking, HSRP, NAT/PAT, ACLs, Subnetting, Packet Tracer) Tj
+0 -14 Td
+(- Software: TypeScript, Next.js, React 19, Python, Java, REST APIs, Tailwind CSS, SQLite/PostgreSQL) Tj
+0 -14 Td
+(- Systems & Hardware: CompTIA A+ diagnostics, PC assembly, macOS Terminal, Linux shell, Git) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000002422 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2492
+%%EOF
