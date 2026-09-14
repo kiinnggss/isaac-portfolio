@@ -1,9 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Laptop, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { Briefcase, GraduationCap, Laptop, CheckCircle2, ArrowUpRight, Maximize2 } from "lucide-react";
+import PhotoModal, { PhotoDetails } from "./PhotoModal";
+import isaacGraduation from "@/public/images/isaac-graduation.jpg";
+import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
 
 export default function ExperienceSection() {
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
+
   const experiences = [
     {
       period: "Internship Tenure",
@@ -19,6 +26,19 @@ export default function ExperienceSection() {
         "Provided technical consulting and authored system handover documentation for client maintenance teams.",
       ],
       tags: ["React", "Next.js", "REST APIs", "Node.js", "Tailwind CSS", "CMS Pipelines"],
+      photo: isaacWorkspace,
+      photoTag: "Workstation",
+      photoDetails: {
+        src: isaacWorkspace,
+        alt: "Gbodimowo Isaac at developer workstation during industry tenure",
+        title: "Developer Workstation",
+        subtitle: "Hoffenheim Tech • Production Web Systems",
+        tag: "INDUSTRY TENURE",
+        location: "Lagos, Nigeria",
+        date: "Internship Period",
+        context:
+          "Gbodimowo Isaac at his developer workstation engineering full-stack client web solutions, data intake portals, and CMS workflows at Hoffenheim Tech.",
+      },
     },
     {
       period: "Academic Instruction",
@@ -49,6 +69,19 @@ export default function ExperienceSection() {
         "Cultivated rigorous dual competency combining software architecture with physical hardware diagnostics.",
       ],
       tags: ["Computer Science", "Systems Architecture", "Databases", "Networking Theory"],
+      photo: isaacGraduation,
+      photoTag: "Convocation",
+      photoDetails: {
+        src: isaacGraduation,
+        alt: "Gbodimowo Isaac at Babcock University Convocation with degree scroll",
+        title: "Academic Convocation Ceremony",
+        subtitle: "Babcock University • B.Sc. in Computer Science",
+        tag: "DEGREE CONFERRAL",
+        location: "Babcock University, Nigeria",
+        date: "Degree Award",
+        context:
+          "Gbodimowo Isaac in academic regalia celebrating degree conferral at Babcock University. Rigorous training across algorithms, distributed systems, network engineering, and database management.",
+      },
     },
   ];
 
@@ -118,21 +151,43 @@ export default function ExperienceSection() {
                   </span>
                 </div>
 
-                {/* Highlights */}
-                <ul className="mt-4 space-y-2.5">
-                  {item.highlights.map((h, hIdx) => (
-                    <li
-                      key={hIdx}
-                      className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300"
+                {/* Highlights & Photo Preview */}
+                <div className="mt-4 flex flex-col md:flex-row gap-5 items-start">
+                  <ul className="flex-1 space-y-2.5">
+                    {item.highlights.map((h, hIdx) => (
+                      <li
+                        key={hIdx}
+                        className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300"
+                      >
+                        <CheckCircle2
+                          className="w-4 h-4 shrink-0 mt-0.5"
+                          style={{ color: item.accent }}
+                        />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {item.photo && item.photoDetails && (
+                    <div
+                      onClick={() => setSelectedPhoto(item.photoDetails)}
+                      className="relative w-full sm:w-36 h-28 sm:h-36 rounded-xl overflow-hidden border border-white/10 bg-neutral-950 shrink-0 group/exp-photo cursor-pointer shadow-md hover:border-[#bfff04]/50 transition-all"
                     >
-                      <CheckCircle2
-                        className="w-4 h-4 shrink-0 mt-0.5"
-                        style={{ color: item.accent }}
+                      <Image
+                        src={item.photo}
+                        alt={item.photoDetails.alt}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/exp-photo:scale-105"
                       />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono-tech">
+                        <span className="text-white truncate font-medium">{item.photoTag}</span>
+                        <span className="text-[#bfff04] flex items-center gap-0.5 shrink-0">
+                          <Maximize2 className="w-2.5 h-2.5" /> Inspect
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 {/* Tags */}
                 <div className="mt-6 flex flex-wrap gap-2 pt-4 border-t border-white/5">
@@ -150,6 +205,13 @@ export default function ExperienceSection() {
           );
         })}
       </div>
+
+      {/* Full Resolution Photo Lightbox Modal */}
+      <PhotoModal
+        photo={selectedPhoto}
+        isOpen={!!selectedPhoto}
+        onClose={() => setSelectedPhoto(null)}
+      />
     </section>
   );
 }

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:export": "mv app/api app/_api && GITHUB_PAGES=true npx next build && mv app/_api app/api && touch out/.nojekyll",
+    "build:export": "([ ! -d app/api ] || mv app/api app/_api) && GITHUB_PAGES=true npx next build && ([ ! -d app/_api ] || mv app/_api app/api) && touch out/.nojekyll",
     "start": "next start",
     "lint": "eslint"
   },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Network,
@@ -15,10 +16,15 @@ import {
   CheckCircle,
   ExternalLink,
   Zap,
+  Maximize2,
 } from "lucide-react";
 import SubnetVisualizer from "./SubnetVisualizer";
+import PhotoModal, { PhotoDetails } from "./PhotoModal";
+import isaacGraduation from "@/public/images/isaac-graduation.jpg";
+import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
 
 export default function BentoGrid() {
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const [activeCategory, setActiveCategory] = useState<"network" | "software" | "hardware" | "tools">("network");
   const [healthData, setHealthData] = useState<{
     status: string;
@@ -141,17 +147,47 @@ export default function BentoGrid() {
               <Award className="w-5 h-5 text-[#00f0ff]" />
             </div>
 
-            {/* University Degree */}
+            {/* University Degree with Graduation Photo */}
             <div className="p-4 rounded-xl bg-neutral-950/80 border border-white/5 mb-4">
               <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-[#bfff04] shrink-0">
-                  <GraduationCap className="w-5 h-5" />
+                <div
+                  onClick={() =>
+                    setSelectedPhoto({
+                      src: isaacGraduation,
+                      alt: "Gbodimowo Isaac at Babcock University Convocation in academic regalia",
+                      title: "Academic Convocation",
+                      subtitle: "B.Sc. in Computer Science • Babcock University",
+                      tag: "DEGREE CONFERRAL",
+                      location: "Babcock University, Nigeria",
+                      date: "Class of Computer Science",
+                      context:
+                        "Gbodimowo Isaac celebrating his degree conferral at Babcock University with his diploma scroll and graduation regalia. Coursework in operating systems, algorithms, distributed networks, and database administration.",
+                    })
+                  }
+                  className="relative w-16 sm:w-20 h-20 sm:h-24 rounded-lg overflow-hidden border border-white/10 shrink-0 group/grad cursor-pointer bg-neutral-900 shadow-md hover:border-[#bfff04]/50 transition-all"
+                >
+                  <Image
+                    src={isaacGraduation}
+                    alt="Gbodimowo Isaac Graduation at Babcock University"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/grad:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-1 left-0 right-0 text-center">
+                    <span className="text-[9px] font-mono-tech text-[#bfff04] flex items-center justify-center gap-0.5">
+                      <Maximize2 className="w-2.5 h-2.5" /> View
+                    </span>
+                  </div>
                 </div>
                 <div>
-                  <div className="text-xs font-mono-tech text-neutral-400 uppercase">Degree Awarded</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono-tech text-neutral-400 uppercase">Degree Awarded</span>
+                    <span className="text-[10px] font-mono-tech text-[#bfff04] px-1.5 py-0.2 rounded bg-[#bfff04]/10 border border-[#bfff04]/20">
+                      Conferred
+                    </span>
+                  </div>
                   <h4 className="text-base font-bold text-white mt-0.5">B.Sc. in Computer Science</h4>
-                  <div className="text-xs text-neutral-300 font-mono-tech mt-1">Babcock University</div>
-                  <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
+                  <div className="text-xs text-neutral-300 font-mono-tech mt-0.5">Babcock University</div>
+                  <p className="text-xs text-neutral-400 mt-1.5 leading-relaxed">
                     Comprehensive computer science training encompassing algorithm analysis, software engineering, database management, and operating systems.
                   </p>
                 </div>
@@ -230,63 +266,108 @@ export default function BentoGrid() {
               Live instrumentation polling the Next.js Route Handlers and SQLite database engine.
             </p>
 
-            {/* Metrics Dashboard */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
-              <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Engine Status</div>
-                <div className="text-base font-bold font-mono-tech text-[#bfff04] capitalize mt-1">
-                  {healthData?.status || "operational"}
+            {/* Split Metrics & Workstation Monitor */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 my-6 items-center">
+              {/* Metrics & Pipeline Column */}
+              <div className="md:col-span-8 space-y-3.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
+                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Engine Status</div>
+                    <div className="text-sm sm:text-base font-bold font-mono-tech text-[#bfff04] capitalize mt-0.5">
+                      {healthData?.status || "operational"}
+                    </div>
+                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">HTTP 200 OK</div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
+                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">DB Handshake</div>
+                    <div className="text-sm sm:text-base font-bold font-mono-tech text-[#00f0ff] mt-0.5 truncate">
+                      {healthData?.dbConnected ? "Connected" : "Synchronizing"}
+                    </div>
+                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">WAL SQLite</div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
+                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Local RTT</div>
+                    <div className="text-sm sm:text-base font-bold font-mono-tech text-white mt-0.5">
+                      {healthData ? `${healthData.latencyMs}ms` : "12ms"}
+                    </div>
+                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Sub-second loop</div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
+                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">System Uptime</div>
+                    <div className="text-sm sm:text-base font-bold font-mono-tech text-white mt-0.5">
+                      {healthData ? `${Math.floor(healthData.uptimeSeconds / 60)}m` : "48m"}
+                    </div>
+                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Continuous</div>
+                  </div>
                 </div>
-                <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">HTTP 200 OK</div>
+
+                {/* Network Packet Flow Banner */}
+                <div className="p-3.5 rounded-xl bg-black border border-neutral-800 text-xs font-mono-tech">
+                  <div className="text-neutral-500 mb-1.5 flex items-center justify-between text-[11px]">
+                    <span>PACKET ROUTING PIPELINE</span>
+                    <span className="text-[#bfff04]">ENCRYPTED</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-neutral-300 overflow-x-auto py-0.5 text-[11px]">
+                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#bfff04] whitespace-nowrap">
+                      Client Browser
+                    </span>
+                    <span className="text-neutral-600">→</span>
+                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#00f0ff] whitespace-nowrap">
+                      Rate Limiter
+                    </span>
+                    <span className="text-neutral-600">→</span>
+                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-amber-400 whitespace-nowrap">
+                      Zod Schema
+                    </span>
+                    <span className="text-neutral-600">→</span>
+                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-emerald-400 whitespace-nowrap">
+                      SQLite & Mail
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">DB Handshake</div>
-                <div className="text-base font-bold font-mono-tech text-[#00f0ff] mt-1">
-                  {healthData?.dbConnected ? "Connected" : "Synchronizing"}
+              {/* Workstation Visual Monitor */}
+              <div
+                onClick={() =>
+                  setSelectedPhoto({
+                    src: isaacWorkspace,
+                    alt: "Gbodimowo Isaac at engineering workstation with headphones in deep flow state",
+                    title: "Systems Engineering Workstation",
+                    subtitle: "Lagos Tech Hub • Systems & Architecture Lab",
+                    tag: "ENGINEERING FLOW",
+                    location: "Lagos, Nigeria",
+                    date: "Active Development",
+                    context:
+                      "Gbodimowo Isaac at his workstation in deep engineering flow. Designing distributed backend pipelines, troubleshooting network topologies, and verifying system diagnostics.",
+                  })
+                }
+                className="md:col-span-4 relative rounded-xl overflow-hidden border border-white/10 bg-neutral-950 aspect-[4/4.5] group/work cursor-pointer shadow-lg hover:border-[#00f0ff]/60 transition-all duration-300"
+              >
+                <Image
+                  src={isaacWorkspace}
+                  alt="Gbodimowo Isaac focused at developer workstation"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/work:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-sm border border-white/10 text-[9px] font-mono-tech text-[#00f0ff] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-ping" />
+                  FLOW STATE
                 </div>
-                <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">WAL SQLite</div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Local RTT</div>
-                <div className="text-base font-bold font-mono-tech text-white mt-1">
-                  {healthData ? `${healthData.latencyMs}ms` : "12ms"}
+                <div className="absolute bottom-2 left-2 right-2 p-2 rounded bg-black/75 backdrop-blur-sm border border-white/10 text-[10px] font-mono-tech">
+                  <div className="text-white font-semibold flex items-center justify-between">
+                    <span>Engineering Lab</span>
+                    <span className="text-[#00f0ff] flex items-center gap-0.5 text-[9px]">
+                      <Maximize2 className="w-2.5 h-2.5" /> Inspect
+                    </span>
+                  </div>
+                  <div className="text-neutral-400 text-[9px] mt-0.5">
+                    Lagos Node • Systems Hub
+                  </div>
                 </div>
-                <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Sub-second loop</div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">System Uptime</div>
-                <div className="text-base font-bold font-mono-tech text-white mt-1">
-                  {healthData ? `${Math.floor(healthData.uptimeSeconds / 60)}m` : "48m"}
-                </div>
-                <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Continuous</div>
-              </div>
-            </div>
-
-            {/* Network Packet Flow Banner */}
-            <div className="p-4 rounded-xl bg-black border border-neutral-800 text-xs font-mono-tech">
-              <div className="text-neutral-500 mb-2 flex items-center justify-between">
-                <span>PACKET ROUTING PIPELINE</span>
-                <span className="text-[#bfff04]">ENCRYPTED</span>
-              </div>
-              <div className="flex items-center gap-2 text-neutral-300 overflow-x-auto py-1">
-                <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#bfff04]">
-                  Client Browser
-                </span>
-                <span className="text-neutral-600">→</span>
-                <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#00f0ff]">
-                  Rate Limiter (Token Bucket)
-                </span>
-                <span className="text-neutral-600">→</span>
-                <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-amber-400">
-                  Zod Sanitizer
-                </span>
-                <span className="text-neutral-600">→</span>
-                <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-emerald-400">
-                  SQLite Storage & Mail Dispatch
-                </span>
               </div>
             </div>
           </div>
@@ -387,6 +468,13 @@ export default function BentoGrid() {
           <SubnetVisualizer />
         </div>
       </div>
+
+      {/* Lightbox Modal for Photo Inspection */}
+      <PhotoModal
+        photo={selectedPhoto}
+        isOpen={!!selectedPhoto}
+        onClose={() => setSelectedPhoto(null)}
+      />
     </section>
   );
 }

@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowDown, Download, Terminal, Network, ShieldCheck, Cpu, ChevronRight, Activity } from "lucide-react";
+import { ArrowDown, Download, Terminal, Network, ShieldCheck, Cpu, ChevronRight, Activity, Maximize2 } from "lucide-react";
 import MagneticButton from "./MagneticButton";
+import PhotoModal, { PhotoDetails } from "./PhotoModal";
+import isaacPortrait from "@/public/images/isaac-portrait.jpg";
 
 export default function HeroSection() {
   const [lagosTime, setLagosTime] = useState<string>("");
@@ -28,6 +31,8 @@ export default function HeroSection() {
   }, []);
 
   const heroHeadline = "GBODIMOWO ISAAC";
+
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
 
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-between pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
@@ -86,92 +91,166 @@ export default function HeroSection() {
       </div>
 
       {/* Main Editorial Hero Display */}
-      <div className="my-auto py-10 sm:py-16">
-        {/* Role Pill Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-4 inline-flex items-center gap-2 text-xs md:text-sm font-mono-tech uppercase tracking-widest text-[#bfff04]"
-        >
-          <span className="w-6 h-[1px] bg-[#bfff04]" />
-          Software Engineer & Network Systems Specialist
-        </motion.div>
+      <div className="my-auto py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        {/* Left Column: Typography, Tagline & CTAs */}
+        <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-center">
+          {/* Role Pill Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mb-4 inline-flex items-center gap-2 text-xs md:text-sm font-mono-tech uppercase tracking-widest text-[#bfff04]"
+          >
+            <span className="w-6 h-[1px] bg-[#bfff04]" />
+            Software Engineer & Network Systems Specialist
+          </motion.div>
 
-        {/* Massive Editorial Name */}
-        <h1 className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[108px] leading-[0.92] tracking-tight uppercase select-none">
-          <div className="flex flex-wrap overflow-hidden py-1">
-            {heroHeadline.split(" ").map((word, wordIndex) => (
-              <span key={wordIndex} className="inline-flex mr-4 sm:mr-6">
-                {word.split("").map((char, charIndex) => (
-                  <motion.span
-                    key={charIndex}
-                    initial={{ y: 120, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{
-                      duration: 0.7,
-                      delay: 0.15 + (wordIndex * 6 + charIndex) * 0.03,
-                      ease: [0.215, 0.61, 0.355, 1],
-                    }}
-                    className={`inline-block ${
-                      wordIndex === 0 ? "text-white hover:text-[#bfff04]" : "text-neutral-400 hover:text-white"
-                    } transition-colors duration-200`}
-                  >
-                    {char}
-                  </motion.span>
-                ))}
+          {/* Massive Editorial Name */}
+          <h1 className="font-display font-bold text-4xl sm:text-6xl md:text-7xl lg:text-[92px] leading-[0.92] tracking-tight uppercase select-none">
+            <div className="flex flex-wrap overflow-hidden py-1">
+              {heroHeadline.split(" ").map((word, wordIndex) => (
+                <span key={wordIndex} className="inline-flex mr-4 sm:mr-6">
+                  {word.split("").map((char, charIndex) => (
+                    <motion.span
+                      key={charIndex}
+                      initial={{ y: 120, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: 0.15 + (wordIndex * 6 + charIndex) * 0.03,
+                        ease: [0.215, 0.61, 0.355, 1],
+                      }}
+                      className={`inline-block ${
+                        wordIndex === 0 ? "text-white hover:text-[#bfff04]" : "text-neutral-400 hover:text-white"
+                      } transition-colors duration-200`}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
+              ))}
+            </div>
+          </h1>
+
+          {/* Hero Editorial Subtitle & Tagline */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-6 max-w-2xl"
+          >
+            <p className="text-base sm:text-xl font-light leading-relaxed text-neutral-300 font-sans">
+              Architecting <span className="text-white font-medium">resilient digital infrastructure</span>, bridging scalable web engineering with enterprise networking and systems diagnostics.
+            </p>
+            <p className="mt-2.5 text-xs sm:text-sm font-mono-tech text-neutral-400 leading-relaxed">
+              Engineered full-stack mobility platforms, Cisco enterprise topologies (Router-on-a-Stick, HSRP, ACLs), and hardware-level diagnostics.
+            </p>
+          </motion.div>
+
+          {/* Action Buttons & Interactions */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.65 }}
+            className="mt-8 flex flex-wrap items-center gap-4"
+          >
+            <MagneticButton
+              href="#work"
+              className="px-6 py-3 rounded-full bg-[#bfff04] text-black font-semibold text-xs sm:text-sm tracking-tight uppercase hover:bg-[#d0ff36] hover:shadow-[0_0_30px_rgba(191,255,4,0.35)] transition-all flex items-center gap-2 active:scale-95"
+            >
+              <span>Explore Projects</span>
+              <ArrowDown className="w-4 h-4" />
+            </MagneticButton>
+
+            <MagneticButton
+              href="/Gbodimowo_Isaac_Resume.pdf"
+              target="_blank"
+              className="px-5 py-3 rounded-full bg-neutral-900 border border-white/15 text-white text-xs sm:text-sm font-medium hover:bg-neutral-800 hover:border-white/30 transition-all flex items-center gap-2 shadow-sm active:scale-95"
+            >
+              <Download className="w-4 h-4 text-[#00f0ff]" />
+              <span>Download Resume</span>
+            </MagneticButton>
+
+            <a
+              href="#terminal"
+              className="group px-4 py-3 rounded-full bg-neutral-950 border border-neutral-800 hover:border-[#00f0ff]/50 text-neutral-400 hover:text-white transition-all flex items-center gap-2 text-xs font-mono-tech"
+            >
+              <Terminal className="w-4 h-4 text-[#00f0ff] group-hover:rotate-12 transition-transform" />
+              <span>Interactive CLI</span>
+              <ChevronRight className="w-3.5 h-3.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Right Column: Featured Editorial Portrait of Isaac */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35, ease: [0.215, 0.61, 0.355, 1] }}
+          className="lg:col-span-5 xl:col-span-4 flex justify-center lg:justify-end"
+        >
+          <div
+            onClick={() =>
+              setSelectedPhoto({
+                src: isaacPortrait,
+                alt: "Gbodimowo Isaac in dark formal suit and sunglasses",
+                title: "Gbodimowo Isaac",
+                subtitle: "Software Engineer & Network Systems Specialist",
+                tag: "OFFICIAL PORTRAIT",
+                location: "Lagos, Nigeria",
+                date: "Verified Spec",
+                context:
+                  "Official portrait of Gbodimowo Isaac. Dual expertise across scalable Next.js web architectures, enterprise Cisco IOS topologies, and hardware diagnostic engineering.",
+              })
+            }
+            className="group relative w-full max-w-sm rounded-2xl bg-neutral-900/60 border border-white/15 p-3 sm:p-3.5 shadow-2xl backdrop-blur-md cursor-pointer hover:border-[#bfff04]/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(191,255,4,0.15)]"
+          >
+            {/* Ambient Background Aura */}
+            <div className="absolute -inset-1 bg-gradient-to-tr from-[#bfff04]/20 via-[#00f0ff]/15 to-transparent rounded-2xl blur-xl opacity-40 group-hover:opacity-100 transition duration-700 pointer-events-none" />
+
+            {/* Top Meta Bar */}
+            <div className="relative flex items-center justify-between pb-2.5 px-1 text-[11px] font-mono-tech text-neutral-400">
+              <span className="flex items-center gap-1.5 text-white font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#bfff04] animate-pulse" />
+                SYSTEM.ID // ISAAC-01
               </span>
-            ))}
+              <span className="text-neutral-500 group-hover:text-[#bfff04] transition-colors flex items-center gap-1">
+                <span>Inspect</span>
+                <Maximize2 className="w-3 h-3" />
+              </span>
+            </div>
+
+            {/* Framed Image Container */}
+            <div className="relative aspect-[3/4] w-full rounded-xl overflow-hidden bg-neutral-950 border border-white/10">
+              <Image
+                src={isaacPortrait}
+                alt="Gbodimowo Isaac in dark navy suit and sunglasses"
+                priority
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+
+              {/* Technical Corner Marking */}
+              <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono-tech text-[#bfff04]">
+                AUTHENTIC
+              </div>
+
+              {/* Bottom Information Card Overlay */}
+              <div className="absolute bottom-2.5 left-2.5 right-2.5 p-3 rounded-lg bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-bold text-white font-display uppercase tracking-wider">
+                    Gbodimowo Isaac
+                  </div>
+                  <div className="text-[10px] font-mono-tech text-[#bfff04]">
+                    Software & Systems Specialist
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono-tech text-neutral-300 px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800">
+                  Lagos, NG
+                </span>
+              </div>
+            </div>
           </div>
-        </h1>
-
-        {/* Hero Editorial Subtitle & Tagline */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-8 max-w-3xl"
-        >
-          <p className="text-lg sm:text-2xl font-light leading-relaxed text-neutral-300 font-sans">
-            Architecting <span className="text-white font-medium">resilient digital infrastructure</span> — bridging scalable web engineering with enterprise networking and systems diagnostics.
-          </p>
-          <p className="mt-3 text-xs sm:text-sm font-mono-tech text-neutral-400 leading-relaxed">
-            Engineered full-stack mobility platforms, Cisco enterprise topologies (Router-on-a-Stick, HSRP, ACLs), and hardware-level diagnostics.
-          </p>
-        </motion.div>
-
-        {/* Action Buttons & Interactions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.65 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <MagneticButton
-            href="#work"
-            className="px-7 py-3.5 rounded-full bg-[#bfff04] text-black font-semibold text-sm tracking-tight uppercase hover:bg-[#d0ff36] hover:shadow-[0_0_30px_rgba(191,255,4,0.35)] transition-all flex items-center gap-2.5 active:scale-95"
-          >
-            <span>Explore Projects</span>
-            <ArrowDown className="w-4 h-4" />
-          </MagneticButton>
-
-          <MagneticButton
-            href="/Gbodimowo_Isaac_Resume.pdf"
-            target="_blank"
-            className="px-6 py-3.5 rounded-full bg-neutral-900 border border-white/15 text-white text-sm font-medium hover:bg-neutral-800 hover:border-white/30 transition-all flex items-center gap-2.5 shadow-sm active:scale-95"
-          >
-            <Download className="w-4 h-4 text-[#00f0ff]" />
-            <span>Download Resume</span>
-          </MagneticButton>
-
-          <a
-            href="#terminal"
-            className="group px-5 py-3.5 rounded-full bg-neutral-950 border border-neutral-800 hover:border-[#00f0ff]/50 text-neutral-400 hover:text-white transition-all flex items-center gap-2 text-xs font-mono-tech"
-          >
-            <Terminal className="w-4 h-4 text-[#00f0ff] group-hover:rotate-12 transition-transform" />
-            <span>Interactive CLI</span>
-            <ChevronRight className="w-3.5 h-3.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-          </a>
         </motion.div>
       </div>
 
@@ -214,6 +293,13 @@ export default function HeroSection() {
           <div className="text-xs text-neutral-400">B.Sc. Computer Science</div>
         </div>
       </motion.div>
+
+      {/* Full Resolution Photo Lightbox Modal */}
+      <PhotoModal
+        photo={selectedPhoto}
+        isOpen={!!selectedPhoto}
+        onClose={() => setSelectedPhoto(null)}
+      />
     </section>
   );
 }
