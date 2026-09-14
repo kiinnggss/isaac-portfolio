@@ -2,7 +2,37 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle2, Shield, Network, Cpu, ArrowUpRight, Copy, Check, Terminal, ExternalLink } from "lucide-react";
+import {
+  X,
+  CheckCircle2,
+  Shield,
+  Network,
+  Cpu,
+  ArrowUpRight,
+  Copy,
+  Check,
+  Terminal,
+  ExternalLink,
+  Globe,
+  Code2,
+} from "lucide-react";
+
+function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+      />
+    </svg>
+  );
+}
 
 export interface ProjectData {
   id: string;
@@ -79,7 +109,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           >
             {/* Modal Header */}
             <div className="p-6 sm:p-8 border-b border-white/10 bg-neutral-900/40 flex items-start justify-between gap-4">
-              <div>
+              <div className="space-y-1">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono-tech uppercase bg-[#bfff04]/10 text-[#bfff04] border border-[#bfff04]/30">
                     {project.category}
@@ -91,17 +121,30 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 <h3 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
                   {project.title}
                 </h3>
-                <p className="text-sm text-neutral-400 mt-1">{project.subtitle}</p>
+                <p className="text-sm text-neutral-400">{project.subtitle}</p>
               </div>
 
-              <button
-                type="button"
-                onClick={onClose}
-                className="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {project.demoLink && (
+                  <a
+                    href={project.demoLink}
+                    target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+                    rel="noreferrer"
+                    className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#bfff04] text-black text-xs font-mono-tech font-bold uppercase hover:bg-[#d0ff36] transition-all shadow-md"
+                  >
+                    <span>Launch Project</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Navigation Tabs */}
@@ -147,6 +190,45 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
               {activeTab === "overview" && (
                 <div className="space-y-6">
+                  {/* Direct Action Banner to Open the Project */}
+                  {(project.demoLink || project.codeLink) && (
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-neutral-900/90 via-neutral-900/50 to-neutral-950 border border-white/10 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <div className="text-xs font-mono-tech text-[#bfff04] uppercase font-semibold">
+                          Direct Access & Deployment
+                        </div>
+                        <div className="text-xs text-neutral-300 mt-0.5">
+                          {project.demoLink ? "Live project is deployed and accessible." : "Repository source code available."}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2.5">
+                        {project.demoLink && (
+                          <a
+                            href={project.demoLink}
+                            target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+                            rel="noreferrer"
+                            className="px-4 py-2 rounded-lg bg-[#bfff04] text-black font-semibold text-xs tracking-tight uppercase hover:bg-[#c9ff26] flex items-center gap-1.5 shadow-md transition-all active:scale-95"
+                          >
+                            <span>Open Live Project</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        {project.codeLink && (
+                          <a
+                            href={project.codeLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-3.5 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white font-mono-tech text-xs hover:bg-neutral-700 flex items-center gap-1.5 transition-all"
+                          >
+                            <GithubIcon className="w-3.5 h-3.5" />
+                            <span>GitHub</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <h4 className="text-xs uppercase tracking-wider font-mono-tech text-neutral-500 mb-2">
                       Abstract & Engineering Scope
@@ -289,6 +371,28 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 Verified Production Spec • Gbodimowo Isaac
               </span>
               <div className="flex items-center gap-3">
+                {project.codeLink && (
+                  <a
+                    href={project.codeLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white text-xs font-mono-tech flex items-center gap-1.5 transition-colors"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5" />
+                    <span>Source Code</span>
+                  </a>
+                )}
+                {project.demoLink && (
+                  <a
+                    href={project.demoLink}
+                    target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+                    rel="noreferrer"
+                    className="px-5 py-2 rounded-lg bg-[#bfff04] text-black text-xs font-semibold tracking-tight uppercase hover:bg-[#c9ff26] flex items-center gap-1.5 shadow-lg transition-all"
+                  >
+                    <span>Launch Project</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={onClose}
@@ -296,13 +400,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 >
                   Close
                 </button>
-                <a
-                  href="#contact"
-                  onClick={onClose}
-                  className="px-5 py-2 rounded-lg bg-[#bfff04] text-black text-xs font-semibold tracking-tight uppercase hover:bg-[#c9ff26] flex items-center gap-1.5"
-                >
-                  Discuss Project <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
               </div>
             </div>
           </motion.div>

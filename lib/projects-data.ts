@@ -40,6 +40,8 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
   const splitCost = totalCost / Math.max(1, passengers);
   return Math.round(splitCost);
 }`,
+    demoLink: "https://kiinnggss.github.io/car-pull/",
+    codeLink: "https://github.com/kiinnggss/car-pull",
   },
   {
     id: "cisco-network-topology",
@@ -106,9 +108,11 @@ interface GigabitEthernet0/0.20
 !
 ip access-list extended RESTRICT_SERVER_FARM
  permit tcp 192.168.20.0 0.0.0.255 host 192.168.30.10 eq 443
- permit tcp 192.168.10.0 0.0.0.255 host 192.168.30.10 eq 22
+  permit tcp 192.168.10.0 0.0.0.255 host 192.168.30.10 eq 22
  deny ip any 192.168.30.0 0.0.0.255 log
  permit ip any any`,
+    demoLink: "#terminal",
+    codeLink: "https://github.com/kiinnggss/ccna-interactive-hub",
   },
   {
     id: "hoffenheim-tech-platforms",
@@ -148,5 +152,7 @@ export async function POST(req: Request) {
   const result = await processClientSubmission(sanitized);
   return Response.json({ success: true, refId: result.id });
 }`,
+    demoLink: "https://kiinnggss.github.io/isaac-portfolio/#work",
+    codeLink: "https://github.com/kiinnggss/isaac-portfolio",
   },
 ];

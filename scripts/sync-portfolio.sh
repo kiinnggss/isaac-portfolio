@@ -11,7 +11,7 @@ echo "==> 2. Exporting static website for GitHub Pages..."
 npm run build:export
 
 echo "==> 3. Committing and pushing updates..."
-git add lib/projects-data.ts public/Gbodimowo_Isaac_Resume.pdf out/ || git add .
+git add -A
 COMMIT_MSG="${1:-feat(portfolio): sync portfolio and resume with new project}"
 git commit -m "$COMMIT_MSG" || echo "No git changes to commit"
 git push origin main
