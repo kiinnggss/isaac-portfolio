@@ -61,6 +61,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     href={project.codeLink}
                     target="_blank"
                     rel="noreferrer"
+                    data-cursor="CODE"
                     title="View Source on GitHub"
                     className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-white/20 transition-all"
                   >
@@ -72,6 +73,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     href={project.demoLink}
                     target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                     rel="noreferrer"
+                    data-cursor="LAUNCH"
                     title="Open Live Project"
                     className="px-2.5 py-1 rounded-lg bg-[#bfff04]/10 border border-[#bfff04]/30 text-[#bfff04] hover:bg-[#bfff04] hover:text-black transition-all text-[11px] font-mono-tech flex items-center gap-1 font-semibold"
                   >
@@ -93,6 +95,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {/* Architecture Frame / Visual Mockup Area */}
             <div
               onClick={() => setModalOpen(true)}
+              data-cursor="INSPECT"
               className="my-6 relative w-full h-48 sm:h-56 rounded-xl bg-gradient-to-b from-neutral-950 to-neutral-900 border border-white/5 p-4 overflow-hidden flex flex-col justify-between cursor-pointer group-hover:border-white/20 transition-all"
             >
               {/* Background Grid Pattern */}
@@ -251,6 +254,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                   href={project.demoLink}
                   target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                   rel="noreferrer"
+                  data-cursor="OPEN"
                   className="px-3.5 py-1.5 rounded-xl bg-[#bfff04] text-black font-semibold text-xs tracking-tight uppercase hover:bg-[#d0ff36] hover:shadow-[0_0_20px_rgba(191,255,4,0.4)] transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
                 >
                   <span>Open Project</span>

@@ -2,9 +2,33 @@
 
 import { useState, useEffect } from "react";
 import MagneticButton from "./MagneticButton";
-import { Menu, X, ArrowUpRight, Terminal, ShieldCheck } from "lucide-react";
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  Terminal,
+  Search,
+  Volume2,
+  VolumeX,
+  FileText,
+  Copy,
+} from "lucide-react";
 
-export default function Navbar() {
+interface NavbarProps {
+  onOpenCommandPalette?: () => void;
+  onOpenResume?: () => void;
+  onCopyEmail?: () => void;
+  onSoundToggle?: () => void;
+  soundEnabled?: boolean;
+}
+
+export default function Navbar({
+  onOpenCommandPalette,
+  onOpenResume,
+  onCopyEmail,
+  onSoundToggle,
+  soundEnabled = true,
+}: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -68,19 +92,68 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href="#terminal"
-              className="px-3 py-1.5 text-[11px] font-mono-tech rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-[#00f0ff]/50 text-neutral-300 hover:text-[#00f0ff] transition-all flex items-center gap-1.5"
-            >
-              <Terminal className="w-3.5 h-3.5 text-[#00f0ff]" />
-              <span>CLI Tool</span>
-            </a>
+          {/* Right Controls & Quick Actions */}
+          <div className="hidden md:flex items-center gap-2.5">
+            {/* Search / Command Palette Pill */}
+            {onOpenCommandPalette && (
+              <button
+                type="button"
+                onClick={onOpenCommandPalette}
+                className="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-white/20 text-neutral-400 hover:text-white text-xs font-mono-tech transition-all"
+                title="Open Command Palette (Cmd+K)"
+              >
+                <Search className="w-3.5 h-3.5 text-[#bfff04]" />
+                <span>Search</span>
+                <kbd className="text-[10px] px-1.5 py-0.2 rounded bg-neutral-800 text-neutral-400 border border-neutral-700">
+                  ⌘K
+                </kbd>
+              </button>
+            )}
+
+            {/* Quick Resume Reader Button */}
+            {onOpenResume && (
+              <button
+                type="button"
+                onClick={onOpenResume}
+                className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-neutral-900/80 border border-neutral-800 hover:border-white/20 text-neutral-300 hover:text-[#00f0ff] text-xs font-mono-tech transition-all"
+                title="Quick Read Resume"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#00f0ff]" />
+                <span>CV</span>
+              </button>
+            )}
+
+            {/* Copy Email Button */}
+            {onCopyEmail && (
+              <button
+                type="button"
+                onClick={onCopyEmail}
+                className="p-2 rounded-xl bg-neutral-900/80 border border-neutral-800 hover:border-white/20 text-neutral-400 hover:text-[#bfff04] transition-all"
+                title="Copy Email Address"
+              >
+                <Copy className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            {/* Sound Toggle Button */}
+            {onSoundToggle && (
+              <button
+                type="button"
+                onClick={onSoundToggle}
+                className="p-2 rounded-xl bg-neutral-900/80 border border-neutral-800 hover:border-white/20 text-neutral-400 hover:text-white transition-all"
+                title={soundEnabled ? "Mute audio effects" : "Enable audio effects"}
+              >
+                {soundEnabled ? (
+                  <Volume2 className="w-3.5 h-3.5 text-[#bfff04]" />
+                ) : (
+                  <VolumeX className="w-3.5 h-3.5 text-neutral-500" />
+                )}
+              </button>
+            )}
 
             <MagneticButton
               href="#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#bfff04] text-black font-semibold text-xs tracking-tight uppercase hover:bg-[#c9ff26] hover:shadow-[0_0_25px_rgba(191,255,4,0.4)] transition-all duration-200 active:scale-95"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#bfff04] text-black font-semibold text-xs tracking-tight uppercase hover:bg-[#c9ff26] hover:shadow-[0_0_25px_rgba(191,255,4,0.4)] transition-all duration-200 active:scale-95 ml-1"
             >
               <span>Let&apos;s Talk</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
