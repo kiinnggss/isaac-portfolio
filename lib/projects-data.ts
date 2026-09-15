@@ -3,7 +3,7 @@ import { type ProjectData } from "@/components/ui/ProjectModal";
 export const featuredProjects: ProjectData[] = [
   {
     id: "car-pull",
-    title: "CAR PULL — Peer-to-Peer Transit & Carpooling",
+    title: "CAR PULL: Peer-to-Peer Transit & Carpooling",
     subtitle: "High-congestion distributed commuter ridesharing architecture for metropolitan Lagos",
     category: "Distributed Web Architecture",
     summary:

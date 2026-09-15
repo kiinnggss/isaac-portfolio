@@ -1,107 +1,57 @@
 @import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #080808;
-  --foreground: #f2f2f2;
-  --card-bg: #111111;
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-border-hover: rgba(191, 255, 4, 0.35);
-  --accent-green: #bfff04;
-  --accent-cyan: #00f0ff;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-border-hover: #cbd5e1;
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
 }
 
 html {
   scroll-behavior: smooth;
   background-color: var(--background);
   color: var(--foreground);
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background-color: #080808;
-  color: #ededed;
+  background-color: #f8fafc;
+  color: #0f172a;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
-  selection-background-color: #bfff04;
-  selection-color: #000000;
 }
 
 ::selection {
-  background-color: #bfff04;
-  color: #000000;
+  background-color: #2563eb;
+  color: #ffffff;
 }
 
 /* Custom Typography Utilities */
 .font-display {
-  font-family: 'Clash Display', 'Syne', -apple-system, sans-serif;
+  font-family: 'Clash Display', -apple-system, sans-serif;
   letter-spacing: -0.02em;
-}
-
-.font-heading {
-  font-family: 'Syne', 'Clash Display', sans-serif;
-  letter-spacing: -0.015em;
 }
 
 .font-mono-tech {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Glassmorphism Surface layers */
-.glass-panel {
-  background: rgba(18, 18, 18, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Subtle border and surface utilities */
+.card-clean {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.glass-nav {
-  background: rgba(8, 8, 8, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-card {
-  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03) 0%, rgba(14, 14, 14, 0.6) 100%), rgba(14, 14, 14, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-card:hover {
-  border-color: rgba(191, 255, 4, 0.3);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 20px 0 rgba(191, 255, 4, 0.08);
-}
-
-/* Subtle editorial grid overlay */
-.bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-/* Glow effects */
-.glow-green {
-  box-shadow: 0 0 35px -5px rgba(191, 255, 4, 0.25);
-}
-
-.glow-cyan {
-  box-shadow: 0 0 35px -5px rgba(0, 240, 255, 0.25);
-}
-
-.text-gradient-green {
-  background: linear-gradient(135deg, #ffffff 40%, #bfff04 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #ffffff 40%, #00f0ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.card-clean:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* Scrollbar polish */
@@ -111,31 +61,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: #94a3b8;
 }
-
-/* Marquee infinite scroll animation */
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 26s linear infinite;
-}
-

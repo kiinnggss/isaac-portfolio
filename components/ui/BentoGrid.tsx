@@ -5,9 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Network,
-  Cpu,
   ShieldCheck,
-  GraduationCap,
   Award,
   Terminal,
   Server,
@@ -15,7 +13,6 @@ import {
   Activity,
   CheckCircle,
   ExternalLink,
-  Zap,
   Maximize2,
 } from "lucide-react";
 import SubnetVisualizer from "./SubnetVisualizer";
@@ -30,7 +27,6 @@ export default function BentoGrid() {
     status: string;
     uptimeSeconds: number;
     dbConnected: boolean;
-    memoryMb: number;
     latencyMs: number;
   } | null>(null);
 
@@ -46,16 +42,13 @@ export default function BentoGrid() {
           status: json.status,
           uptimeSeconds: json.uptimeSeconds,
           dbConnected: json.database?.connected ?? false,
-          memoryMb: json.system?.memoryUsageMb?.rss ?? 0,
           latencyMs: duration,
         });
       } catch {
-        // Fallback for UI
         setHealthData({
           status: "operational",
           uptimeSeconds: 86400,
           dbConnected: true,
-          memoryMb: 128,
           latencyMs: 14,
         });
       }
@@ -71,28 +64,28 @@ export default function BentoGrid() {
       title: "Networking & Infrastructure",
       desc: "Enterprise protocol architecture, multi-layer switching, and packet diagnostics.",
       items: [
-        { name: "Cisco IOS CLI", level: "Advanced", desc: "Configuring ISR routers & Catalyst switches" },
-        { name: "VLANs & 802.1Q", level: "Expert", desc: "Trunking & Router-on-a-Stick inter-VLAN routing" },
+        { name: "Cisco IOS CLI", level: "Advanced", desc: "Configuring ISR routers and Catalyst switches" },
+        { name: "VLANs & 802.1Q", level: "Proficient", desc: "Trunking and Router-on-a-Stick inter-VLAN routing" },
         { name: "HSRP v2", level: "Advanced", desc: "Gateway redundancy, active/standby preemption" },
-        { name: "NAT & PAT", level: "Advanced", desc: "Inside source static and overload translation" },
+        { name: "NAT & PAT", level: "Advanced", desc: "Inside source static and overload address translation" },
         { name: "Extended ACLs", level: "Advanced", desc: "Layer 3/4 packet filtering and traffic policing" },
-        { name: "Subnetting (IPv4/IPv6)", level: "Mastery", desc: "VLSM, binary masks, and address allocation" },
-        { name: "Cisco Packet Tracer", level: "Expert", desc: "Complex multi-site enterprise topologies" },
-        { name: "Port Security", level: "Advanced", desc: "Sticky MAC learning & violation shutdown" },
+        { name: "Subnetting (IPv4/IPv6)", level: "Proficient", desc: "VLSM, binary masks, and address allocation" },
+        { name: "Cisco Packet Tracer", level: "Proficient", desc: "Complex multi-site enterprise topologies" },
+        { name: "Port Security", level: "Advanced", desc: "Sticky MAC learning and violation shutdown" },
       ],
     },
     software: {
       title: "Software & Development",
       desc: "Modern full-stack web engineering, distributed state, and clean API contracts.",
       items: [
-        { name: "TypeScript / JavaScript", level: "Production", desc: "Strict type models & async architecture" },
+        { name: "TypeScript / JavaScript", level: "Production", desc: "Strict type models and async architecture" },
         { name: "Next.js (App Router)", level: "Production", desc: "Server components, route handlers, SSR" },
         { name: "React 19", level: "Production", desc: "Hooks, concurrent features, component state" },
         { name: "Python", level: "Proficient", desc: "Algorithmic scripts, backend tools, education" },
         { name: "REST APIs & Zod", level: "Production", desc: "Input sanitization, contract validation" },
         { name: "PostgreSQL & SQLite", level: "Production", desc: "Relational persistence, indexing, migrations" },
-        { name: "Tailwind CSS", level: "Expert", desc: "Design systems, responsive tokens, glassmorphism" },
-        { name: "Java", level: "Foundational", desc: "Object-oriented design patterns & algorithms" },
+        { name: "Tailwind CSS", level: "Proficient", desc: "Design systems, responsive tokens, clean UI" },
+        { name: "Java", level: "Foundational", desc: "Object-oriented design patterns and algorithms" },
       ],
     },
     hardware: {
@@ -100,55 +93,54 @@ export default function BentoGrid() {
       desc: "CompTIA A+ verified hardware maintenance, component testing, and system integrity.",
       items: [
         { name: "CompTIA A+ Diagnostics", level: "Certified", desc: "Motherboard, CPU, RAM, PSU fault isolation" },
-        { name: "System Unit Assembly", level: "Expert", desc: "Custom workstation builds & thermal airflow" },
-        { name: "Storage & RAID", level: "Advanced", desc: "NVMe, SATA, redundancy arrays & backup recovery" },
-        { name: "macOS Monterey / Linux", level: "Advanced", desc: "Terminal navigation, cron, systemd services" },
+        { name: "System Unit Assembly", level: "Proficient", desc: "Custom workstation builds and thermal airflow" },
+        { name: "Storage & RAID", level: "Advanced", desc: "NVMe, SATA, redundancy arrays and recovery" },
+        { name: "Linux / macOS Administration", level: "Advanced", desc: "Terminal navigation, cron, systemd services" },
         { name: "Peripheral Interfacing", level: "Advanced", desc: "Serial consoles, USB buses, display interfaces" },
-        { name: "Preventative Maintenance", level: "Expert", desc: "Dust suppression, thermal paste, voltage testing" },
+        { name: "Preventative Maintenance", level: "Proficient", desc: "Dust suppression, thermal paste, voltage testing" },
       ],
     },
     tools: {
       title: "Tools & Methodologies",
       desc: "Developer tooling, version control, and organizational workflows.",
       items: [
-        { name: "Git / GitHub", level: "Production", desc: "Branching workflows, PR reviews, CI basics" },
+        { name: "Git / GitHub", level: "Production", desc: "Branching workflows, PR reviews, CI pipelines" },
         { name: "Linux / Unix Shell", level: "Advanced", desc: "Bash scripting, process tracking, SSH keys" },
-        { name: "Figma & Canva", level: "Design", desc: "UI mockups, design handoffs, presentation" },
-        { name: "Microsoft Excel", level: "Analytical", desc: "Data modeling, inventory tracking, formulas" },
-        { name: "Postman / Thunder Client", level: "Testing", desc: "API payload inspection & contract testing" },
+        { name: "Figma & Canva", level: "Design", desc: "UI mockups, design handoffs, wireframes" },
+        { name: "Postman & Insomnia", level: "Testing", desc: "API payload inspection and contract testing" },
       ],
     },
   };
 
   return (
-    <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="mb-14">
-        <div className="inline-flex items-center gap-2 text-xs font-mono-tech text-[#bfff04] uppercase tracking-widest mb-3">
-          <Layers className="w-3.5 h-3.5" /> Technical Matrix & Infrastructure Philosophy
+      <div className="mb-12">
+        <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+          Technical Competency & Credentials
         </div>
-        <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight uppercase">
-          Engineering Bento
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+          Technical Matrix & Qualifications
         </h2>
-        <p className="mt-3 text-base text-neutral-400 max-w-2xl">
-          Where robust network protocols converge with responsive, modern software design and rigorous hardware diagnostics.
+        <p className="mt-2 text-base text-slate-600 max-w-2xl">
+          Where robust network protocols meet modern software engineering and verified hardware diagnostics.
         </p>
       </div>
 
-      {/* Bento Grid Layout */}
+      {/* Bento Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Tile 1: Credentials & Academia (Col 5) */}
-        <div className="lg:col-span-5 rounded-2xl bg-neutral-900/40 border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
+        <div className="lg:col-span-5 rounded-xl bg-white border border-slate-200 p-6 sm:p-7 shadow-xs flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between mb-6">
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono-tech uppercase bg-neutral-800 text-[#00f0ff] border border-[#00f0ff]/20">
-                Credentials & Pedigree
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                Education & Certifications
               </span>
-              <Award className="w-5 h-5 text-[#00f0ff]" />
+              <Award className="w-5 h-5 text-blue-600" />
             </div>
 
             {/* University Degree with Graduation Photo */}
-            <div className="p-4 rounded-xl bg-neutral-950/80 border border-white/5 mb-4">
+            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 mb-4">
               <div className="flex items-start gap-3.5">
                 <div
                   onClick={() =>
@@ -164,173 +156,158 @@ export default function BentoGrid() {
                         "Gbodimowo Isaac celebrating his degree conferral at Babcock University with his diploma scroll and graduation regalia. Coursework in operating systems, algorithms, distributed networks, and database administration.",
                     })
                   }
-                  className="relative w-16 sm:w-20 h-20 sm:h-24 rounded-lg overflow-hidden border border-white/10 shrink-0 group/grad cursor-pointer bg-neutral-900 shadow-md hover:border-[#bfff04]/50 transition-all"
+                  className="relative w-16 sm:w-20 h-20 sm:h-24 rounded-lg overflow-hidden border border-slate-200 shrink-0 cursor-pointer group bg-slate-200 shadow-xs hover:border-blue-400 transition-all"
                 >
                   <Image
                     src={isaacGraduation}
                     alt="Gbodimowo Isaac Graduation at Babcock University"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/grad:scale-110"
+                    className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-1 left-0 right-0 text-center">
-                    <span className="text-[9px] font-mono-tech text-[#bfff04] flex items-center justify-center gap-0.5">
-                      <Maximize2 className="w-2.5 h-2.5" /> View
-                    </span>
+                  <div className="absolute top-1 right-1 p-0.5 rounded bg-white/80 backdrop-blur-xs text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Maximize2 className="w-2.5 h-2.5" />
                   </div>
                 </div>
+
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono-tech text-neutral-400 uppercase">Degree Awarded</span>
-                    <span className="text-[10px] font-mono-tech text-[#bfff04] px-1.5 py-0.2 rounded bg-[#bfff04]/10 border border-[#bfff04]/20">
-                      Conferred
-                    </span>
-                  </div>
-                  <h4 className="text-base font-bold text-white mt-0.5">B.Sc. in Computer Science</h4>
-                  <div className="text-xs text-neutral-300 font-mono-tech mt-0.5">Babcock University</div>
-                  <p className="text-xs text-neutral-400 mt-1.5 leading-relaxed">
-                    Comprehensive computer science training encompassing algorithm analysis, software engineering, database management, and operating systems.
+                  <div className="text-xs font-medium text-blue-600">Babcock University</div>
+                  <h4 className="text-base font-bold text-slate-900 mt-0.5">B.Sc. in Computer Science</h4>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    Formal coursework in operating systems, algorithm design, relational database models, and computer networking.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Industry Certifications */}
-            <div className="space-y-3">
-              <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-white/5 flex items-center justify-between">
+            <div className="space-y-2.5">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <ShieldCheck className="w-5 h-5 text-[#bfff04]" />
+                  <ShieldCheck className="w-5 h-5 text-blue-600" />
                   <div>
-                    <div className="text-xs sm:text-sm font-semibold text-white">CompTIA A+ Certified</div>
-                    <div className="text-[11px] font-mono-tech text-neutral-400">Hardware & Diagnostics Core</div>
+                    <div className="text-sm font-semibold text-slate-900">CompTIA A+ Certified</div>
+                    <div className="text-xs text-slate-500">Hardware & Diagnostics Core</div>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono-tech text-[#bfff04] px-2 py-0.5 rounded bg-[#bfff04]/10 border border-[#bfff04]/20">
+                <span className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
                   Verified
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-white/5 flex items-center justify-between">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Award className="w-5 h-5 text-[#00f0ff]" />
+                  <Award className="w-5 h-5 text-slate-700" />
                   <div>
-                    <div className="text-xs sm:text-sm font-semibold text-white">New Horizons Technical Certification</div>
-                    <div className="text-[11px] font-mono-tech text-neutral-400">Systems & Networking Program</div>
+                    <div className="text-sm font-semibold text-slate-900">New Horizons Technical Certification</div>
+                    <div className="text-xs text-slate-500">Systems & Networking Program</div>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono-tech text-[#00f0ff] px-2 py-0.5 rounded bg-[#00f0ff]/10 border border-[#00f0ff]/20">
+                <span className="text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
                   Certified
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-white/5 flex items-center justify-between">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Network className="w-5 h-5 text-amber-400" />
+                  <Network className="w-5 h-5 text-amber-600" />
                   <div>
-                    <div className="text-xs sm:text-sm font-semibold text-white">Cisco CCNA 200-301</div>
-                    <div className="text-[11px] font-mono-tech text-neutral-400">Enterprise Network Candidate</div>
+                    <div className="text-sm font-semibold text-slate-900">Cisco CCNA 200-301</div>
+                    <div className="text-xs text-slate-500">Enterprise Network Routing & Switching</div>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono-tech text-amber-400 px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20">
-                  In Progress
+                <span className="text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+                  Candidate
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Experience Callout */}
-          <div className="mt-6 pt-4 border-t border-white/5 text-xs text-neutral-400">
-            <span className="text-white font-medium">Practicing Philosophy:</span> Bridging hardware diagnosis with cloud-native web deployment.
+          <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+            Bridging physical hardware diagnosis with modern web application deployment.
           </div>
         </div>
 
-        {/* Tile 2: Live Systems Diagnostics & Telemetry (Col 7) */}
-        <div className="lg:col-span-7 rounded-2xl bg-neutral-900/40 border border-white/10 p-6 sm:p-8 flex flex-col justify-between">
+        {/* Tile 2: Live Diagnostics & Workstation (Col 7) */}
+        <div className="lg:col-span-7 rounded-xl bg-white border border-slate-200 p-6 sm:p-7 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono-tech uppercase bg-neutral-800 text-[#bfff04] border border-[#bfff04]/20">
-                Live Systems Telemetry
+              <span className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                Edge Node Telemetry & Environment
               </span>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#bfff04] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#bfff04]"></span>
-                </span>
-                <span className="text-xs font-mono-tech text-neutral-400">API Gateway: Online</span>
+              <div className="flex items-center gap-1.5 text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span>Gateway Operational</span>
               </div>
             </div>
 
-            <h3 className="text-2xl font-display font-bold text-white">
+            <h3 className="text-xl font-bold text-slate-900">
               Lagos Edge Node Diagnostics
             </h3>
-            <p className="mt-1 text-sm text-neutral-400">
-              Live instrumentation polling the Next.js Route Handlers and SQLite database engine.
+            <p className="mt-1 text-xs text-slate-600">
+              Real-time instrumentation polling the Next.js Route Handlers and SQLite database engine.
             </p>
 
-            {/* Split Metrics & Workstation Monitor */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 my-6 items-center">
-              {/* Metrics & Pipeline Column */}
-              <div className="md:col-span-8 space-y-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 my-5 items-center">
+              {/* Metrics Column */}
+              <div className="md:col-span-8 space-y-3">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Engine Status</div>
-                    <div className="text-sm sm:text-base font-bold font-mono-tech text-[#bfff04] capitalize mt-0.5">
+                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-[11px] text-slate-500 font-medium">STATUS</div>
+                    <div className="text-sm font-bold text-slate-900 capitalize mt-0.5">
                       {healthData?.status || "operational"}
                     </div>
-                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">HTTP 200 OK</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">HTTP 200</div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">DB Handshake</div>
-                    <div className="text-sm sm:text-base font-bold font-mono-tech text-[#00f0ff] mt-0.5 truncate">
-                      {healthData?.dbConnected ? "Connected" : "Synchronizing"}
+                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-[11px] text-slate-500 font-medium">DATABASE</div>
+                    <div className="text-sm font-bold text-blue-600 mt-0.5 truncate">
+                      {healthData?.dbConnected ? "Connected" : "Active"}
                     </div>
-                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">WAL SQLite</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">WAL SQLite</div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Local RTT</div>
-                    <div className="text-sm sm:text-base font-bold font-mono-tech text-white mt-0.5">
+                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-[11px] text-slate-500 font-medium">LOCAL RTT</div>
+                    <div className="text-sm font-bold text-slate-900 mt-0.5">
                       {healthData ? `${healthData.latencyMs}ms` : "12ms"}
                     </div>
-                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Sub-second loop</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">Round trip</div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-neutral-950 border border-white/5">
-                    <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">System Uptime</div>
-                    <div className="text-sm sm:text-base font-bold font-mono-tech text-white mt-0.5">
+                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="text-[11px] text-slate-500 font-medium">UPTIME</div>
+                    <div className="text-sm font-bold text-slate-900 mt-0.5">
                       {healthData ? `${Math.floor(healthData.uptimeSeconds / 60)}m` : "48m"}
                     </div>
-                    <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Continuous</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">Continuous</div>
                   </div>
                 </div>
 
-                {/* Network Packet Flow Banner */}
-                <div className="p-3.5 rounded-xl bg-black border border-neutral-800 text-xs font-mono-tech">
-                  <div className="text-neutral-500 mb-1.5 flex items-center justify-between text-[11px]">
-                    <span>PACKET ROUTING PIPELINE</span>
-                    <span className="text-[#bfff04]">ENCRYPTED</span>
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600">
+                  <div className="text-slate-500 font-medium mb-1.5 text-[11px]">
+                    APPLICATION PIPELINE
                   </div>
-                  <div className="flex items-center gap-2 text-neutral-300 overflow-x-auto py-0.5 text-[11px]">
-                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#bfff04] whitespace-nowrap">
+                  <div className="flex items-center gap-2 overflow-x-auto text-[11px] font-mono-tech py-0.5">
+                    <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-800 whitespace-nowrap">
                       Client Browser
                     </span>
-                    <span className="text-neutral-600">→</span>
-                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#00f0ff] whitespace-nowrap">
+                    <span className="text-slate-400">→</span>
+                    <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-blue-600 whitespace-nowrap">
                       Rate Limiter
                     </span>
-                    <span className="text-neutral-600">→</span>
-                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-amber-400 whitespace-nowrap">
+                    <span className="text-slate-400">→</span>
+                    <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-800 whitespace-nowrap">
                       Zod Schema
                     </span>
-                    <span className="text-neutral-600">→</span>
-                    <span className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-emerald-400 whitespace-nowrap">
-                      SQLite & Mail
+                    <span className="text-slate-400">→</span>
+                    <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-emerald-700 whitespace-nowrap">
+                      SQLite
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Workstation Visual Monitor */}
+              {/* Workstation Photo */}
               <div
                 onClick={() =>
                   setSelectedPhoto({
@@ -338,81 +315,67 @@ export default function BentoGrid() {
                     alt: "Gbodimowo Isaac at engineering workstation with headphones in deep flow state",
                     title: "Systems Engineering Workstation",
                     subtitle: "Lagos Tech Hub • Systems & Architecture Lab",
-                    tag: "ENGINEERING FLOW",
+                    tag: "ENGINEERING",
                     location: "Lagos, Nigeria",
                     date: "Active Development",
                     context:
-                      "Gbodimowo Isaac at his workstation in deep engineering flow. Designing distributed backend pipelines, troubleshooting network topologies, and verifying system diagnostics.",
+                      "Gbodimowo Isaac at his workstation designing backend pipelines, configuring network topologies, and verifying system diagnostics.",
                   })
                 }
-                className="md:col-span-4 relative rounded-xl overflow-hidden border border-white/10 bg-neutral-950 aspect-[4/4.5] group/work cursor-pointer shadow-lg hover:border-[#00f0ff]/60 transition-all duration-300"
+                className="md:col-span-4 relative rounded-lg overflow-hidden border border-slate-200 bg-slate-100 aspect-[4/4] group cursor-pointer shadow-xs hover:border-blue-400 transition-all"
               >
                 <Image
                   src={isaacWorkspace}
                   alt="Gbodimowo Isaac focused at developer workstation"
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/work:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
-                <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-sm border border-white/10 text-[9px] font-mono-tech text-[#00f0ff] flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-ping" />
-                  FLOW STATE
+                <div className="absolute top-2 right-2 p-1 rounded bg-white/90 backdrop-blur-xs text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3 h-3" />
                 </div>
-                <div className="absolute bottom-2 left-2 right-2 p-2 rounded bg-black/75 backdrop-blur-sm border border-white/10 text-[10px] font-mono-tech">
-                  <div className="text-white font-semibold flex items-center justify-between">
-                    <span>Engineering Lab</span>
-                    <span className="text-[#00f0ff] flex items-center gap-0.5 text-[9px]">
-                      <Maximize2 className="w-2.5 h-2.5" /> Inspect
-                    </span>
-                  </div>
-                  <div className="text-neutral-400 text-[9px] mt-0.5">
-                    Lagos Node • Systems Hub
-                  </div>
+                <div className="absolute bottom-2 left-2 right-2 p-2 rounded bg-white/90 backdrop-blur-xs text-xs">
+                  <div className="font-semibold text-slate-900">Engineering Workstation</div>
+                  <div className="text-[10px] text-slate-500">Lagos Tech Hub</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
-            <span className="text-xs font-mono-tech text-neutral-500">
-              Host Environment: Linux Mint / Node.js 26
-            </span>
-            <a
-              href="#terminal"
-              className="text-xs font-mono-tech text-[#bfff04] hover:underline flex items-center gap-1"
-            >
-              Open Terminal Viewer →
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Host Environment: Linux Mint / Node.js 26</span>
+            <a href="#terminal" className="text-blue-600 hover:underline font-medium">
+              Open Terminal →
             </a>
           </div>
         </div>
 
-        {/* Tile 3: Interactive Skills & Tech Matrix with Category Tabs (Col 12) */}
-        <div className="lg:col-span-12 rounded-2xl bg-neutral-900/40 border border-white/10 p-6 sm:p-8">
+        {/* Tile 3: Skills & Tech Matrix (Col 12) */}
+        <div className="lg:col-span-12 rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-xs">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
-              <span className="text-xs font-mono-tech uppercase text-[#bfff04] tracking-wider">
-                Full Spectrum Competency
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mt-1">
+              <h3 className="text-xl font-bold text-slate-900">
                 Technical Stack & Skills Matrix
               </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Categorized by domain competency and operational depth.
+              </p>
             </div>
 
-            {/* Category Switcher Tabs */}
-            <div className="flex flex-wrap gap-1 p-1 rounded-xl bg-black/60 border border-white/10">
+            {/* Category Tabs */}
+            <div className="flex flex-wrap gap-1 p-1 rounded-lg bg-slate-100 border border-slate-200">
               {(["network", "software", "hardware", "tools"] as const).map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-lg text-xs font-mono-tech uppercase tracking-wider transition-all ${
+                  className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     activeCategory === cat
-                      ? "bg-[#bfff04] text-black font-bold shadow-md"
-                      : "text-neutral-400 hover:text-white hover:bg-white/5"
+                      ? "bg-white text-slate-900 shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {cat === "network" && "Networking & Infra"}
                   {cat === "software" && "Software & Web"}
-                  {cat === "hardware" && "Hardware & Systems"}
+                  {cat === "hardware" && "Hardware & Diagnostics"}
                   {cat === "tools" && "Tools & Methods"}
                 </button>
               ))}
@@ -420,41 +383,36 @@ export default function BentoGrid() {
           </div>
 
           {/* Active Category Description */}
-          <div className="mb-6 p-4 rounded-xl bg-neutral-950/60 border border-white/5 flex items-center justify-between">
+          <div className="mb-5 p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
             <div>
-              <h4 className="text-sm font-semibold text-white">
-                {skillsMatrix[activeCategory].title}
-              </h4>
-              <p className="text-xs text-neutral-400 mt-0.5">
-                {skillsMatrix[activeCategory].desc}
-              </p>
+              <strong className="text-slate-900">{skillsMatrix[activeCategory].title}:</strong>{" "}
+              <span className="text-slate-600">{skillsMatrix[activeCategory].desc}</span>
             </div>
-            <span className="text-xs font-mono-tech text-[#00f0ff] hidden sm:inline">
-              {skillsMatrix[activeCategory].items.length} Competencies Cataloged
+            <span className="text-slate-500 hidden sm:inline font-mono-tech">
+              {skillsMatrix[activeCategory].items.length} skills listed
             </span>
           </div>
 
           {/* Skills Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             {skillsMatrix[activeCategory].items.map((skill, index) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="group p-4 rounded-xl bg-neutral-950/80 border border-white/5 hover:border-[#bfff04]/30 transition-all flex flex-col justify-between"
+                transition={{ duration: 0.2, delay: index * 0.03 }}
+                className="p-3.5 rounded-lg bg-slate-50/70 border border-slate-200 hover:border-slate-300 hover:bg-white transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono-tech uppercase px-2 py-0.5 rounded bg-neutral-900 text-[#bfff04] border border-[#bfff04]/20">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                       {skill.level}
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-600 group-hover:bg-[#bfff04] transition-colors" />
                   </div>
-                  <div className="text-sm font-bold text-white group-hover:text-[#bfff04] transition-colors">
+                  <div className="text-sm font-semibold text-slate-900 mt-1">
                     {skill.name}
                   </div>
-                  <p className="text-xs text-neutral-400 mt-1.5 leading-relaxed">
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                     {skill.desc}
                   </p>
                 </div>
@@ -469,7 +427,7 @@ export default function BentoGrid() {
         </div>
       </div>
 
-      {/* Lightbox Modal for Photo Inspection */}
+      {/* Lightbox Modal */}
       <PhotoModal
         photo={selectedPhoto}
         isOpen={!!selectedPhoto}

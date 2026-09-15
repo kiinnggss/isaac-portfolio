@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/ui/Navbar";
 import HeroSection from "@/components/ui/HeroSection";
-import MarqueeTicker from "@/components/ui/MarqueeTicker";
 import ProjectCard from "@/components/ui/ProjectCard";
 import BentoGrid from "@/components/ui/BentoGrid";
 import TerminalViewer from "@/components/ui/TerminalViewer";
@@ -11,14 +10,11 @@ import CiscoTopologyViewer from "@/components/ui/CiscoTopologyViewer";
 import ExperienceSection from "@/components/ui/ExperienceSection";
 import ContactSection from "@/components/ui/ContactSection";
 import Footer from "@/components/ui/Footer";
-import CustomCursor from "@/components/ui/CustomCursor";
 import CommandPalette from "@/components/ui/CommandPalette";
 import ResumeModal from "@/components/ui/ResumeModal";
 import PhotoModal, { PhotoDetails } from "@/components/ui/PhotoModal";
 import Toast, { ToastMessage } from "@/components/ui/Toast";
 import { featuredProjects } from "@/lib/projects-data";
-import { sound } from "@/lib/sound";
-import { Terminal, Layers, Network, Check, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import isaacPortrait from "@/public/images/isaac-portrait.jpg";
@@ -30,12 +26,9 @@ export default function Home() {
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(true);
   const [activeFilter, setActiveFilter] = useState<"all" | "web" | "network">("all");
 
   useEffect(() => {
-    setSoundEnabled(sound.isEnabled());
-
     const handleKeyDown = (e: KeyboardEvent) => {
       // Cmd+K or Ctrl+K or '/' to open command palette
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -51,19 +44,8 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const handleSoundToggle = () => {
-    const newState = sound.toggle();
-    setSoundEnabled(newState);
-    setToast({
-      id: Date.now().toString(),
-      text: newState ? "Sound effects enabled" : "Sound effects muted",
-      type: "info",
-    });
-  };
-
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("isaacgbodimowo@gmail.com");
-    sound.playChime();
     setToast({
       id: Date.now().toString(),
       text: "Email copied: isaacgbodimowo@gmail.com",
@@ -78,7 +60,7 @@ export default function Home() {
         alt: "Gbodimowo Isaac in dark formal suit and sunglasses",
         title: "Official Portrait",
         subtitle: "Software Engineer & Network Systems Specialist",
-        tag: "OFFICIAL PORTRAIT",
+        tag: "PORTRAIT",
         location: "Lagos, Nigeria",
         date: "Verified Spec",
         context:
@@ -102,7 +84,7 @@ export default function Home() {
         alt: "Gbodimowo Isaac at engineering workstation with headphones in deep flow state",
         title: "Systems Engineering Workstation",
         subtitle: "Lagos Tech Hub • Systems & Architecture Lab",
-        tag: "ENGINEERING FLOW",
+        tag: "ENGINEERING",
         location: "Lagos, Nigeria",
         date: "Active Development",
         context:
@@ -130,43 +112,35 @@ export default function Home() {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#080808] text-white selection:bg-[#bfff04] selection:text-black">
-      {/* Custom Magnetic Cursor follower */}
-      <CustomCursor />
-
+    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-blue-600 selection:text-white">
       {/* Global Navigation */}
       <Navbar
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
         onOpenResume={() => setResumeModalOpen(true)}
         onCopyEmail={handleCopyEmail}
-        onSoundToggle={handleSoundToggle}
-        soundEnabled={soundEnabled}
       />
 
       <main>
         {/* Editorial Hero Section */}
         <HeroSection />
 
-        {/* Continuous Technical Marquee Ticker */}
-        <MarqueeTicker />
-
-        {/* Featured Projects Showcase (The Matthew-style Section) */}
-        <section id="work" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+        {/* Featured Projects Showcase */}
+        <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-mono-tech text-[#bfff04] uppercase tracking-widest mb-3">
-                <Layers className="w-3.5 h-3.5" /> Featured Production Systems
+              <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+                Production Systems & Architecture
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight uppercase">
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
                 Selected Works
               </h2>
-              <p className="mt-3 text-base text-neutral-400 max-w-2xl">
-                Distributed web architectures, Cisco Packet Tracer enterprise network topologies, and high-concurrency client platforms.
+              <p className="mt-2 text-base text-slate-600 max-w-2xl">
+                Distributed web architectures, Cisco Packet Tracer enterprise topologies, and high-concurrency client platforms.
               </p>
             </div>
 
             {/* Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-neutral-950 border border-white/10">
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-lg bg-slate-100 border border-slate-200">
               {(
                 [
                   { id: "all", label: "All Works (3)" },
@@ -177,14 +151,11 @@ export default function Home() {
                 <button
                   key={tab.id}
                   type="button"
-                  onClick={() => {
-                    sound.playClick();
-                    setActiveFilter(tab.id);
-                  }}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-mono-tech uppercase tracking-wider transition-all ${
+                  onClick={() => setActiveFilter(tab.id)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     activeFilter === tab.id
-                      ? "bg-[#bfff04] text-black font-bold shadow-md"
-                      : "text-neutral-400 hover:text-white hover:bg-white/5"
+                      ? "bg-white text-slate-900 shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {tab.label}
@@ -203,27 +174,27 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* Interactive Bento Grid & Subnet Calculator */}
+        {/* Technical Matrix & Credentials */}
         <BentoGrid />
 
-        {/* Live Network Playground & Interactive CLI Section */}
-        <section id="terminal" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+        {/* Systems Terminal & Interactive Topology */}
+        <section id="terminal" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-mono-tech text-[#00f0ff] uppercase tracking-widest mb-3">
-                <Terminal className="w-3.5 h-3.5" /> Interactive CLI & Systems Probe
+              <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+                Systems Diagnostics & Network Simulation
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight uppercase">
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
                 Network Terminal & Topology
               </h2>
-              <p className="mt-3 text-base text-neutral-400 max-w-2xl">
-                Run live probes against the network edge, inspect HSRP convergence states, or explore the interactive Cisco topology below.
+              <p className="mt-2 text-base text-slate-600 max-w-2xl">
+                Run live probes against the network edge, inspect HSRP gateway redundancy, or explore the interactive Cisco topology below.
               </p>
             </div>
 
-            <div className="text-xs font-mono-tech text-neutral-400 flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-md bg-neutral-900 border border-neutral-800 text-[#00f0ff]">
-                Live Socket & ICMP Probe
+            <div className="text-xs text-slate-500 flex items-center gap-2">
+              <span className="px-3 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-medium">
+                Active Edge Node: Lagos
               </span>
             </div>
           </div>
@@ -238,11 +209,11 @@ export default function Home() {
         {/* Experience & Academic Track */}
         <ExperienceSection />
 
-        {/* Contact Drawer / Section */}
+        {/* Contact Section */}
         <ContactSection />
       </main>
 
-      {/* Editorial Footer */}
+      {/* Footer */}
       <Footer />
 
       {/* Global Command Palette (Cmd+K) */}
@@ -252,8 +223,6 @@ export default function Home() {
         onOpenResume={() => setResumeModalOpen(true)}
         onOpenPhoto={handleOpenPhoto}
         onCopyEmail={handleCopyEmail}
-        onSoundToggle={handleSoundToggle}
-        soundEnabled={soundEnabled}
       />
 
       {/* In-Browser Resume Quick Reader Modal */}

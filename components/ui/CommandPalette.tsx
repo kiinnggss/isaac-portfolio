@@ -4,27 +4,21 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
-  Terminal,
-  Layers,
   FileText,
-  Mail,
   Copy,
   ExternalLink,
-  Volume2,
-  VolumeX,
   Camera,
   Network,
+  Layers,
   ArrowRight,
-  Sparkles,
   X,
 } from "lucide-react";
-import { sound } from "@/lib/sound";
 
 export interface CommandItem {
   id: string;
   title: string;
   subtitle: string;
-  category: "Navigation" | "Projects" | "Documents" | "Photographs" | "Settings";
+  category: "Navigation" | "Projects" | "Documents" | "Photographs";
   icon: typeof Search;
   action: () => void;
 }
@@ -35,8 +29,6 @@ interface CommandPaletteProps {
   onOpenResume: () => void;
   onOpenPhoto: (photoType: "portrait" | "graduation" | "workspace") => void;
   onCopyEmail: () => void;
-  onSoundToggle: () => void;
-  soundEnabled: boolean;
 }
 
 export default function CommandPalette({
@@ -45,8 +37,6 @@ export default function CommandPalette({
   onOpenResume,
   onOpenPhoto,
   onCopyEmail,
-  onSoundToggle,
-  soundEnabled,
 }: CommandPaletteProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -113,7 +103,7 @@ export default function CommandPalette({
     {
       id: "proj-clients",
       title: "Client Web Platforms Showcase",
-      subtitle: "Hoffenheim Tech production portals and integration workflows",
+      subtitle: "Production portals and integration workflows",
       category: "Projects",
       icon: Layers,
       action: () => {
@@ -125,7 +115,7 @@ export default function CommandPalette({
     {
       id: "photo-portrait",
       title: "View Official Portrait",
-      subtitle: "Formal photograph of Gbodimowo Isaac in Lagos",
+      subtitle: "Formal portrait of Gbodimowo Isaac in Lagos",
       category: "Photographs",
       icon: Camera,
       action: () => {
@@ -146,8 +136,8 @@ export default function CommandPalette({
     },
     {
       id: "photo-work",
-      title: "View Engineering Workstation",
-      subtitle: "Systems lab and high-concurrency development setup",
+      title: "View Engineering Workstation Photo",
+      subtitle: "Deep focus at workstation engineering distributed systems",
       category: "Photographs",
       icon: Camera,
       action: () => {
@@ -158,8 +148,8 @@ export default function CommandPalette({
     // Navigation
     {
       id: "nav-work",
-      title: "Jump to Selected Works",
-      subtitle: "Production web architectures and network configurations",
+      title: "Navigate to Featured Works",
+      subtitle: "View engineering architectures and live demos",
       category: "Navigation",
       icon: Layers,
       action: () => {
@@ -169,10 +159,10 @@ export default function CommandPalette({
     },
     {
       id: "nav-skills",
-      title: "Jump to Engineering Bento",
-      subtitle: "Interactive telemetry and skills matrix",
+      title: "Navigate to Skills Matrix",
+      subtitle: "Inspect full networking, software, and hardware matrix",
       category: "Navigation",
-      icon: Sparkles,
+      icon: Network,
       action: () => {
         window.location.hash = "skills";
         onClose();
@@ -180,10 +170,10 @@ export default function CommandPalette({
     },
     {
       id: "nav-terminal",
-      title: "Jump to Network Terminal",
-      subtitle: "Interactive CLI, ICMP ping probe, and subnet calculator",
+      title: "Navigate to Systems Terminal",
+      subtitle: "Open interactive CLI emulator and latency probe",
       category: "Navigation",
-      icon: Terminal,
+      icon: Search,
       action: () => {
         window.location.hash = "terminal";
         onClose();
@@ -191,45 +181,36 @@ export default function CommandPalette({
     },
     {
       id: "nav-contact",
-      title: "Jump to Contact Transmission",
-      subtitle: "Dispatch an inquiry directly to SQLite mailbox",
+      title: "Navigate to Contact Section",
+      subtitle: "Send a direct message or view contact coordinates",
       category: "Navigation",
-      icon: Mail,
+      icon: Copy,
       action: () => {
         window.location.hash = "contact";
-        onClose();
-      },
-    },
-    // Settings
-    {
-      id: "toggle-sound",
-      title: soundEnabled ? "Mute Sound Effects" : "Enable Sound Effects",
-      subtitle: soundEnabled ? "Currently enabled (synthesized Web Audio)" : "Currently muted",
-      category: "Settings",
-      icon: soundEnabled ? VolumeX : Volume2,
-      action: () => {
-        onSoundToggle();
         onClose();
       },
     },
   ];
 
   const filtered = commands.filter(
-    (c) =>
-      c.title.toLowerCase().includes(query.toLowerCase()) ||
-      c.subtitle.toLowerCase().includes(query.toLowerCase()) ||
-      c.category.toLowerCase().includes(query.toLowerCase())
+    (item) =>
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.subtitle.toLowerCase().includes(query.toLowerCase()) ||
+      item.category.toLowerCase().includes(query.toLowerCase())
   );
 
   useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
-
-  useEffect(() => {
     if (isOpen) {
-      sound.playChime();
+      setQuery("");
+      setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 50);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
     }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -238,11 +219,9 @@ export default function CommandPalette({
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        sound.playClick();
         setSelectedIndex((prev) => (prev + 1) % Math.max(1, filtered.length));
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        sound.playClick();
         setSelectedIndex((prev) => (prev - 1 + filtered.length) % Math.max(1, filtered.length));
       } else if (e.key === "Enter") {
         e.preventDefault();
@@ -269,49 +248,46 @@ export default function CommandPalette({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/85 backdrop-blur-md"
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"
           />
 
           {/* Modal Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            initial={{ opacity: 0, scale: 0.96, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
-            transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-            className="relative w-full max-w-2xl bg-neutral-950 border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
+            transition={{ duration: 0.2 }}
+            className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search Input Bar */}
-            <div className="p-4 border-b border-white/10 flex items-center gap-3 bg-neutral-900/60">
-              <Search className="w-5 h-5 text-neutral-400 shrink-0" />
+            <div className="p-4 border-b border-slate-200 flex items-center gap-3 bg-slate-50">
+              <Search className="w-5 h-5 text-slate-400 shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
-                onChange={(e) => {
-                  sound.playKey();
-                  setQuery(e.target.value);
-                }}
-                placeholder="Type a command, project, or shortcut (e.g. resume, ping, cisco)..."
-                className="w-full bg-transparent text-sm sm:text-base font-mono-tech text-white placeholder-neutral-500 focus:outline-none"
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Type a command, project, or section (e.g. resume, cisco, contact)..."
+                className="w-full bg-transparent text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
               />
-              <span className="hidden sm:inline px-2 py-0.5 rounded bg-neutral-800 text-[10px] font-mono-tech text-neutral-400 border border-neutral-700">
+              <span className="hidden sm:inline px-2 py-0.5 rounded bg-white text-xs text-slate-500 border border-slate-300 font-mono-tech">
                 ESC
               </span>
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1 rounded-lg text-neutral-400 hover:text-white sm:hidden"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 sm:hidden"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Command Results List */}
-            <div className="max-h-[60vh] overflow-y-auto p-2 divide-y divide-white/5">
+            <div className="max-h-[60vh] overflow-y-auto p-2 divide-y divide-slate-100">
               {filtered.length === 0 ? (
-                <div className="py-12 text-center text-xs font-mono-tech text-neutral-500">
-                  No matching commands found for &quot;{query}&quot;
+                <div className="py-12 text-center text-xs text-slate-500">
+                  No matching results for &quot;{query}&quot;
                 </div>
               ) : (
                 filtered.map((item, idx) => {
@@ -324,28 +300,28 @@ export default function CommandPalette({
                       onMouseEnter={() => setSelectedIndex(idx)}
                       className={`p-3 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition-colors ${
                         isSelected
-                          ? "bg-neutral-900 border border-[#bfff04]/30"
-                          : "hover:bg-neutral-900/50 border border-transparent"
+                          ? "bg-blue-50 border border-blue-200"
+                          : "hover:bg-slate-50 border border-transparent"
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div
                           className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                             isSelected
-                              ? "bg-[#bfff04] text-black"
-                              : "bg-neutral-900 border border-white/10 text-neutral-400"
+                              ? "bg-blue-600 text-white"
+                              : "bg-slate-100 text-slate-600"
                           }`}
                         >
                           <Icon className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
-                          <div className="text-xs sm:text-sm font-semibold text-white truncate flex items-center gap-2">
+                          <div className="text-xs sm:text-sm font-semibold text-slate-900 truncate flex items-center gap-2">
                             <span>{item.title}</span>
-                            <span className="text-[10px] font-mono-tech px-1.5 py-0.2 rounded bg-neutral-800 text-neutral-400">
+                            <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
                               {item.category}
                             </span>
                           </div>
-                          <div className="text-[11px] text-neutral-400 truncate mt-0.5">
+                          <div className="text-xs text-slate-500 truncate mt-0.5">
                             {item.subtitle}
                           </div>
                         </div>
@@ -353,8 +329,8 @@ export default function CommandPalette({
 
                       <div className="flex items-center gap-1.5 shrink-0">
                         {isSelected && (
-                          <span className="text-[10px] font-mono-tech text-[#bfff04] flex items-center gap-1">
-                            <span>Execute</span>
+                          <span className="text-xs font-medium text-blue-600 flex items-center gap-1">
+                            <span>Select</span>
                             <ArrowRight className="w-3 h-3" />
                           </span>
                         )}
@@ -366,7 +342,7 @@ export default function CommandPalette({
             </div>
 
             {/* Footer Hints */}
-            <div className="p-3 border-t border-white/10 bg-neutral-900/80 flex items-center justify-between text-[11px] font-mono-tech text-neutral-400">
+            <div className="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
               <div className="flex items-center gap-3">
                 <span>↑↓ Navigate</span>
                 <span>•</span>
@@ -374,8 +350,8 @@ export default function CommandPalette({
                 <span>•</span>
                 <span>ESC Dismiss</span>
               </div>
-              <span className="text-[#bfff04] hidden sm:inline">
-                Isaac Command Gateway
+              <span className="text-slate-400 hidden sm:inline">
+                Navigation Launcher
               </span>
             </div>
           </motion.div>

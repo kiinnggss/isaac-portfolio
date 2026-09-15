@@ -30,40 +30,34 @@ interface ProjectCardProps {
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Dynamic visual preview theme depending on category
   const isNetwork = project.category.toLowerCase().includes("network") || project.category.toLowerCase().includes("defense");
   const isTransport = project.category.toLowerCase().includes("transit") || project.category.toLowerCase().includes("peer");
 
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.7, delay: index * 0.15 }}
-        className="group relative rounded-2xl bg-neutral-900/40 border border-white/10 hover:border-[#bfff04]/40 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        className="group relative rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between"
       >
-        {/* Top Glow & Surface Accent */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#bfff04]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        {/* Card Header & Preview Frame */}
-        <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+        <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
           <div>
-            {/* Meta Row with Quick Links */}
+            {/* Meta Row with Category & Quick Actions */}
             <div className="flex items-center justify-between mb-4">
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono-tech uppercase bg-neutral-800 text-[#bfff04] border border-[#bfff04]/20">
-                0{index + 1} // {project.category}
+              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700">
+                {project.category}
               </span>
-              
-              <div className="flex items-center gap-1.5">
+
+              <div className="flex items-center gap-2">
                 {project.codeLink && (
                   <a
                     href={project.codeLink}
                     target="_blank"
                     rel="noreferrer"
-                    data-cursor="CODE"
-                    title="View Source on GitHub"
-                    className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-white/20 transition-all"
+                    title="View source on GitHub"
+                    className="p-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                   >
                     <GithubIcon className="w-3.5 h-3.5" />
                   </a>
@@ -73,9 +67,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     href={project.demoLink}
                     target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                     rel="noreferrer"
-                    data-cursor="LAUNCH"
-                    title="Open Live Project"
-                    className="px-2.5 py-1 rounded-lg bg-[#bfff04]/10 border border-[#bfff04]/30 text-[#bfff04] hover:bg-[#bfff04] hover:text-black transition-all text-[11px] font-mono-tech flex items-center gap-1 font-semibold"
+                    title="Open live project"
+                    className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-xs font-medium inline-flex items-center gap-1"
                   >
                     <span>Launch</span>
                     <ExternalLink className="w-3 h-3" />
@@ -85,152 +78,139 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
 
             {/* Title & Subtitle */}
-            <h3 className="text-2xl sm:text-3xl font-display font-bold text-white group-hover:text-[#bfff04] transition-colors leading-tight">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
               {project.title}
             </h3>
-            <p className="mt-2 text-sm text-neutral-400 font-sans leading-relaxed">
+            <p className="mt-2 text-sm text-slate-600 leading-relaxed">
               {project.subtitle}
             </p>
 
-            {/* Architecture Frame / Visual Mockup Area */}
+            {/* Architecture Preview Box */}
             <div
               onClick={() => setModalOpen(true)}
-              data-cursor="INSPECT"
-              className="my-6 relative w-full h-48 sm:h-56 rounded-xl bg-gradient-to-b from-neutral-950 to-neutral-900 border border-white/5 p-4 overflow-hidden flex flex-col justify-between cursor-pointer group-hover:border-white/20 transition-all"
+              className="my-5 relative w-full rounded-lg bg-slate-50 border border-slate-200 p-4 cursor-pointer hover:bg-slate-100/70 transition-colors"
             >
-              {/* Background Grid Pattern */}
-              <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
-
-              {/* Status Header inside Mockup */}
-              <div className="relative z-10 flex items-center justify-between text-[11px] font-mono-tech text-neutral-400 pb-2 border-b border-white/5">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#bfff04]" />
-                  <span>topology-monitor // live</span>
-                </div>
-                <span className="text-neutral-500">Click to inspect</span>
+              <div className="flex items-center justify-between text-xs text-slate-500 pb-2.5 border-b border-slate-200">
+                <span className="font-medium text-slate-700">Architecture Topology</span>
+                <span className="text-blue-600 hover:underline">Inspect spec</span>
               </div>
 
-              {/* Visual topology node mockup */}
-              <div className="relative z-10 my-auto flex items-center justify-around">
+              {/* Topology Nodes */}
+              <div className="py-4 flex items-center justify-around">
                 {isNetwork ? (
                   <>
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-[#bfff04]">
-                        <Network className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-xs">
+                        <Network className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Core R1/R2</span>
-                      <span className="text-[9px] font-mono-tech text-[#bfff04]">HSRP 110</span>
+                      <span className="text-xs font-medium text-slate-700">R1 / R2 Core</span>
+                      <span className="text-[10px] text-slate-500">HSRP Gateway</span>
                     </div>
 
-                    <div className="flex-1 h-[2px] bg-gradient-to-r from-[#bfff04]/40 via-white/20 to-[#00f0ff]/40 mx-2 relative">
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-mono-tech text-neutral-500">
-                        802.1Q Trunk
-                      </span>
-                    </div>
+                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
 
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-[#00f0ff]">
-                        <ShieldCheck className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-xs">
+                        <ShieldCheck className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Dist Sw 2960</span>
-                      <span className="text-[9px] font-mono-tech text-[#00f0ff]">VLAN 10/20/30</span>
+                      <span className="text-xs font-medium text-slate-700">Catalyst 3650</span>
+                      <span className="text-[10px] text-slate-500">802.1Q Trunks</span>
                     </div>
 
-                    <div className="flex-1 h-[2px] bg-gradient-to-r from-[#00f0ff]/40 via-white/20 to-emerald-400/40 mx-2" />
+                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
 
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-emerald-400">
-                        <Cpu className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shadow-xs">
+                        <Cpu className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Host Egress</span>
-                      <span className="text-[9px] font-mono-tech text-emerald-400">NAT Pool</span>
+                      <span className="text-xs font-medium text-slate-700">DMZ Server</span>
+                      <span className="text-[10px] text-slate-500">ACLs & NAT</span>
                     </div>
                   </>
                 ) : isTransport ? (
                   <>
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-[#bfff04]/30 flex items-center justify-center text-[#bfff04]">
-                        <Layers className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-xs">
+                        <Layers className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Commuter A</span>
-                      <span className="text-[9px] font-mono-tech text-[#bfff04]">Mainland</span>
+                      <span className="text-xs font-medium text-slate-700">Origin Route</span>
+                      <span className="text-[10px] text-slate-500">Mainland</span>
                     </div>
 
-                    <div className="flex-1 h-[2px] bg-gradient-to-r from-[#bfff04] via-amber-400 to-[#00f0ff] mx-2 relative animate-pulse">
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-mono-tech text-neutral-400">
-                        3rd Mainland Corridor
-                      </span>
-                    </div>
+                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
 
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff]">
-                        <Cpu className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-xs">
+                        <Cpu className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Dynamic Match</span>
-                      <span className="text-[9px] font-mono-tech text-[#00f0ff]">GeoIndex</span>
+                      <span className="text-xs font-medium text-slate-700">Geo Match</span>
+                      <span className="text-[10px] text-slate-500">Spatial Query</span>
                     </div>
 
-                    <div className="flex-1 h-[2px] bg-gradient-to-r from-[#00f0ff] to-emerald-400 mx-2" />
+                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
 
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Layers className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shadow-xs">
+                        <Layers className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Commuter B</span>
-                      <span className="text-[9px] font-mono-tech text-emerald-400">Lekki / Island</span>
+                      <span className="text-xs font-medium text-slate-700">Destination</span>
+                      <span className="text-[10px] text-slate-500">Lekki / Island</span>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-[#bfff04]">
-                        <Terminal className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-xs">
+                        <Terminal className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">Client Web</span>
+                      <span className="text-xs font-medium text-slate-700">Client Web</span>
+                      <span className="text-[10px] text-slate-500">Next.js UI</span>
                     </div>
 
-                    <div className="flex-1 h-[2px] bg-white/20 mx-2" />
+                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
 
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-[#00f0ff]">
-                        <Layers className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-xs">
+                        <Layers className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">API Gateway</span>
+                      <span className="text-xs font-medium text-slate-700">API Gateway</span>
+                      <span className="text-[10px] text-slate-500">Route Handlers</span>
                     </div>
 
-                    <div className="flex-1 h-[2px] bg-white/20 mx-2" />
+                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
 
                     <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-10 h-10 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-amber-400">
-                        <Cpu className="w-5 h-5" />
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shadow-xs">
+                        <Cpu className="w-4 h-4" />
                       </div>
-                      <span className="text-[10px] font-mono-tech text-neutral-400">DB & Pipeline</span>
+                      <span className="text-xs font-medium text-slate-700">Database</span>
+                      <span className="text-[10px] text-slate-500">SQLite & Store</span>
                     </div>
                   </>
                 )}
               </div>
 
-              {/* Bottom Quick Metric */}
-              <div className="relative z-10 flex items-center justify-between text-[11px] font-mono-tech text-neutral-400 pt-2 border-t border-white/5">
-                <span>{project.metrics[0]?.label}: {project.metrics[0]?.value}</span>
-                <span className="text-[#bfff04] flex items-center gap-1">
-                  Inspect Spec <ArrowUpRight className="w-3 h-3" />
+              {/* Bottom Metric */}
+              <div className="pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+                <span>{project.metrics[0]?.label}: <strong className="text-slate-700 font-semibold">{project.metrics[0]?.value}</strong></span>
+                <span className="text-blue-600 font-medium inline-flex items-center gap-1">
+                  Explore <ArrowUpRight className="w-3 h-3" />
                 </span>
               </div>
             </div>
 
             {/* Technical Stack Tags */}
-            <div className="flex flex-wrap gap-1.5 pt-2">
+            <div className="flex flex-wrap gap-1.5 pt-1">
               {project.tags.slice(0, 4).map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-1 rounded-md text-[11px] font-mono-tech bg-neutral-950 text-neutral-300 border border-neutral-800"
+                  className="px-2 py-0.5 rounded-md text-xs bg-slate-100 text-slate-600 border border-slate-200"
                 >
                   {tag}
                 </span>
               ))}
               {project.tags.length > 4 && (
-                <span className="px-2 py-1 rounded-md text-[11px] font-mono-tech bg-neutral-950 text-neutral-500 border border-neutral-800">
+                <span className="px-2 py-0.5 rounded-md text-xs bg-slate-50 text-slate-500 border border-slate-200">
                   +{project.tags.length - 4} more
                 </span>
               )}
@@ -238,30 +218,27 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
 
           {/* Action Trigger Row */}
-          <div className="mt-6 pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="text-xs font-mono-tech text-white uppercase tracking-wider hover:text-[#bfff04] flex items-center gap-1.5 transition-colors group-hover:translate-x-1 duration-200"
+              className="text-xs font-medium text-slate-700 hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
             >
-              <span>Explore Architecture</span>
+              <span>View Architecture Specs</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
 
-            <div className="flex items-center gap-2">
-              {project.demoLink && (
-                <a
-                  href={project.demoLink}
-                  target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
-                  rel="noreferrer"
-                  data-cursor="OPEN"
-                  className="px-3.5 py-1.5 rounded-xl bg-[#bfff04] text-black font-semibold text-xs tracking-tight uppercase hover:bg-[#d0ff36] hover:shadow-[0_0_20px_rgba(191,255,4,0.4)] transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
-                >
-                  <span>Open Project</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              )}
-            </div>
+            {project.demoLink && (
+              <a
+                href={project.demoLink}
+                target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+                rel="noreferrer"
+                className="px-3.5 py-1.5 rounded-lg bg-slate-900 text-white font-medium text-xs hover:bg-slate-800 transition-colors inline-flex items-center gap-1.5 shadow-xs"
+              >
+                <span>Launch Project</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
+              </a>
+            )}
           </div>
         </div>
       </motion.div>

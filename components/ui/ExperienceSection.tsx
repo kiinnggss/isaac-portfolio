@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Laptop, CheckCircle2, ArrowUpRight, Maximize2 } from "lucide-react";
+import { Briefcase, GraduationCap, Laptop, Maximize2 } from "lucide-react";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
 import isaacGraduation from "@/public/images/isaac-graduation.jpg";
 import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
@@ -13,13 +12,12 @@ export default function ExperienceSection() {
 
   const experiences = [
     {
-      period: "Internship Tenure",
+      period: "Industry Experience",
       role: "Web Developer Intern",
       organization: "Hoffenheim Tech",
       location: "Lagos, Nigeria",
-      type: "Industry Experience",
+      type: "Internship Tenure",
       icon: Briefcase,
-      accent: "#bfff04",
       highlights: [
         "Delivered production websites, client portals, and administrative web tools for business clients.",
         "Engineered API integrations, webhook consumers, and dynamic form submission pipelines with data sanitization.",
@@ -27,7 +25,6 @@ export default function ExperienceSection() {
       ],
       tags: ["React", "Next.js", "REST APIs", "Node.js", "Tailwind CSS", "CMS Pipelines"],
       photo: isaacWorkspace,
-      photoTag: "Workstation",
       photoDetails: {
         src: isaacWorkspace,
         alt: "Gbodimowo Isaac at developer workstation during industry tenure",
@@ -47,7 +44,6 @@ export default function ExperienceSection() {
       location: "Lagos, Nigeria",
       type: "Instruction & Mentorship",
       icon: Laptop,
-      accent: "#00f0ff",
       highlights: [
         "Instructed students in foundational software engineering principles, Python programming, and Scratch logic.",
         "Designed hands-on curriculum promoting algorithmic problem-solving and structured code debugging.",
@@ -62,7 +58,6 @@ export default function ExperienceSection() {
       location: "Ogun / Lagos, Nigeria",
       type: "Degree Program",
       icon: GraduationCap,
-      accent: "#bfff04",
       highlights: [
         "In-depth studies covering data structures, operating systems, networking models, and relational database systems.",
         "Participated in systems research and practical networking labs configuring routers, subnets, and packet routing.",
@@ -70,7 +65,6 @@ export default function ExperienceSection() {
       ],
       tags: ["Computer Science", "Systems Architecture", "Databases", "Networking Theory"],
       photo: isaacGraduation,
-      photoTag: "Convocation",
       photoDetails: {
         src: isaacGraduation,
         alt: "Gbodimowo Isaac at Babcock University Convocation with degree scroll",
@@ -86,127 +80,94 @@ export default function ExperienceSection() {
   ];
 
   return (
-    <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="mb-14">
-        <div className="inline-flex items-center gap-2 text-xs font-mono-tech text-[#00f0ff] uppercase tracking-widest mb-3">
-          <Briefcase className="w-3.5 h-3.5" /> Career Trajectory & Pedigree
+    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="mb-12">
+        <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+          Career Background & Education
         </div>
-        <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight uppercase">
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
           Experience & Education
         </h2>
-        <p className="mt-3 text-base text-neutral-400 max-w-2xl">
-          Practical industry internships, educational instruction, and rigorous university training.
+        <p className="mt-2 text-base text-slate-600 max-w-2xl">
+          Practical industry internships, educational instruction, and formal university training.
         </p>
       </div>
 
-      <div className="relative border-l border-white/10 ml-4 sm:ml-8 space-y-12">
-        {experiences.map((item, idx) => {
-          const Icon = item.icon;
+      <div className="space-y-6">
+        {experiences.map((exp) => {
+          const Icon = exp.icon;
           return (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className="relative pl-6 sm:pl-10 group"
+            <div
+              key={exp.role + exp.organization}
+              className="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-xs hover:border-slate-300 transition-colors"
             >
-              {/* Timeline Marker Dot */}
-              <div
-                className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-neutral-950 border-2 transition-all duration-300 group-hover:scale-125"
-                style={{ borderColor: item.accent }}
-              />
-
-              <div className="rounded-2xl bg-neutral-900/40 border border-white/10 p-6 sm:p-8 hover:border-white/20 transition-all">
-                {/* Header */}
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="px-2.5 py-0.5 rounded-full text-[11px] font-mono-tech uppercase font-medium"
-                      style={{
-                        backgroundColor: `${item.accent}15`,
-                        color: item.accent,
-                        borderColor: `${item.accent}40`,
-                        borderWidth: 1,
-                      }}
-                    >
-                      {item.type}
-                    </span>
-                    <span className="text-xs font-mono-tech text-neutral-400">
-                      {item.location}
-                    </span>
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 shrink-0 mt-1">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-xs font-mono-tech text-neutral-400">
-                    {item.period}
-                  </span>
-                </div>
 
-                <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
-                  <h3 className="text-xl sm:text-2xl font-display font-bold text-white group-hover:text-[#bfff04] transition-colors">
-                    {item.role}
-                  </h3>
-                  <span className="text-neutral-500 font-mono-tech text-sm">@</span>
-                  <span className="text-base sm:text-lg font-medium text-neutral-300">
-                    {item.organization}
-                  </span>
-                </div>
-
-                {/* Highlights & Photo Preview */}
-                <div className="mt-4 flex flex-col md:flex-row gap-5 items-start">
-                  <ul className="flex-1 space-y-2.5">
-                    {item.highlights.map((h, hIdx) => (
-                      <li
-                        key={hIdx}
-                        className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300"
-                      >
-                        <CheckCircle2
-                          className="w-4 h-4 shrink-0 mt-0.5"
-                          style={{ color: item.accent }}
-                        />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {item.photo && item.photoDetails && (
-                    <div
-                      onClick={() => setSelectedPhoto(item.photoDetails)}
-                      className="relative w-full sm:w-36 h-28 sm:h-36 rounded-xl overflow-hidden border border-white/10 bg-neutral-950 shrink-0 group/exp-photo cursor-pointer shadow-md hover:border-[#bfff04]/50 transition-all"
-                    >
-                      <Image
-                        src={item.photo}
-                        alt={item.photoDetails.alt}
-                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/exp-photo:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono-tech">
-                        <span className="text-white truncate font-medium">{item.photoTag}</span>
-                        <span className="text-[#bfff04] flex items-center gap-0.5 shrink-0">
-                          <Maximize2 className="w-2.5 h-2.5" /> Inspect
-                        </span>
-                      </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                        {exp.period}
+                      </span>
+                      <span className="text-xs text-slate-500 font-medium">
+                        {exp.location}
+                      </span>
                     </div>
-                  )}
+
+                    <h3 className="text-xl font-bold text-slate-900 mt-1.5">
+                      {exp.role}
+                    </h3>
+                    <div className="text-sm font-semibold text-slate-700">
+                      {exp.organization}
+                    </div>
+
+                    <ul className="mt-4 space-y-2 max-w-3xl">
+                      {exp.highlights.map((h, idx) => (
+                        <li key={idx} className="text-sm text-slate-600 flex items-start gap-2.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0 mt-2" />
+                          <span className="leading-relaxed">{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-wrap gap-1.5 mt-5">
+                      {exp.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-0.5 rounded-md text-xs bg-slate-100 text-slate-600 border border-slate-200"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Tags */}
-                <div className="mt-6 flex flex-wrap gap-2 pt-4 border-t border-white/5">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-1 rounded-md text-[11px] font-mono-tech bg-neutral-950 text-neutral-400 border border-neutral-800"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                {/* Optional Attached Photo */}
+                {exp.photo && exp.photoDetails && (
+                  <div
+                    onClick={() => setSelectedPhoto(exp.photoDetails)}
+                    className="relative w-24 sm:w-28 h-28 sm:h-32 rounded-lg overflow-hidden border border-slate-200 shrink-0 cursor-pointer group bg-slate-100 shadow-xs hover:border-blue-400 transition-all self-start"
+                  >
+                    <Image
+                      src={exp.photo}
+                      alt={exp.photoDetails.alt}
+                      className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute top-1 right-1 p-0.5 rounded bg-white/80 backdrop-blur-xs text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Maximize2 className="w-3 h-3" />
+                    </div>
+                  </div>
+                )}
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>
 
-      {/* Full Resolution Photo Lightbox Modal */}
       <PhotoModal
         photo={selectedPhoto}
         isOpen={!!selectedPhoto}

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gbodimowo Isaac — Software Engineer & Network Systems Specialist",
+  title: "Gbodimowo Isaac: Software Engineer & Network Systems Specialist",
   description:
     "Portfolio of Gbodimowo Isaac: Software Engineer and Network Systems Specialist based in Lagos, Nigeria. Specializing in resilient digital infrastructure, modern full-stack web applications, Cisco IOS enterprise topologies, and systems diagnostics.",
   keywords: [
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Gbodimowo Isaac" }],
   creator: "Gbodimowo Isaac",
   openGraph: {
-    title: "Gbodimowo Isaac — Software Engineer & Network Systems Specialist",
+    title: "Gbodimowo Isaac: Software Engineer & Network Systems Specialist",
     description:
-      "Architecting resilient digital infrastructure — bridging scalable web development with enterprise networking and systems diagnostics.",
+      "Architecting resilient digital infrastructure, bridging scalable web development with enterprise networking and systems diagnostics.",
     url: "https://isaacgbodimowo.dev",
     siteName: "Gbodimowo Isaac Portfolio",
     locale: "en_US",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gbodimowo Isaac — Software Engineer & Network Systems Specialist",
+    title: "Gbodimowo Isaac: Software Engineer & Network Systems Specialist",
     description:
-      "Architecting resilient digital infrastructure — bridging scalable web development with enterprise networking and systems diagnostics.",
+      "Architecting resilient digital infrastructure, bridging scalable web development with enterprise networking and systems diagnostics.",
   },
 };
 
@@ -59,9 +59,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark scroll-smooth`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#080808] text-neutral-100 selection:bg-[#bfff04] selection:text-black">
+      <body className="min-h-full flex flex-col bg-[#f8fafc] text-slate-900 selection:bg-blue-600 selection:text-white">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

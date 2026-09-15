@@ -29,27 +29,27 @@ export default function Toast({ toast, onDismiss }: ToastProps) {
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+            initial={{ opacity: 0, y: 12, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl bg-neutral-900/95 border border-white/15 text-white shadow-2xl backdrop-blur-md"
+            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ duration: 0.2 }}
+            className="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 text-white shadow-xl border border-slate-800"
           >
-            <div className="w-6 h-6 rounded-full bg-[#bfff04]/15 border border-[#bfff04]/30 flex items-center justify-center text-[#bfff04] shrink-0">
+            <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0">
               {toast.type === "info" ? (
-                <Info className="w-3.5 h-3.5" />
+                <Info className="w-3.5 h-3.5 text-blue-400" />
               ) : (
-                <Check className="w-3.5 h-3.5" />
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
               )}
             </div>
-            <span className="text-xs font-mono-tech text-neutral-200">
+            <span className="text-xs font-medium text-slate-100">
               {toast.text}
             </span>
             <button
               type="button"
               onClick={onDismiss}
-              className="ml-2 text-neutral-500 hover:text-white transition-colors"
-              aria-label="Dismiss toast"
+              className="ml-2 text-slate-400 hover:text-white transition-colors"
+              aria-label="Dismiss notification"
             >
               <X className="w-3.5 h-3.5" />
             </button>

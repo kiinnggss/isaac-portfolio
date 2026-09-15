@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { calculateSubnet, type SubnetResult } from "@/lib/network-utils";
-import { Copy, Check, Terminal, Network, ShieldCheck, Cpu, ArrowRight } from "lucide-react";
+import { Copy, Check, Network, Terminal } from "lucide-react";
 
 export default function SubnetVisualizer() {
   const [cidrInput, setCidrInput] = useState("192.168.10.0/24");
@@ -15,7 +15,7 @@ export default function SubnetVisualizer() {
       const res = calculateSubnet(cidrInput);
       setData(res);
     } catch {
-      // Invalid input - fallback to default
+      // Invalid input fallback
     }
   }, [cidrInput]);
 
@@ -36,45 +36,45 @@ export default function SubnetVisualizer() {
   if (!data) return null;
 
   return (
-    <div className="rounded-2xl bg-neutral-900/50 border border-white/10 p-6 sm:p-8 backdrop-blur-md">
+    <div className="rounded-xl bg-white border border-slate-200 p-6 sm:p-7 shadow-xs">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/5">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono-tech text-[#00f0ff] uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
             <Network className="w-4 h-4" />
             <span>Interactive Subnet Calculator & Cisco CLI Generator</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
+          <h3 className="text-xl font-bold text-slate-900">
             IPv4 CIDR & Packet Routing Telemetry
           </h3>
         </div>
 
-        {/* Input & Presets */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="relative">
-            <input
-              type="text"
-              value={cidrInput}
-              onChange={(e) => setCidrInput(e.target.value)}
-              className="px-3.5 py-1.5 rounded-lg bg-black border border-white/20 text-xs sm:text-sm font-mono-tech text-[#bfff04] focus:outline-none focus:border-[#bfff04] w-44"
-              placeholder="e.g. 192.168.1.0/24"
-            />
-          </div>
+        {/* Input */}
+        <div className="flex items-center gap-2">
+          <label htmlFor="cidr-input" className="text-xs text-slate-500 font-medium">CIDR:</label>
+          <input
+            id="cidr-input"
+            type="text"
+            value={cidrInput}
+            onChange={(e) => setCidrInput(e.target.value)}
+            className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-xs font-mono-tech text-slate-900 focus:outline-none focus:border-blue-500 focus:bg-white w-44"
+            placeholder="e.g. 192.168.10.0/24"
+          />
         </div>
       </div>
 
       {/* Preset Quick Badges */}
-      <div className="flex flex-wrap gap-2 py-4 border-b border-white/5">
-        <span className="text-xs font-mono-tech text-neutral-500 my-auto mr-1">Presets:</span>
+      <div className="flex flex-wrap items-center gap-2 py-3 border-b border-slate-100 text-xs">
+        <span className="text-slate-500 font-medium mr-1">Presets:</span>
         {presets.map((p) => (
           <button
             key={p.cidr}
             type="button"
             onClick={() => setCidrInput(p.cidr)}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-mono-tech transition-colors ${
+            className={`px-2.5 py-1 rounded-md transition-colors ${
               cidrInput === p.cidr
-                ? "bg-[#bfff04] text-black font-semibold"
-                : "bg-neutral-800/80 text-neutral-300 hover:text-white hover:bg-neutral-700"
+                ? "bg-slate-900 text-white font-medium shadow-xs"
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
             }`}
           >
             {p.label}
@@ -83,156 +83,100 @@ export default function SubnetVisualizer() {
       </div>
 
       {/* Grid of Calculations */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 my-6">
-        <div className="p-3.5 rounded-xl bg-neutral-950 border border-white/5">
-          <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Network ID</div>
-          <div className="text-sm sm:text-base font-mono-tech font-bold text-white mt-1">{data.networkAddress}</div>
-          <div className="text-[10px] font-mono-tech text-[#00f0ff] mt-0.5">Prefix: /{data.prefix}</div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 my-5">
+        <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+          <div className="text-[11px] font-medium text-slate-500 uppercase">Network ID</div>
+          <div className="text-sm font-mono-tech font-bold text-slate-900 mt-1">{data.networkAddress}</div>
+          <div className="text-[10px] text-blue-600 mt-0.5">Prefix: /{data.prefix}</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-neutral-950 border border-white/5">
-          <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Broadcast Address</div>
-          <div className="text-sm sm:text-base font-mono-tech font-bold text-white mt-1">{data.broadcastAddress}</div>
-          <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Class {data.ipClass} ({data.isPrivate ? "RFC1918 Private" : "Public"})</div>
+        <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+          <div className="text-[11px] font-medium text-slate-500 uppercase">Broadcast Address</div>
+          <div className="text-sm font-mono-tech font-bold text-slate-900 mt-1">{data.broadcastAddress}</div>
+          <div className="text-[10px] text-slate-500 mt-0.5">Class {data.ipClass} ({data.isPrivate ? "RFC1918 Private" : "Public"})</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-neutral-950 border border-white/5">
-          <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Subnet Mask</div>
-          <div className="text-sm sm:text-base font-mono-tech font-bold text-[#bfff04] mt-1">{data.subnetMask}</div>
-          <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Wildcard: {data.wildcardMask}</div>
+        <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+          <div className="text-[11px] font-medium text-slate-500 uppercase">Subnet Mask</div>
+          <div className="text-sm font-mono-tech font-bold text-slate-900 mt-1">{data.subnetMask}</div>
+          <div className="text-[10px] text-slate-500 mt-0.5">Wildcard: {data.wildcardMask}</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-neutral-950 border border-white/5">
-          <div className="text-[10px] font-mono-tech text-neutral-500 uppercase">Usable Hosts</div>
-          <div className="text-sm sm:text-base font-mono-tech font-bold text-[#bfff04] mt-1">
-            {data.usableHosts.toLocaleString()}
-          </div>
-          <div className="text-[10px] font-mono-tech text-neutral-400 mt-0.5">Total: {data.totalHosts.toLocaleString()}</div>
+        <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
+          <div className="text-[11px] font-medium text-slate-500 uppercase">Usable Hosts</div>
+          <div className="text-sm font-mono-tech font-bold text-slate-900 mt-1">{data.usableHosts.toLocaleString()}</div>
+          <div className="text-[10px] text-slate-500 mt-0.5">{data.firstUsableIp} - {data.lastUsableIp.split('.').pop()}</div>
         </div>
       </div>
 
-      {/* Usable Range Box */}
-      <div className="p-4 rounded-xl bg-neutral-950/80 border border-white/10 mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-[#bfff04]">
-            <ArrowRight className="w-4 h-4" />
+      {/* Cisco CLI Configuration Generator */}
+      <div className="mt-5 pt-4 border-t border-slate-200">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <div className="text-xs font-semibold text-slate-900 flex items-center gap-1.5">
+            <Terminal className="w-3.5 h-3.5 text-slate-600" />
+            <span>Generated Cisco IOS Running Configuration</span>
           </div>
-          <div>
-            <div className="text-[10px] font-mono-tech text-neutral-400 uppercase">Usable Host IP Range</div>
-            <div className="text-sm sm:text-base font-mono-tech text-white font-medium">
-              <span className="text-[#00f0ff]">{data.firstUsableIp || data.networkAddress}</span>
-              <span className="text-neutral-500 mx-2">→</span>
-              <span className="text-[#bfff04]">{data.lastUsableIp || data.broadcastAddress}</span>
-            </div>
-          </div>
-        </div>
 
-        {/* Binary Mask Visualizer */}
-        <div className="font-mono-tech text-xs text-right">
-          <div className="text-[10px] text-neutral-500 uppercase">Mask Binary Octets</div>
-          <div className="text-neutral-400">
-            {data.subnetMaskBinary.split(".").map((octet, i) => (
-              <span key={i} className="inline-block mr-1">
-                {octet.split("").map((bit, bitIdx) => (
-                  <span
-                    key={bitIdx}
-                    className={bit === "1" ? "text-[#bfff04]" : "text-neutral-600"}
-                  >
-                    {bit}
-                  </span>
-                ))}
-                {i < 3 && <span className="text-neutral-700">.</span>}
-              </span>
+          <div className="flex flex-wrap gap-1">
+            {(
+              [
+                { id: "subinterface", label: "Router-on-a-Stick" },
+                { id: "hsrp", label: "HSRP v2 Gateway" },
+                { id: "acl", label: "Extended ACL" },
+                { id: "nat", label: "Dynamic NAT / PAT" },
+              ] as const
+            ).map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveCliTab(tab.id)}
+                className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                  activeCliTab === tab.id
+                    ? "bg-slate-900 text-white"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
+              >
+                {tab.label}
+              </button>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Cisco IOS CLI Generator Tab View */}
-      <div className="rounded-xl bg-black border border-white/10 overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between border-b border-white/10 px-4 bg-neutral-950">
-          <div className="flex flex-wrap gap-1 py-2">
-            <button
-              type="button"
-              onClick={() => setActiveCliTab("subinterface")}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono-tech transition-colors ${
-                activeCliTab === "subinterface"
-                  ? "bg-neutral-800 text-[#bfff04]"
-                  : "text-neutral-400 hover:text-white"
-              }`}
-            >
-              Router-on-a-Stick (802.1Q)
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCliTab("hsrp")}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono-tech transition-colors ${
-                activeCliTab === "hsrp"
-                  ? "bg-neutral-800 text-[#00f0ff]"
-                  : "text-neutral-400 hover:text-white"
-              }`}
-            >
-              HSRP v2 Standby
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCliTab("acl")}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono-tech transition-colors ${
-                activeCliTab === "acl"
-                  ? "bg-neutral-800 text-[#bfff04]"
-                  : "text-neutral-400 hover:text-white"
-              }`}
-            >
-              Extended ACL Filter
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCliTab("nat")}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono-tech transition-colors ${
-                activeCliTab === "nat"
-                  ? "bg-neutral-800 text-[#00f0ff]"
-                  : "text-neutral-400 hover:text-white"
-              }`}
-            >
-              Dynamic NAT Overload
-            </button>
-          </div>
+        {(() => {
+          const activeSnippet =
+            activeCliTab === "interface"
+              ? data.ciscoConfig.interfaceConfig
+              : activeCliTab === "subinterface"
+              ? data.ciscoConfig.subinterfaceConfig
+              : activeCliTab === "acl"
+              ? data.ciscoConfig.aclConfig
+              : activeCliTab === "hsrp"
+              ? data.ciscoConfig.hsrpConfig
+              : data.ciscoConfig.natConfig;
 
-          <button
-            type="button"
-            onClick={() => {
-              const configMap = {
-                interface: data.ciscoConfig.interfaceConfig,
-                subinterface: data.ciscoConfig.subinterfaceConfig,
-                acl: data.ciscoConfig.aclConfig,
-                hsrp: data.ciscoConfig.hsrpConfig,
-                nat: data.ciscoConfig.natConfig,
-              };
-              handleCopy(configMap[activeCliTab], activeCliTab);
-            }}
-            className="my-2 px-3 py-1 rounded-md text-xs font-mono-tech bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white flex items-center gap-1.5 transition-colors"
-          >
-            {copiedKey === activeCliTab ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-[#bfff04]" /> Copied!
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5" /> Copy Config
-              </>
-            )}
-          </button>
-        </div>
-
-        <pre className="p-4 text-xs font-mono-tech text-emerald-400 overflow-x-auto leading-relaxed">
-          <code>
-            {activeCliTab === "subinterface" && data.ciscoConfig.subinterfaceConfig}
-            {activeCliTab === "hsrp" && data.ciscoConfig.hsrpConfig}
-            {activeCliTab === "acl" && data.ciscoConfig.aclConfig}
-            {activeCliTab === "nat" && data.ciscoConfig.natConfig}
-            {activeCliTab === "interface" && data.ciscoConfig.interfaceConfig}
-          </code>
-        </pre>
+          return (
+            <div className="relative rounded-xl bg-slate-900 border border-slate-800 p-4 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed">
+              <button
+                type="button"
+                onClick={() => handleCopy(activeSnippet, "cli-block")}
+                className="absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] inline-flex items-center gap-1 transition-colors"
+              >
+                {copiedKey === "cli-block" ? (
+                  <>
+                    <Check className="w-3 h-3 text-emerald-400" />
+                    <span className="text-emerald-400 font-medium">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3 h-3" />
+                    <span>Copy</span>
+                  </>
+                )}
+              </button>
+              <pre>{activeSnippet}</pre>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

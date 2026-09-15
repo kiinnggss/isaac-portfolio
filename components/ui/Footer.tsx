@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUp, Terminal, ShieldCheck, Heart } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 
 export default function Footer() {
@@ -29,79 +29,85 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-black border-t border-white/10 pt-20 pb-12 overflow-hidden">
-      {/* Background Accent Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-t from-[#bfff04]/10 via-[#00f0ff]/5 to-transparent blur-[120px] pointer-events-none -z-10" />
-
+    <footer className="relative bg-white border-t border-slate-200 pt-16 pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Massive Display Closing Banner */}
-        <div className="pb-16 border-b border-white/10">
-          <div className="text-xs font-mono-tech uppercase text-[#bfff04] tracking-widest mb-4 flex items-center gap-2">
-            <span className="w-6 h-[1px] bg-[#bfff04]" />
-            Next Steps & Collaboration
+        {/* Banner */}
+        <div className="pb-12 border-b border-slate-200">
+          <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-3">
+            Opportunities & Collaboration
           </div>
 
-          <h2 className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[104px] tracking-tight uppercase text-white leading-[0.92] select-none hover:text-gradient-green transition-all">
-            LET&apos;S BUILD TOGETHER.
+          <h2 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-slate-900 tracking-tight leading-tight">
+            Ready to engineer resilient systems together.
           </h2>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-            <p className="text-base sm:text-lg text-neutral-400 max-w-xl font-light">
-              Available for full-time software engineering roles, enterprise systems diagnostics, and distributed infrastructure architecture.
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-6">
+            <p className="text-base text-slate-600 max-w-xl">
+              Open for full-time software engineering roles, enterprise systems diagnostics, and distributed infrastructure architecture.
             </p>
 
             <MagneticButton
               href="#contact"
-              className="px-8 py-4 rounded-full bg-[#bfff04] text-black font-semibold text-xs sm:text-sm uppercase tracking-tight hover:bg-[#d0ff36] hover:shadow-[0_0_35px_rgba(191,255,4,0.4)] transition-all flex items-center gap-2 active:scale-95"
+              className="px-6 py-3 rounded-lg bg-slate-900 text-white font-medium text-xs sm:text-sm hover:bg-slate-800 transition-colors shadow-xs"
             >
               Start Conversation
             </MagneticButton>
           </div>
         </div>
 
-        {/* Ticker & Meta Status Bar */}
-        <div className="py-8 border-b border-white/5 grid grid-cols-1 md:grid-cols-4 gap-6 text-xs font-mono-tech text-neutral-400">
+        {/* Status Bar */}
+        <div className="py-8 border-b border-slate-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-xs text-slate-500">
           <div>
-            <div className="text-[10px] text-neutral-500 uppercase">Current Station</div>
-            <div className="text-white font-medium mt-1">Lagos, Nigeria (West Africa)</div>
+            <div className="font-medium text-slate-700">Location Base</div>
+            <div className="text-slate-900 mt-1">Lagos, Nigeria (West Africa)</div>
           </div>
 
           <div>
-            <div className="text-[10px] text-neutral-500 uppercase">Local Real-time Clock</div>
-            <div className="text-[#00f0ff] font-semibold mt-1">
+            <div className="font-medium text-slate-700">Local Time (WAT)</div>
+            <div className="text-slate-900 font-mono-tech mt-1">
               {lagosTime ? `${lagosTime} WAT (UTC+1)` : "Synchronizing..."}
             </div>
           </div>
 
           <div>
-            <div className="text-[10px] text-neutral-500 uppercase">Architecture Stack</div>
-            <div className="text-white font-medium mt-1">Next.js 16 • React 19 • Cisco IOS</div>
+            <div className="font-medium text-slate-700">Architecture Stack</div>
+            <div className="text-slate-900 mt-1">Next.js 16 • React 19 • Cisco IOS</div>
           </div>
 
-          <div className="flex items-center md:justify-end">
+          <div className="flex items-center sm:justify-end">
             <button
               type="button"
               onClick={scrollToTop}
-              className="px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-[#bfff04]/40 transition-all flex items-center gap-2"
+              className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors inline-flex items-center gap-1.5 text-xs font-medium"
             >
-              <span>Return to Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-[#bfff04]" />
+              <span>Back to Top</span>
+              <ArrowUp className="w-3.5 h-3.5 text-slate-500" />
             </button>
           </div>
         </div>
 
-        {/* Copyright & Signoff */}
-        <div className="pt-8 flex flex-wrap items-center justify-between gap-4 text-xs font-mono-tech text-neutral-400">
+        {/* Signoff */}
+        <div className="pt-8 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#bfff04]" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span>© {new Date().getFullYear()} Gbodimowo Isaac. All rights reserved.</span>
           </div>
 
-          <div className="flex items-center gap-6">
-            <a href="#work" className="hover:text-white transition-colors">Projects</a>
-            <a href="#skills" className="hover:text-white transition-colors">Skills</a>
-            <a href="#terminal" className="hover:text-white transition-colors">CLI</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+          <div className="flex items-center gap-4">
+            <a
+              href="mailto:isaacgbodimowo@gmail.com"
+              className="hover:text-slate-900 transition-colors"
+            >
+              isaacgbodimowo@gmail.com
+            </a>
+            <span>•</span>
+            <a
+              href="/Gbodimowo_Isaac_Resume.pdf"
+              target="_blank"
+              className="hover:text-slate-900 transition-colors"
+            >
+              Resume PDF
+            </a>
           </div>
         </div>
       </div>
