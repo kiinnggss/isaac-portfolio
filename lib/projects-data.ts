@@ -17,7 +17,7 @@ export const featuredProjects: ProjectData[] = [
     highlights: [
       "Real-time corridor matching algorithms connecting drivers with verified passengers travelling along identical arterial routes.",
       "Route-split pricing module calculating fair operational cost division based on distance intervals and peak Lagos congestion hours.",
-      "Streamlined driver cockpit architecture featuring a dedicated trip and vehicle configuration sheet, visual seat capacity indicators, and clean commuter matching feeds.",
+      "Streamlined driver cockpit architecture featuring one-tap morning/evening route presets, sequential pickup itinerary with Google Maps waypoints, 5-minute arrival broadcast alerts, and one-tap curbside boarding verification with automated escrow release.",
       "60-30-10 color design system anchored in brand teal (#0F766E) and sunset amber (#F58A25) micro-sparks over clean slate canvas, eliminating border clutter and unbranded color artifacts.",
       "Mobile-first responsive interface engineered with high-contrast dark mode slate tokens for on-the-go commuters.",
     ],
