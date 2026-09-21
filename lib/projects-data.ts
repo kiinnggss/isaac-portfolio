@@ -17,9 +17,9 @@ export const featuredProjects: ProjectData[] = [
     highlights: [
       "Real-time corridor matching algorithms connecting drivers with verified passengers travelling along identical arterial routes.",
       "Route-split pricing module calculating fair operational cost division based on distance intervals and peak Lagos congestion hours.",
-      "Optimized dispatch state machine handling trip invitations, seat reservations, and cancellation timeouts.",
-      "60-30-10 color design system anchored in brand teal (#0F766E) and sunset amber (#F58A25) micro-sparks over clean slate canvas, dedicated corridor street map tab, and offline PWA installation modal.",
-      "Mobile-first responsive interface engineered with high-contrast night accessibility for on-the-go commuters.",
+      "Streamlined driver cockpit architecture featuring a dedicated trip and vehicle configuration sheet, visual seat capacity indicators, and clean commuter matching feeds.",
+      "60-30-10 color design system anchored in brand teal (#0F766E) and sunset amber (#F58A25) micro-sparks over clean slate canvas, eliminating border clutter and unbranded color artifacts.",
+      "Mobile-first responsive interface engineered with high-contrast dark mode slate tokens for on-the-go commuters.",
     ],
     topology: [
       "Client Layer: Mobile & Web Next.js client with low-bandwidth offline caching.",
