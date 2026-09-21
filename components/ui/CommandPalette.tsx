@@ -10,6 +10,7 @@ import {
   Camera,
   Network,
   Layers,
+  Terminal,
   ArrowRight,
   X,
 } from "lucide-react";
@@ -108,6 +109,17 @@ export default function CommandPalette({
       icon: Layers,
       action: () => {
         window.location.hash = "work";
+        onClose();
+      },
+    },
+    {
+      id: "proj-antigravity",
+      title: "Google Antigravity Mobile Controller",
+      subtitle: "Voice assistant, PWA drawer, and FastAPI streaming supervisor",
+      category: "Projects",
+      icon: Terminal,
+      action: () => {
+        window.open("https://github.com/kiinnggss/joyboy_sys", "_blank");
         onClose();
       },
     },

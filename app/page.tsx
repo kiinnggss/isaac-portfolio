@@ -99,7 +99,9 @@ export default function Home() {
       return (
         project.category.toLowerCase().includes("transit") ||
         project.category.toLowerCase().includes("web") ||
-        project.category.toLowerCase().includes("peer")
+        project.category.toLowerCase().includes("peer") ||
+        project.category.toLowerCase().includes("ai") ||
+        project.category.toLowerCase().includes("distributed")
       );
     }
     if (activeFilter === "network") {
@@ -143,8 +145,8 @@ export default function Home() {
             <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-lg bg-slate-100 border border-slate-200">
               {(
                 [
-                  { id: "all", label: "All Works (3)" },
-                  { id: "web", label: "Web Architecture (2)" },
+                  { id: "all", label: `All Works (${featuredProjects.length})` },
+                  { id: "web", label: "Web & AI Architecture (3)" },
                   { id: "network", label: "Cisco Networks (1)" },
                 ] as const
               ).map((tab) => (

@@ -156,4 +156,54 @@ export async function POST(req: Request) {
     demoLink: "https://kiinnggss.github.io/isaac-portfolio/#work",
     codeLink: "https://github.com/kiinnggss/isaac-portfolio",
   },
+  {
+    id: "antigravity-mobile",
+    title: "Google Antigravity Mobile Controller & Voice Assistant",
+    subtitle: "Zero-build PWA, FastAPI streaming supervisor, and Web Speech interface for host agent control",
+    category: "Distributed AI Systems & Web Architecture",
+    summary:
+      "A mobile-first voice controller and streaming supervisor enabling continuous interaction with Google Antigravity on a Linux workstation from a smartphone. Features a zero-build Progressive Web App with real-time Web Speech recognition and synthesized audio feedback, an asynchronous FastAPI backend streaming Server-Sent Events, a resilient subprocess manager with pipe-deadlock mitigation, and automated HTTPS tunneling via Cloudflare Quick Tunnels.",
+    tags: [
+      "FastAPI",
+      "Python 3.12",
+      "Server-Sent Events",
+      "Asyncio Subprocesses",
+      "Web Speech API",
+      "PWA",
+      "Cloudflare Tunnel",
+      "HMAC Auth",
+    ],
+    metrics: [
+      { label: "Stream Latency", value: "<15ms", detail: "SSE chunk delivery to mobile" },
+      { label: "Test Coverage", value: "66 Tests", detail: "100% unit and E2E pass rate" },
+      { label: "Bundle Size", value: "0 KB", detail: "Zero-build vanilla PWA architecture" },
+    ],
+    highlights: [
+      "Engineered a zero-build vanilla PWA frontend with speech-to-text dictation, synthesized speech responses, and a mobile-friendly responsive layout.",
+      "Implemented a slide-up terminal drawer mirroring the CLI Ctrl+O hotkey to monitor tool invocations, shell commands, and stdout live with bounded DOM pruning.",
+      "Constructed an asynchronous process supervisor running the agy CLI with stream-json parsing, concurrent stderr background draining to prevent pipe saturation deadlocks, and clean lifecycle termination.",
+      "Built a regex-based speech text sanitizer converting code fences, markdown syntax, and bare URLs into natural spoken sentences.",
+      "Secured endpoints with constant-time PIN comparison, HMAC SHA-256 session token verification, and sliding-window rate limiting with automated expired client cleanup.",
+      "Automated deployment through a unified bash launcher provisioning an instant Cloudflare HTTPS quick tunnel and rendering an ASCII QR code for one-scan camera onboarding.",
+    ],
+    topology: [
+      "Mobile Client: Vanilla PWA with Web Speech API for voice dictation and audio playback.",
+      "Edge Gateway: Cloudflare Quick Tunnel forwarding HTTPS traffic to local port 8000.",
+      "Server Runtime: FastAPI ASGI server with Server-Sent Events fan-out broadcasting.",
+      "Agent Engine: Asynchronous subprocess supervisor managing Google Antigravity CLI processes.",
+    ],
+    protocols: [
+      "Server-Sent Events (SSE) for real-time token streaming and terminal output",
+      "Web Speech API (SpeechRecognition and SpeechSynthesis) in browser",
+      "HMAC SHA-256 signed session authentication with timestamp skew checks",
+      "Asyncio stream-json pipeline with concurrent stderr draining",
+    ],
+    cliSnippet: `# Launch the complete supervisor, Cloudflare tunnel, and mobile QR code
+./run.sh
+
+# Run the automated test suite across all subsystems
+.venv/bin/python3 -m pytest -v`,
+    demoLink: "https://github.com/kiinnggss/joyboy_sys#running-the-application",
+    codeLink: "https://github.com/kiinnggss/joyboy_sys",
+  },
 ];

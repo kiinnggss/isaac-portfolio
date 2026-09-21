@@ -194,6 +194,48 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </div>
               </div>
 
+              {/* Featured Systems & Projects */}
+              <div>
+                <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
+                  Featured Systems & Architecture
+                </h2>
+                <div className="space-y-3">
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-sm font-bold text-slate-900">
+                        Google Antigravity Mobile Controller & Voice Assistant
+                      </h3>
+                      <span className="text-xs text-blue-600 font-medium">FastAPI • PWA • Web Speech • SSE</span>
+                    </div>
+                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                      Mobile Progressive Web App and streaming supervisor driving host CLI agents over Cloudflare HTTPS tunnels. Features real-time speech dictation and synthesis, an async subprocess runner with pipe deadlock mitigation, and a live slide-up terminal drawer.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-sm font-bold text-slate-900">
+                        CAR PULL: Distributed Transit & Carpooling
+                      </h3>
+                      <span className="text-xs text-blue-600 font-medium">Next.js • TypeScript • Geospatial</span>
+                    </div>
+                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                      High-congestion ridesharing platform matching commuters across arterial Lagos corridors with sub-45ms spatial polygon indexing, route-split pricing, and dark-mode mobile cockpit.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-sm font-bold text-slate-900">
+                        Enterprise Cisco Network & Defense Topology
+                      </h3>
+                      <span className="text-xs text-blue-600 font-medium">Cisco IOS • HSRP v2 • 802.1Q • ACLs</span>
+                    </div>
+                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                      Multi-VLAN fault-tolerant infrastructure simulated in Cisco Packet Tracer with Router-on-a-Stick, sub-3s HSRP gateway failover, dynamic NAT overload (PAT), and port security.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Technical Skills Matrix */}
               <div>
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
@@ -210,14 +252,14 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                     <div className="font-semibold text-slate-900 mb-1">Web Architecture</div>
                     <div className="text-slate-600 leading-relaxed">
-                      TypeScript, Next.js, React 19, REST APIs, Tailwind CSS, Node.js, Zod validation
+                      TypeScript, Next.js, React 19, FastAPI, REST APIs, SSE, Tailwind CSS, Node.js
                     </div>
                   </div>
 
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                     <div className="font-semibold text-slate-900 mb-1">Systems & Diagnostics</div>
                     <div className="text-slate-600 leading-relaxed">
-                      CompTIA A+ fault isolation, Linux Mint/Ubuntu, PostgreSQL, SQLite, Git, Shell scripting
+                      CompTIA A+ fault isolation, Linux Mint/Ubuntu, Async Subprocesses, PostgreSQL, SQLite, Git, Shell scripting
                     </div>
                   </div>
                 </div>

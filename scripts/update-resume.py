@@ -88,7 +88,7 @@ def generate_resume_pdf(output_path, projects_file):
         "0 -15 Td",
         "(- Networking: Cisco IOS, VLANs & Trunking, HSRP v2, NAT/PAT, ACLs, Subnetting, Packet Tracer) Tj",
         "0 -13 Td",
-        "(- Software: Next.js 16, React 19, TypeScript, Python, Java, REST APIs, Tailwind CSS, SQLite/Postgres) Tj",
+        "(- Software: Next.js 16, React 19, TypeScript, Python/FastAPI, SSE, REST APIs, Tailwind CSS, SQLite/Postgres) Tj",
         "0 -13 Td",
         "(- Hardware & Tools: CompTIA A+ diagnostics, PC assembly, Linux/Unix shell, Git/GitHub, Canva) Tj",
         "ET"
