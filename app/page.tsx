@@ -125,7 +125,7 @@ export default function Home() {
       {/* Interactive Scroll Avatar Companion & Background Silhouette */}
       <ScrollAvatar />
 
-      <main>
+      <main className="relative z-10">
         {/* Editorial Hero Section */}
         <HeroSection />
 
