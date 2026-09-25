@@ -100,8 +100,7 @@ export default function Home() {
         project.category.toLowerCase().includes("transit") ||
         project.category.toLowerCase().includes("web") ||
         project.category.toLowerCase().includes("peer") ||
-        project.category.toLowerCase().includes("ai") ||
-        project.category.toLowerCase().includes("distributed")
+        project.category.toLowerCase().includes("ai")
       );
     }
     if (activeFilter === "network") {
@@ -114,7 +113,7 @@ export default function Home() {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-blue-600 selection:text-white">
+    <div className="relative min-h-screen text-slate-900 selection:bg-blue-600 selection:text-white">
       {/* Global Navigation */}
       <Navbar
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
@@ -127,37 +126,37 @@ export default function Home() {
         <HeroSection />
 
         {/* Featured Projects Showcase */}
-        <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
+        <section id="work" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/50 backdrop-blur-md">
                 Production Systems & Architecture
               </div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-950 tracking-tight">
                 Selected Works
               </h2>
-              <p className="mt-2 text-base text-slate-600 max-w-2xl">
+              <p className="mt-3 text-base text-slate-600 max-w-2xl font-normal">
                 Distributed web architectures, Cisco Packet Tracer enterprise topologies, and high-concurrency client platforms.
               </p>
             </div>
 
-            {/* Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-lg bg-slate-100 border border-slate-200">
+            {/* Seamless Crystal Filter Pills */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full bg-white/70 backdrop-blur-md shadow-xs border border-white/80">
               {(
                 [
                   { id: "all", label: `All Works (${featuredProjects.length})` },
-                  { id: "web", label: "Web & AI Architecture (3)" },
-                  { id: "network", label: "Cisco Networks (1)" },
+                  { id: "web", label: "Web & AI Architecture" },
+                  { id: "network", label: "Cisco Networks" },
                 ] as const
               ).map((tab) => (
                 <button
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveFilter(tab.id)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
                     activeFilter === tab.id
-                      ? "bg-white text-slate-900 shadow-xs"
-                      : "text-slate-600 hover:text-slate-900"
+                      ? "crystal-button text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-950 hover:bg-white/60"
                   }`}
                 >
                   {tab.label}
@@ -167,7 +166,7 @@ export default function Home() {
           </div>
 
           {/* Projects Grid */}
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
@@ -180,24 +179,22 @@ export default function Home() {
         <BentoGrid />
 
         {/* Systems Terminal & Interactive Topology */}
-        <section id="terminal" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+        <section id="terminal" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/50 backdrop-blur-md">
                 Systems Diagnostics & Network Simulation
               </div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-950 tracking-tight">
                 Network Terminal & Topology
               </h2>
-              <p className="mt-2 text-base text-slate-600 max-w-2xl">
+              <p className="mt-3 text-base text-slate-600 max-w-2xl font-normal">
                 Run live probes against the network edge, inspect HSRP gateway redundancy, or explore the interactive Cisco topology below.
               </p>
             </div>
 
-            <div className="text-xs text-slate-500 flex items-center gap-2">
-              <span className="px-3 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-medium">
-                Active Edge Node: Lagos
-              </span>
+            <div className="crystal-pill px-4 py-1.5 rounded-full text-xs text-slate-700 font-medium shadow-xs">
+              Active Edge Node: Lagos
             </div>
           </div>
 

@@ -80,36 +80,36 @@ export default function ExperienceSection() {
   ];
 
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="mb-12">
-        <div className="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+    <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="mb-14">
+        <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/50 backdrop-blur-md">
           Career Background & Education
         </div>
-        <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-950 tracking-tight">
           Experience & Education
         </h2>
-        <p className="mt-2 text-base text-slate-600 max-w-2xl">
+        <p className="mt-3 text-base text-slate-600 max-w-2xl font-normal">
           Practical industry internships, educational instruction, and formal university training.
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-7">
         {experiences.map((exp) => {
           const Icon = exp.icon;
           return (
             <div
               key={exp.role + exp.organization}
-              className="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-xs hover:border-slate-300 transition-colors"
+              className="crystal-surface crystal-surface-hover rounded-3xl p-8 sm:p-9 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.06)]"
             >
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 shrink-0 mt-1">
+                  <div className="w-11 h-11 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.06)] flex items-center justify-center text-slate-800 shrink-0 mt-1 border border-white/90">
                     <Icon className="w-5 h-5" />
                   </div>
 
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                      <span className="crystal-pill text-xs font-semibold text-blue-700 px-3 py-1 rounded-full">
                         {exp.period}
                       </span>
                       <span className="text-xs text-slate-500 font-medium">
@@ -117,27 +117,27 @@ export default function ExperienceSection() {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900 mt-1.5">
+                    <h3 className="text-2xl font-bold text-slate-900 mt-2 font-display">
                       {exp.role}
                     </h3>
-                    <div className="text-sm font-semibold text-slate-700">
+                    <div className="text-sm font-semibold text-slate-600 font-display">
                       {exp.organization}
                     </div>
 
-                    <ul className="mt-4 space-y-2 max-w-3xl">
+                    <ul className="mt-4 space-y-2.5 max-w-3xl">
                       {exp.highlights.map((h, idx) => (
-                        <li key={idx} className="text-sm text-slate-600 flex items-start gap-2.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0 mt-2" />
+                        <li key={idx} className="text-sm text-slate-600 flex items-start gap-2.5 font-normal">
+                          <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5 shadow-[0_0_6px_rgba(59,130,246,0.4)]" />
                           <span className="leading-relaxed">{h}</span>
                         </li>
                       ))}
                     </ul>
 
-                    <div className="flex flex-wrap gap-1.5 mt-5">
+                    <div className="flex flex-wrap gap-1.5 mt-6">
                       {exp.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-0.5 rounded-md text-xs bg-slate-100 text-slate-600 border border-slate-200"
+                          className="crystal-pill px-3 py-1 rounded-full text-xs text-slate-600 font-medium"
                         >
                           {tag}
                         </span>
@@ -146,18 +146,18 @@ export default function ExperienceSection() {
                   </div>
                 </div>
 
-                {/* Optional Attached Photo */}
+                {/* Optional Attached Photo Plinth */}
                 {exp.photo && exp.photoDetails && (
                   <div
                     onClick={() => setSelectedPhoto(exp.photoDetails)}
-                    className="relative w-24 sm:w-28 h-28 sm:h-32 rounded-lg overflow-hidden border border-slate-200 shrink-0 cursor-pointer group bg-slate-100 shadow-xs hover:border-blue-400 transition-all self-start"
+                    className="relative w-28 sm:w-32 h-32 sm:h-36 rounded-2xl overflow-hidden shrink-0 cursor-pointer group bg-slate-100 shadow-md transition-transform hover:scale-105 self-start border border-white/90"
                   >
                     <Image
                       src={exp.photo}
                       alt={exp.photoDetails.alt}
-                      className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover object-top"
                     />
-                    <div className="absolute top-1 right-1 p-0.5 rounded bg-white/80 backdrop-blur-xs text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute top-2 right-2 p-1.5 rounded-full crystal-pill text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity shadow-xs">
                       <Maximize2 className="w-3 h-3" />
                     </div>
                   </div>

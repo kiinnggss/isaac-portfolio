@@ -40,210 +40,208 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="group relative rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between"
+        className="crystal-surface crystal-surface-hover rounded-3xl p-7 flex flex-col justify-between"
       >
-        <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-          <div>
-            {/* Meta Row with Category & Quick Actions */}
-            <div className="flex items-center justify-between mb-4">
-              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700">
-                {project.category}
-              </span>
+        <div>
+          {/* Top Meta Bar */}
+          <div className="flex items-center justify-between mb-5">
+            <span className="crystal-pill px-3 py-1 rounded-full text-xs font-medium text-slate-700">
+              {project.category}
+            </span>
 
-              <div className="flex items-center gap-2">
-                {project.codeLink && (
-                  <a
-                    href={project.codeLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    title="View source on GitHub"
-                    className="p-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
-                  >
-                    <GithubIcon className="w-3.5 h-3.5" />
-                  </a>
-                )}
-                {project.demoLink && (
-                  <a
-                    href={project.demoLink}
-                    target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
-                    rel="noreferrer"
-                    title="Open live project"
-                    className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-xs font-medium inline-flex items-center gap-1"
-                  >
-                    <span>Launch</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                )}
-              </div>
-            </div>
-
-            {/* Title & Subtitle */}
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
-              {project.title}
-            </h3>
-            <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-              {project.subtitle}
-            </p>
-
-            {/* Architecture Preview Box */}
-            <div
-              onClick={() => setModalOpen(true)}
-              className="my-5 relative w-full rounded-lg bg-slate-50 border border-slate-200 p-4 cursor-pointer hover:bg-slate-100/70 transition-colors"
-            >
-              <div className="flex items-center justify-between text-xs text-slate-500 pb-2.5 border-b border-slate-200">
-                <span className="font-medium text-slate-700">Architecture Topology</span>
-                <span className="text-blue-600 hover:underline">Inspect spec</span>
-              </div>
-
-              {/* Topology Nodes */}
-              <div className="py-4 flex items-center justify-around">
-                {isNetwork ? (
-                  <>
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-xs">
-                        <Network className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">R1 / R2 Core</span>
-                      <span className="text-[10px] text-slate-500">HSRP Gateway</span>
-                    </div>
-
-                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
-
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-xs">
-                        <ShieldCheck className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">Catalyst 3650</span>
-                      <span className="text-[10px] text-slate-500">802.1Q Trunks</span>
-                    </div>
-
-                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
-
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shadow-xs">
-                        <Cpu className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">DMZ Server</span>
-                      <span className="text-[10px] text-slate-500">ACLs & NAT</span>
-                    </div>
-                  </>
-                ) : isTransport ? (
-                  <>
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-xs">
-                        <Layers className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">Origin Route</span>
-                      <span className="text-[10px] text-slate-500">Mainland</span>
-                    </div>
-
-                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
-
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-xs">
-                        <Cpu className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">Geo Match</span>
-                      <span className="text-[10px] text-slate-500">Spatial Query</span>
-                    </div>
-
-                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
-
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shadow-xs">
-                        <Layers className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">Destination</span>
-                      <span className="text-[10px] text-slate-500">Lekki / Island</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-xs">
-                        <Terminal className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">Client Web</span>
-                      <span className="text-[10px] text-slate-500">Next.js UI</span>
-                    </div>
-
-                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
-
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-xs">
-                        <Layers className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">API Gateway</span>
-                      <span className="text-[10px] text-slate-500">Route Handlers</span>
-                    </div>
-
-                    <div className="flex-1 h-[1px] bg-slate-300 mx-2" />
-
-                    <div className="flex flex-col items-center gap-1 text-center">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-emerald-600 shadow-xs">
-                        <Cpu className="w-4 h-4" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-700">Database</span>
-                      <span className="text-[10px] text-slate-500">SQLite & Store</span>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* Bottom Metric */}
-              <div className="pt-2.5 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-                <span>{project.metrics[0]?.label}: <strong className="text-slate-700 font-semibold">{project.metrics[0]?.value}</strong></span>
-                <span className="text-blue-600 font-medium inline-flex items-center gap-1">
-                  Explore <ArrowUpRight className="w-3 h-3" />
-                </span>
-              </div>
-            </div>
-
-            {/* Technical Stack Tags */}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {project.tags.slice(0, 4).map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-0.5 rounded-md text-xs bg-slate-100 text-slate-600 border border-slate-200"
+            <div className="flex items-center gap-2">
+              {project.codeLink && (
+                <a
+                  href={project.codeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="View repository on GitHub"
+                  className="p-2 rounded-full bg-white/70 hover:bg-white border border-white/80 text-slate-600 hover:text-slate-900 shadow-xs transition-colors"
                 >
-                  {tag}
-                </span>
-              ))}
-              {project.tags.length > 4 && (
-                <span className="px-2 py-0.5 rounded-md text-xs bg-slate-50 text-slate-500 border border-slate-200">
-                  +{project.tags.length - 4} more
-                </span>
+                  <GithubIcon className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.demoLink && (
+                <a
+                  href={project.demoLink}
+                  target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+                  rel="noreferrer"
+                  title="Launch live project"
+                  className="px-3 py-1 rounded-full bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 border border-blue-200/60 text-xs font-medium inline-flex items-center gap-1 shadow-xs transition-colors"
+                >
+                  <span>Launch</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               )}
             </div>
           </div>
 
-          {/* Action Trigger Row */}
-          <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              className="text-xs font-medium text-slate-700 hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
-            >
-              <span>View Architecture Specs</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+          {/* Title & Description */}
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-display leading-tight">
+            {project.title}
+          </h3>
+          <p className="mt-2 text-sm text-slate-600 leading-relaxed font-normal">
+            {project.subtitle}
+          </p>
 
-            {project.demoLink && (
-              <a
-                href={project.demoLink}
-                target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
-                rel="noreferrer"
-                className="px-3.5 py-1.5 rounded-lg bg-slate-900 text-white font-medium text-xs hover:bg-slate-800 transition-colors inline-flex items-center gap-1.5 shadow-xs"
+          {/* Seamless Crystal Architecture Plinth */}
+          <div
+            onClick={() => setModalOpen(true)}
+            className="my-6 rounded-2xl bg-gradient-to-b from-white/70 to-white/35 backdrop-blur-xl p-4 cursor-pointer hover:bg-white/80 border border-white/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_6px_20px_-6px_rgba(15,23,42,0.05)] transition-all"
+          >
+            <div className="flex items-center justify-between text-xs text-slate-500 pb-3 border-b border-slate-200/50">
+              <span className="font-semibold text-slate-700 font-display">System Topology</span>
+              <span className="text-blue-600 font-medium">Inspect Spec →</span>
+            </div>
+
+            {/* Architecture Node Flow */}
+            <div className="py-4 flex items-center justify-around">
+              {isNetwork ? (
+                <>
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-blue-600 ring-1 ring-white/90">
+                      <Network className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">R1 / R2</span>
+                    <span className="text-[10px] text-slate-500">HSRP Gateway</span>
+                  </div>
+
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-blue-300 to-indigo-300 mx-2" />
+
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-slate-700 ring-1 ring-white/90">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Dist SW</span>
+                    <span className="text-[10px] text-slate-500">802.1Q Trunks</span>
+                  </div>
+
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-indigo-300 to-emerald-300 mx-2" />
+
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-emerald-600 ring-1 ring-white/90">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Server Farm</span>
+                    <span className="text-[10px] text-slate-500">ACLs & NAT</span>
+                  </div>
+                </>
+              ) : isTransport ? (
+                <>
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-blue-600 ring-1 ring-white/90">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Origin</span>
+                    <span className="text-[10px] text-slate-500">Mainland</span>
+                  </div>
+
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-blue-300 to-indigo-300 mx-2" />
+
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-slate-700 ring-1 ring-white/90">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">GeoMatch</span>
+                    <span className="text-[10px] text-slate-500">Spatial Index</span>
+                  </div>
+
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-indigo-300 to-emerald-300 mx-2" />
+
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-emerald-600 ring-1 ring-white/90">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Destination</span>
+                    <span className="text-[10px] text-slate-500">Lekki / Island</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-blue-600 ring-1 ring-white/90">
+                      <Terminal className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Client Web</span>
+                    <span className="text-[10px] text-slate-500">Next.js UI</span>
+                  </div>
+
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-blue-300 to-indigo-300 mx-2" />
+
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-slate-700 ring-1 ring-white/90">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Edge Gateway</span>
+                    <span className="text-[10px] text-slate-500">Route Handlers</span>
+                  </div>
+
+                  <div className="flex-1 h-[2px] bg-gradient-to-r from-indigo-300 to-emerald-300 mx-2" />
+
+                  <div className="flex flex-col items-center gap-1 text-center">
+                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-emerald-600 ring-1 ring-white/90">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800">Database</span>
+                    <span className="text-[10px] text-slate-500">WAL SQLite</span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Bottom Key Metric */}
+            <div className="pt-3 border-t border-slate-200/50 flex items-center justify-between text-xs text-slate-600">
+              <span>{project.metrics[0]?.label}: <strong className="text-slate-900 font-semibold">{project.metrics[0]?.value}</strong></span>
+              <span className="text-blue-600 font-medium inline-flex items-center gap-1">
+                Inspect Specs <ArrowUpRight className="w-3.5 h-3.5" />
+              </span>
+            </div>
+          </div>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            {project.tags.slice(0, 4).map((tag) => (
+              <span
+                key={tag}
+                className="crystal-pill px-2.5 py-1 rounded-full text-xs text-slate-600 font-medium"
               >
-                <span>Launch Project</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
-              </a>
+                {tag}
+              </span>
+            ))}
+            {project.tags.length > 4 && (
+              <span className="crystal-pill px-2.5 py-1 rounded-full text-xs text-slate-400 font-medium">
+                +{project.tags.length - 4} more
+              </span>
             )}
           </div>
         </div>
+
+        {/* Footer Actions */}
+        <div className="mt-7 pt-4 border-t border-slate-200/50 flex items-center justify-between gap-3">
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            className="text-xs font-medium text-slate-700 hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
+          >
+            <span>Architecture Specs</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+          </button>
+
+          {project.demoLink && (
+            <a
+              href={project.demoLink}
+              target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+              rel="noreferrer"
+              className="crystal-button px-4 py-2 rounded-full text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-[0_6px_16px_-2px_rgba(15,23,42,0.25)]"
+            >
+              <span>Launch</span>
+              <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
+            </a>
+          )}
+        </div>
       </motion.div>
 
-      {/* Detail Modal */}
+      {/* Modal */}
       <ProjectModal
         project={project}
         isOpen={modalOpen}

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Network, Server, ShieldCheck, Cpu, Terminal, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Network, Server, ShieldCheck, Terminal, ArrowRight } from "lucide-react";
 
 interface TopologyNode {
   id: string;
@@ -119,15 +118,15 @@ interface GigabitEthernet0/0.30
   };
 
   return (
-    <div className="rounded-xl bg-white border border-slate-200 p-6 sm:p-7 shadow-xs">
+    <div className="crystal-surface rounded-3xl p-8 sm:p-10 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.08)]">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-200">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
-            <Network className="w-4 h-4" />
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-200/50">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600 shadow-xs">
+            <Network className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-base font-bold text-slate-900">
+            <h4 className="text-xl font-bold text-slate-900 font-display">
               Interactive Cisco IOS Topology Visualizer
             </h4>
             <div className="text-xs text-slate-500">
@@ -136,65 +135,67 @@ interface GigabitEthernet0/0.30
           </div>
         </div>
 
-        <span className="text-xs font-medium px-2.5 py-1 rounded-md bg-slate-100 text-slate-700">
+        <span className="crystal-pill text-xs font-medium px-3.5 py-1 rounded-full text-slate-700">
           Click nodes to inspect running IOS config
         </span>
       </div>
 
-      {/* SVG Interactive Topology Diagram */}
-      <div className="relative my-6 rounded-xl bg-slate-50 border border-slate-200 p-4 overflow-x-auto">
+      {/* Borderless Floating Crystal Topology Canvas */}
+      <div className="relative my-7 rounded-2xl bg-gradient-to-b from-white/80 via-white/50 to-white/30 backdrop-blur-xl p-6 shadow-sm border border-white/80 overflow-x-auto">
         <svg
           viewBox="0 0 740 320"
           className="w-full min-w-[580px] h-auto select-none"
         >
+          {/* Subtle Ambient Drop Shadows for SVG nodes */}
+          <defs>
+            <filter id="nodeShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="6" stdDeviation="6" floodOpacity="0.08" />
+            </filter>
+          </defs>
+
           {/* Connecting Trunks */}
-          {/* R1 to SW1 */}
           <line
             x1="260"
             y1="70"
             x2="370"
             y2="170"
             stroke="#2563eb"
-            strokeWidth="2"
-            strokeDasharray="5 3"
+            strokeWidth="2.5"
+            strokeDasharray="6 4"
           />
-          {/* R2 to SW1 */}
           <line
             x1="480"
             y1="70"
             x2="370"
             y2="170"
-            stroke="#64748b"
+            stroke="#94a3b8"
             strokeWidth="2"
             strokeDasharray="4 4"
           />
-          {/* SW1 to VLAN10 */}
           <line
             x1="370"
             y1="170"
             x2="160"
             y2="265"
-            stroke="#94a3b8"
+            stroke="#cbd5e1"
             strokeWidth="2"
           />
-          {/* SW1 to VLAN20 */}
           <line
             x1="370"
             y1="170"
             x2="370"
             y2="265"
-            stroke="#94a3b8"
+            stroke="#cbd5e1"
             strokeWidth="2"
           />
-          {/* SW1 to Server */}
           <line
             x1="370"
             y1="170"
             x2="580"
             y2="265"
             stroke="#2563eb"
-            strokeWidth="2"
-            strokeDasharray="5 3"
+            strokeWidth="2.5"
+            strokeDasharray="6 4"
           />
 
           {/* Nodes */}
@@ -203,21 +204,22 @@ interface GigabitEthernet0/0.30
           <g
             onClick={() => handleSelect("r1")}
             className="cursor-pointer"
+            filter="url(#nodeShadow)"
           >
             <rect
               x="200"
               y="35"
               width="120"
               height="55"
-              rx="8"
+              rx="14"
               fill="#ffffff"
-              stroke={selectedNodeId === "r1" ? "#2563eb" : "#cbd5e1"}
-              strokeWidth={selectedNodeId === "r1" ? "2" : "1"}
+              stroke={selectedNodeId === "r1" ? "#2563eb" : "rgba(255,255,255,0.9)"}
+              strokeWidth={selectedNodeId === "r1" ? "2.5" : "1"}
             />
             <text x="260" y="58" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">
               R1 (Active)
             </text>
-            <text x="260" y="75" textAnchor="middle" fill="#2563eb" fontSize="10" fontWeight="500">
+            <text x="260" y="75" textAnchor="middle" fill="#2563eb" fontSize="10" fontWeight="600">
               HSRP Pri 110
             </text>
           </g>
@@ -226,16 +228,17 @@ interface GigabitEthernet0/0.30
           <g
             onClick={() => handleSelect("r2")}
             className="cursor-pointer"
+            filter="url(#nodeShadow)"
           >
             <rect
               x="420"
               y="35"
               width="120"
               height="55"
-              rx="8"
+              rx="14"
               fill="#ffffff"
-              stroke={selectedNodeId === "r2" ? "#2563eb" : "#cbd5e1"}
-              strokeWidth={selectedNodeId === "r2" ? "2" : "1"}
+              stroke={selectedNodeId === "r2" ? "#2563eb" : "rgba(255,255,255,0.9)"}
+              strokeWidth={selectedNodeId === "r2" ? "2.5" : "1"}
             />
             <text x="480" y="58" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">
               R2 (Standby)
@@ -250,12 +253,12 @@ interface GigabitEthernet0/0.30
             x="320"
             y="20"
             width="100"
-            height="24"
-            rx="4"
+            height="26"
+            rx="13"
             fill="#eff6ff"
             stroke="#bfdbfe"
           />
-          <text x="370" y="36" textAnchor="middle" fill="#1d4ed8" fontSize="10" fontWeight="bold">
+          <text x="370" y="37" textAnchor="middle" fill="#1d4ed8" fontSize="10" fontWeight="bold">
             VIP: .20.1
           </text>
 
@@ -263,16 +266,17 @@ interface GigabitEthernet0/0.30
           <g
             onClick={() => handleSelect("sw1")}
             className="cursor-pointer"
+            filter="url(#nodeShadow)"
           >
             <rect
               x="300"
               y="140"
               width="140"
               height="55"
-              rx="8"
+              rx="14"
               fill="#ffffff"
-              stroke={selectedNodeId === "sw1" ? "#2563eb" : "#cbd5e1"}
-              strokeWidth={selectedNodeId === "sw1" ? "2" : "1"}
+              stroke={selectedNodeId === "sw1" ? "#2563eb" : "rgba(255,255,255,0.9)"}
+              strokeWidth={selectedNodeId === "sw1" ? "2.5" : "1"}
             />
             <text x="370" y="163" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">
               SW1-DIST-CORE
@@ -286,16 +290,17 @@ interface GigabitEthernet0/0.30
           <g
             onClick={() => handleSelect("vlan10")}
             className="cursor-pointer"
+            filter="url(#nodeShadow)"
           >
             <rect
               x="100"
               y="245"
               width="120"
               height="50"
-              rx="8"
+              rx="12"
               fill="#ffffff"
-              stroke={selectedNodeId === "vlan10" ? "#2563eb" : "#cbd5e1"}
-              strokeWidth={selectedNodeId === "vlan10" ? "2" : "1"}
+              stroke={selectedNodeId === "vlan10" ? "#2563eb" : "rgba(255,255,255,0.9)"}
+              strokeWidth={selectedNodeId === "vlan10" ? "2.5" : "1"}
             />
             <text x="160" y="267" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="bold">
               VLAN 10: Eng
@@ -309,16 +314,17 @@ interface GigabitEthernet0/0.30
           <g
             onClick={() => handleSelect("vlan20")}
             className="cursor-pointer"
+            filter="url(#nodeShadow)"
           >
             <rect
               x="310"
               y="245"
               width="120"
               height="50"
-              rx="8"
+              rx="12"
               fill="#ffffff"
-              stroke={selectedNodeId === "vlan20" ? "#2563eb" : "#cbd5e1"}
-              strokeWidth={selectedNodeId === "vlan20" ? "2" : "1"}
+              stroke={selectedNodeId === "vlan20" ? "#2563eb" : "rgba(255,255,255,0.9)"}
+              strokeWidth={selectedNodeId === "vlan20" ? "2.5" : "1"}
             />
             <text x="370" y="267" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="bold">
               VLAN 20: Corp
@@ -332,16 +338,17 @@ interface GigabitEthernet0/0.30
           <g
             onClick={() => handleSelect("server")}
             className="cursor-pointer"
+            filter="url(#nodeShadow)"
           >
             <rect
               x="520"
               y="245"
               width="120"
               height="50"
-              rx="8"
+              rx="12"
               fill="#ffffff"
-              stroke={selectedNodeId === "server" ? "#2563eb" : "#cbd5e1"}
-              strokeWidth={selectedNodeId === "server" ? "2" : "1"}
+              stroke={selectedNodeId === "server" ? "#2563eb" : "rgba(255,255,255,0.9)"}
+              strokeWidth={selectedNodeId === "server" ? "2.5" : "1"}
             />
             <text x="580" y="267" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="bold">
               SRV-DMZ-01
@@ -354,13 +361,13 @@ interface GigabitEthernet0/0.30
       </div>
 
       {/* Selected Node Details & Configuration Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-5">
-        <div className="lg:col-span-5 p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+        <div className="lg:col-span-5 p-5 rounded-2xl bg-white/70 backdrop-blur-md shadow-xs flex flex-col justify-between border border-white/80">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase mb-1">
+            <div className="text-xs font-semibold text-blue-600 uppercase mb-1 font-display">
               Active Node Metadata
             </div>
-            <h4 className="text-lg font-bold text-slate-900">
+            <h4 className="text-xl font-bold text-slate-900 font-display">
               {selectedNode.name}
             </h4>
             <div className="text-xs font-mono-tech text-slate-700 mt-1">
@@ -369,23 +376,23 @@ interface GigabitEthernet0/0.30
             <div className="text-xs text-slate-500 font-medium mt-0.5">
               {selectedNode.status}
             </div>
-            <p className="mt-3 text-xs text-slate-600 leading-relaxed">
+            <p className="mt-3.5 text-xs text-slate-600 leading-relaxed font-normal">
               {selectedNode.detail}
             </p>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-200 text-xs text-slate-500">
-            Click another diagram node to view its configuration.
+          <div className="mt-5 pt-3 border-t border-slate-200/40 text-xs text-slate-400">
+            Click any network node above to inspect its configuration.
           </div>
         </div>
 
         {/* Cisco Running Configuration */}
         <div className="lg:col-span-7">
-          <div className="text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-            <Terminal className="w-3.5 h-3.5 text-slate-500" />
-            <span>Cisco IOS Running Configuration Snippet</span>
+          <div className="text-xs font-semibold text-slate-800 mb-2 flex items-center gap-2 font-display">
+            <Terminal className="w-4 h-4 text-slate-600" />
+            <span>Cisco IOS Running Configuration</span>
           </div>
-          <div className="rounded-xl bg-slate-900 border border-slate-800 p-4 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed max-h-56">
+          <div className="rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-slate-800/80 p-5 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed max-h-56 shadow-[0_16px_32px_-8px_rgba(15,23,42,0.3)]">
             <pre>{selectedNode.cliSnippet}</pre>
           </div>
         </div>
