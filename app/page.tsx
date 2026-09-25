@@ -14,6 +14,7 @@ import CommandPalette from "@/components/ui/CommandPalette";
 import ResumeModal from "@/components/ui/ResumeModal";
 import PhotoModal, { PhotoDetails } from "@/components/ui/PhotoModal";
 import Toast, { ToastMessage } from "@/components/ui/Toast";
+import ScrollAvatar from "@/components/ui/ScrollAvatar";
 import { featuredProjects } from "@/lib/projects-data";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -120,6 +121,9 @@ export default function Home() {
         onOpenResume={() => setResumeModalOpen(true)}
         onCopyEmail={handleCopyEmail}
       />
+
+      {/* Interactive Scroll Avatar Companion & Background Silhouette */}
+      <ScrollAvatar />
 
       <main>
         {/* Editorial Hero Section */}
