@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import MagneticButton from "./MagneticButton";
+import isaac3dAvatar from "@/public/images/isaac-3d-avatar.jpg";
 import {
   Menu,
   X,
@@ -56,8 +58,15 @@ export default function Navbar({
             href="#"
             className="group flex items-center gap-3 focus:outline-none"
           >
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-slate-900 to-slate-800 text-white flex items-center justify-center font-display font-bold text-sm shadow-[0_4px_12px_rgba(15,23,42,0.25)] ring-2 ring-white/80 transition-transform group-hover:scale-105">
-              <span>GI</span>
+            <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/90 shadow-[0_4px_12px_rgba(15,23,42,0.18)] transition-transform group-hover:scale-105 bg-slate-900">
+              <Image
+                src={isaac3dAvatar}
+                alt="Isaac 3D Avatar"
+                width={36}
+                height={36}
+                className="w-full h-full object-cover"
+              />
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
             </div>
             <div>
               <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">

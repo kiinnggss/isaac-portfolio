@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { Terminal as TerminalIcon } from "lucide-react";
+import isaac3dAvatar from "@/public/images/isaac-3d-avatar.jpg";
 
 interface TerminalLine {
   id: string;
@@ -307,9 +309,23 @@ Experience:
               <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
             </div>
-            <span className="ml-3 font-mono-tech text-xs text-slate-300">
-              isaac@lagos-edge:~
-            </span>
+            <div className="ml-2 flex items-center gap-2 pl-2 border-l border-slate-800">
+              <div className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-emerald-500/60 shadow-xs">
+                <Image
+                  src={isaac3dAvatar}
+                  alt="Operator"
+                  width={16}
+                  height={16}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="font-mono-tech text-xs text-slate-300">
+                isaac@lagos-edge:~
+              </span>
+              <span className="text-[10px] font-mono-tech px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
+                operator
+              </span>
+            </div>
           </div>
           <span className="text-[11px] font-mono-tech text-slate-500">bash</span>
         </div>

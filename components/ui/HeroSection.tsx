@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowDown, Download, Terminal, ShieldCheck, Network, Maximize2 } from "lucide-react";
+import { ArrowDown, Download, Terminal, ShieldCheck, Network, Maximize2, Sparkles } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
 import isaacPortrait from "@/public/images/isaac-portrait.jpg";
+import isaac3dAvatar from "@/public/images/isaac-3d-avatar.jpg";
 
 export default function HeroSection() {
   const [lagosTime, setLagosTime] = useState<string>("");
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
+  const [avatarView, setAvatarView] = useState<"photo" | "avatar">("avatar");
 
   useEffect(() => {
     const updateTime = () => {
@@ -31,9 +33,17 @@ export default function HeroSection() {
 
   return (
     <section className="relative pt-36 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Ambient Light Refraction Background Orbs */}
+      {/* Ambient Light Refraction Background Orbs & Holographic Silhouette */}
       <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-blue-300/25 blur-[120px] rounded-full pointer-events-none -z-10" />
       <div className="absolute top-1/4 right-10 w-[450px] h-[450px] bg-indigo-200/30 blur-[110px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-16 right-4 sm:right-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full overflow-hidden pointer-events-none -z-10 opacity-[0.06] mix-blend-luminosity blur-[1px]">
+        <Image
+          src={isaac3dAvatar}
+          alt=""
+          priority
+          className="w-full h-full object-cover scale-110 filter grayscale"
+        />
+      </div>
 
       {/* Floating Crystal Status Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 pb-8">
@@ -117,34 +127,82 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Right Column: Floating Crystal Portrait */}
-        <div className="lg:col-span-5 xl:col-span-4 flex justify-center lg:justify-end">
+        {/* Right Column: Floating Crystal Portrait & 3D Avatar */}
+        <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-center lg:items-end">
+          {/* Interactive Switcher */}
+          <div className="flex items-center gap-1.5 p-1 rounded-full crystal-pill bg-white/70 shadow-xs mb-3.5">
+            <button
+              type="button"
+              onClick={() => setAvatarView("photo")}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                avatarView === "photo"
+                  ? "bg-slate-900 text-white shadow-xs"
+                  : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              Real Photo
+            </button>
+            <button
+              type="button"
+              onClick={() => setAvatarView("avatar")}
+              className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1.5 transition-all ${
+                avatarView === "avatar"
+                  ? "bg-blue-600 text-white shadow-xs shadow-blue-500/30"
+                  : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>3D Avatar</span>
+            </button>
+          </div>
+
           <div
             onClick={() =>
-              setSelectedPhoto({
-                src: isaacPortrait,
-                alt: "Gbodimowo Isaac in navy suit and sunglasses",
-                title: "Gbodimowo Isaac",
-                subtitle: "Software Engineer & Network Systems Specialist",
-                tag: "PORTRAIT",
-                location: "Lagos, Nigeria",
-                date: "Verified Spec",
-                context:
-                  "Official portrait of Gbodimowo Isaac. Dual expertise across scalable Next.js web architectures, enterprise Cisco IOS topologies, and hardware diagnostic engineering.",
-              })
+              setSelectedPhoto(
+                avatarView === "avatar"
+                  ? {
+                      src: isaac3dAvatar,
+                      alt: "Gbodimowo Isaac 3D Character Avatar",
+                      title: "Gbodimowo Isaac (3D Avatar)",
+                      subtitle: "Stylized Network Systems Engineer Persona",
+                      tag: "3D AVATAR",
+                      location: "Lagos, Nigeria",
+                      date: "Octane 3D Render",
+                      context:
+                        "High-fidelity 3D character bust of Gbodimowo Isaac modeled in technical graphite apparel with subtle cyan edge lighting.",
+                    }
+                  : {
+                      src: isaacPortrait,
+                      alt: "Gbodimowo Isaac in navy suit and sunglasses",
+                      title: "Gbodimowo Isaac",
+                      subtitle: "Software Engineer & Network Systems Specialist",
+                      tag: "PORTRAIT",
+                      location: "Lagos, Nigeria",
+                      date: "Verified Spec",
+                      context:
+                        "Official portrait of Gbodimowo Isaac. Dual expertise across scalable Next.js web architectures, enterprise Cisco IOS topologies, and hardware diagnostic engineering.",
+                    }
+              )
             }
             className="group relative w-full max-w-sm crystal-surface rounded-3xl p-3.5 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.12),0_0_1px_1px_rgba(255,255,255,0.9)] cursor-pointer hover:shadow-[0_32px_64px_-16px_rgba(37,99,235,0.15)] transition-all duration-500"
           >
             {/* Luminous Specular Refraction Catchlight */}
             <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100/60 shadow-inner">
               <Image
-                src={isaacPortrait}
-                alt="Gbodimowo Isaac in navy suit and sunglasses"
+                src={avatarView === "avatar" ? isaac3dAvatar : isaacPortrait}
+                alt={
+                  avatarView === "avatar"
+                    ? "Gbodimowo Isaac 3D Character Avatar"
+                    : "Gbodimowo Isaac in navy suit and sunglasses"
+                }
                 priority
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
               />
               <div className="absolute top-3 right-3 p-2 rounded-full crystal-pill text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
                 <Maximize2 className="w-3.5 h-3.5" />
+              </div>
+              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full crystal-pill text-[10px] font-mono-tech font-semibold tracking-wider uppercase text-blue-700 bg-white/85 backdrop-blur-md">
+                {avatarView === "avatar" ? "3D Character" : "Live Portrait"}
               </div>
             </div>
 
@@ -154,11 +212,13 @@ export default function HeroSection() {
                   Gbodimowo Isaac
                 </div>
                 <div className="text-xs text-slate-500">
-                  B.Sc. Computer Science • CompTIA A+
+                  {avatarView === "avatar"
+                    ? "3D Network Systems Persona"
+                    : "B.Sc. Computer Science • CompTIA A+"}
                 </div>
               </div>
               <span className="crystal-pill text-[11px] font-medium text-slate-700 px-3 py-1 rounded-full">
-                Lagos, NG
+                {avatarView === "avatar" ? "3D Render" : "Lagos, NG"}
               </span>
             </div>
           </div>
