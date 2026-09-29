@@ -30,7 +30,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative pt-36 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="overview" className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Ambient Light Refraction Background Orbs */}
       <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-blue-300/25 blur-[120px] rounded-full pointer-events-none -z-10" />
       <div className="absolute top-1/4 right-10 w-[450px] h-[450px] bg-indigo-200/30 blur-[110px] rounded-full pointer-events-none -z-10" />

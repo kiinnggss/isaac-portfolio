@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/ui/Navbar";
+import CoverPage from "@/components/ui/CoverPage";
 import HeroSection from "@/components/ui/HeroSection";
 import ProjectCard from "@/components/ui/ProjectCard";
 import BentoGrid from "@/components/ui/BentoGrid";
@@ -115,6 +116,9 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen text-slate-900 selection:bg-blue-600 selection:text-white">
+      {/* 100vh Cinematic Editorial Cover Page */}
+      <CoverPage />
+
       {/* Global Navigation */}
       <Navbar
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
