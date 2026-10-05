@@ -17,12 +17,14 @@ interface NavbarProps {
   onOpenCommandPalette?: () => void;
   onOpenResume?: () => void;
   onCopyEmail?: () => void;
+  onShowCover?: () => void;
 }
 
 export default function Navbar({
   onOpenCommandPalette,
   onOpenResume,
   onCopyEmail,
+  onShowCover,
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -53,30 +55,42 @@ export default function Navbar({
               : "bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.04)]"
           }`}
         >
-          {/* Brand Monogram */}
-          <a
-            href="#"
-            className="group flex items-center gap-3 focus:outline-none"
-          >
-            <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/90 shadow-[0_4px_12px_rgba(15,23,42,0.18)] transition-transform group-hover:scale-105 bg-slate-900">
-              <Image
-                src={isaac3dAvatar}
-                alt="Isaac 3D Avatar"
-                width={36}
-                height={36}
-                className="w-full h-full object-cover"
-              />
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
-                Gbodimowo Isaac
+          {/* Brand Monogram & Cover Toggle */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#"
+              className="group flex items-center gap-3 focus:outline-none"
+            >
+              <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/90 shadow-[0_4px_12px_rgba(15,23,42,0.18)] transition-transform group-hover:scale-105 bg-slate-900">
+                <Image
+                  src={isaac3dAvatar}
+                  alt="Isaac 3D Avatar"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
               </div>
-              <div className="text-[11px] text-slate-500 hidden sm:block">
-                Software & Systems
+              <div>
+                <div className="text-sm font-semibold text-slate-900 group-hover:text-orange-600 transition-colors">
+                  Gbodimowo Isaac
+                </div>
+                <div className="text-[11px] text-slate-500 hidden sm:block">
+                  Software & Systems
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+
+            {onShowCover && (
+              <button
+                type="button"
+                onClick={onShowCover}
+                className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-white/80 hover:bg-white text-slate-800 border border-slate-200/80 shadow-xs transition-all cursor-pointer"
+              >
+                <span>← Cover Page</span>
+              </button>
+            )}
+          </div>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">

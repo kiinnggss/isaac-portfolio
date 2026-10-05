@@ -29,6 +29,7 @@ export default function Home() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "web" | "network">("all");
+  const [isCoverOpen, setIsCoverOpen] = useState(true);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -115,15 +116,31 @@ export default function Home() {
   });
 
   return (
-    <div className="relative min-h-screen text-slate-900 selection:bg-blue-600 selection:text-white">
-      {/* 100vh Cinematic Editorial Cover Page */}
-      <CoverPage />
+    <div className="relative min-h-screen text-slate-900 selection:bg-orange-600 selection:text-white">
+      {/* 100vh Editorial Cover Page with Explicit Open Action */}
+      <AnimatePresence>
+        {isCoverOpen && (
+          <motion.div
+            key="editorial-cover"
+            initial={{ opacity: 1, y: 0 }}
+            exit={{
+              opacity: 0,
+              y: -80,
+              transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+            }}
+            className="fixed inset-0 z-50 overflow-y-auto"
+          >
+            <CoverPage onOpenPortfolio={() => setIsCoverOpen(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Global Navigation */}
       <Navbar
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
         onOpenResume={() => setResumeModalOpen(true)}
         onCopyEmail={handleCopyEmail}
+        onShowCover={() => setIsCoverOpen(true)}
       />
 
       {/* Interactive Scroll Avatar Companion & Background Silhouette */}
