@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles, Terminal } from "lucide-react";
-import isaacPortraitCutout from "@/public/images/isaac-portrait-cutout.png";
+import { ArrowUpRight, Sparkles, Terminal, Shield, Cpu, Network, CheckCircle2 } from "lucide-react";
+import isaacPortraitBust from "@/public/images/isaac-portrait-bust.png";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -80,12 +80,12 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen w-full bg-[#cad3d8] text-slate-900 flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-6 sm:py-8 overflow-hidden select-none"
+      className="relative min-h-screen w-full bg-[#a8b4bc] text-slate-900 flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-5 sm:py-7 overflow-hidden select-none"
     >
-      {/* Top Editorial Navigation */}
+      {/* Top Editorial Navigation Header */}
       <header className="relative z-30 w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
-        {/* Left lower-case section links */}
-        <nav className="flex items-center gap-6 text-sm font-medium text-slate-800">
+        {/* Left Section Links */}
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-800">
           <button
             type="button"
             onClick={onOpenPortfolio}
@@ -110,21 +110,21 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
         </nav>
 
         {/* Center Brand Identity */}
-        <div className="flex items-center gap-2 font-display font-bold text-lg sm:text-xl tracking-tight text-slate-950">
+        <div className="flex items-center gap-2 font-display font-bold text-base sm:text-xl tracking-tight text-slate-950">
           <span className="w-5 h-5 rounded-full bg-slate-950 text-white flex items-center justify-center text-xs font-mono-tech">
             I
           </span>
           <span>gbodimowo.isaac</span>
         </div>
 
-        {/* Right Social Circles and Action Button */}
-        <div className="flex items-center gap-3">
+        {/* Right Socials & Open Portfolio Button */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <a
             href="https://github.com/kiinnggss"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="w-8 h-8 rounded-full bg-white/80 border border-slate-300 flex items-center justify-center text-slate-800 hover:bg-white hover:text-black transition-all shadow-xs"
+            className="hidden sm:flex w-8 h-8 rounded-full bg-white/80 border border-slate-300 items-center justify-center text-slate-800 hover:bg-white hover:text-black transition-all shadow-xs"
           >
             <GithubIcon className="w-4 h-4" />
           </a>
@@ -133,7 +133,7 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="w-8 h-8 rounded-full bg-white/80 border border-slate-300 flex items-center justify-center text-slate-800 hover:bg-white hover:text-black transition-all shadow-xs"
+            className="hidden sm:flex w-8 h-8 rounded-full bg-white/80 border border-slate-300 items-center justify-center text-slate-800 hover:bg-white hover:text-black transition-all shadow-xs"
           >
             <LinkedinIcon className="w-4 h-4" />
           </a>
@@ -142,7 +142,7 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X Profile"
-            className="w-8 h-8 rounded-full bg-white/80 border border-slate-300 flex items-center justify-center text-slate-800 hover:bg-white hover:text-black transition-all shadow-xs"
+            className="hidden sm:flex w-8 h-8 rounded-full bg-white/80 border border-slate-300 items-center justify-center text-slate-800 hover:bg-white hover:text-black transition-all shadow-xs"
           >
             <TwitterIcon className="w-4 h-4" />
           </a>
@@ -150,7 +150,7 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
           <button
             type="button"
             onClick={onOpenPortfolio}
-            className="ml-1 sm:ml-2 px-5 py-2 rounded-full bg-slate-950 text-white text-xs sm:text-sm font-medium tracking-wide shadow-md hover:bg-black hover:scale-105 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-1.5"
+            className="px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-slate-950 text-white text-xs sm:text-sm font-medium tracking-wide shadow-md hover:bg-black hover:scale-105 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-1.5"
           >
             <span>Open Portfolio</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -158,107 +158,128 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
         </div>
       </header>
 
-      {/* Main Cover Stage */}
+      {/* Main Cover Stage: Tech Executive Layout */}
       <main className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center my-4 sm:my-6">
-        {/* Massive Embossed White Display Word in Background */}
+        {/* Subtle background blueprint watermark */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <h1 className="font-display font-black text-[15vw] sm:text-[16vw] md:text-[17vw] tracking-tighter text-white/55 leading-none uppercase select-none text-center">
+          <h1 className="font-display font-black text-[14vw] sm:text-[15vw] tracking-tighter text-white/50 leading-none uppercase select-none text-center">
             ARCHITECT
           </h1>
         </div>
 
-        {/* Center Sunset Arch with Real Portrait and Overlays */}
-        <div className="relative w-full flex items-center justify-center">
-          <motion.div
-            animate={{
-              rotateX: -mousePos.y * 12,
-              rotateY: mousePos.x * 12,
-            }}
-            transition={{ type: "spring", stiffness: 180, damping: 20 }}
-            style={{ transformStyle: "preserve-3d" }}
-            className="relative z-10 flex items-center justify-center"
-          >
-            {/* The Radiant Sunset Arch */}
-            <div className="relative w-[280px] sm:w-[340px] md:w-[390px] h-[430px] sm:h-[500px] md:h-[550px] rounded-t-full rounded-b-3xl bg-gradient-to-b from-[#ff2442] via-[#ff6a00] to-[#ffaa00] shadow-[0_25px_60px_rgba(255,106,0,0.35)] overflow-hidden flex items-end justify-center">
-              {/* Internal sunset ambient radial gradient */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.25)_0%,transparent_70%)]" />
-
-              {/* Isaac's Real Portrait Inside the Arch */}
-              <div className="relative z-10 w-full h-[95%] flex items-end justify-center">
-                <Image
-                  src={isaacPortraitCutout}
-                  alt="Gbodimowo Isaac"
-                  priority
-                  className="h-full w-auto object-contain object-bottom select-none pointer-events-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.55)] scale-110 translate-y-3"
-                />
-              </div>
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Left Column: Visionary Headline and Credentials */}
+          <div className="lg:col-span-6 flex flex-col justify-center space-y-5 text-left">
+            <div className="inline-flex items-center gap-2 self-start px-3.5 py-1 rounded-full bg-white/80 border border-slate-300 shadow-xs text-xs font-mono-tech text-slate-800">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>LAGOS, NIGERIA // COMPTIA A+ VERIFIED</span>
             </div>
 
-            {/* Floating Left Dark Pill Badge */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -left-6 sm:-left-12 top-1/4 -rotate-6 z-20 px-4 py-1.5 rounded-full bg-slate-950 text-white text-xs sm:text-sm font-medium tracking-wide shadow-lg border border-white/20 select-none pointer-events-none"
-            >
-              Distributed Systems
-            </motion.div>
-
-            {/* Floating Right Dark Pill Badge */}
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-6 sm:-right-12 top-1/5 rotate-6 z-20 px-4 py-1.5 rounded-full bg-slate-950 text-white text-xs sm:text-sm font-medium tracking-wide shadow-lg border border-white/20 select-none pointer-events-none"
-            >
-              Cloud Architecture
-            </motion.div>
-
-            {/* Electric Violet / Purple Cursive Signature Across the Center */}
-            <div className="absolute z-25 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[140%] text-center pointer-events-none">
-              <span className="font-signature font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-[#a855f7] tracking-wide -rotate-6 inline-block drop-shadow-[0_4px_16px_rgba(168,85,247,0.7)] select-none">
-                Isaac Gbodimowo
+            <div className="space-y-1">
+              <span className="text-xs uppercase tracking-widest font-mono-tech text-orange-600 font-semibold">
+                Software & Enterprise Systems
               </span>
-            </div>
-          </motion.div>
-
-          {/* Left Headline Overlay */}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20 max-w-xs sm:max-w-sm hidden md:block">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-800 mb-3 px-3 py-1 rounded-full bg-white/70 border border-slate-300/80 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-orange-600" />
-              <span>Hi, I am Gbodimowo Isaac</span>
+              <h2 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-slate-950 tracking-tight leading-[1.02] uppercase">
+                Gbodimowo
+                <br />
+                Isaac.
+              </h2>
             </div>
 
-            <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl leading-[0.95] tracking-tight text-slate-950 uppercase">
-              Systems,
-              <br />
-              Distributed
-              <br />
-              Backends
-              <br />
-              & Cloud.
-            </h2>
-          </div>
-
-          {/* Floating White Experience Card on Bottom Right */}
-          <motion.div
-            whileHover={{ y: -4, scale: 1.02 }}
-            onClick={onOpenPortfolio}
-            className="absolute right-0 bottom-4 sm:bottom-8 z-30 bg-white/95 rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-200/80 max-w-[280px] sm:max-w-xs cursor-pointer group transition-all"
-          >
-            <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">
-              4+ Years of Expertise, Systems & Enterprise Network Engineer in Lagos, Nigeria.
+            <p className="text-sm sm:text-base text-slate-700 max-w-lg leading-relaxed">
+              Engineering resilient distributed backends, high-throughput cloud
+              pipelines, and enterprise Cisco network routing architectures.
             </p>
 
-            <div className="mt-3 flex items-center justify-between pt-3 border-t border-slate-100">
-              <span className="text-xs font-mono-tech text-slate-500 group-hover:text-orange-600 transition-colors">
-                isaacgbodimowo@gmail.com
+            {/* Live Core Competencies Pill Cluster */}
+            <div className="flex flex-wrap gap-2 pt-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-slate-200 text-xs font-mono-tech text-slate-800 shadow-xs">
+                <Network className="w-3.5 h-3.5 text-orange-600" />
+                <span>Cisco IOS Routing</span>
               </span>
-
-              {/* Scalloped Circular Action Sticker */}
-              <div className="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md group-hover:bg-orange-600 group-hover:rotate-45 transition-all">
-                <ArrowUpRight className="w-5 h-5 text-white" />
-              </div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-slate-200 text-xs font-mono-tech text-slate-800 shadow-xs">
+                <Cpu className="w-3.5 h-3.5 text-blue-600" />
+                <span>Distributed Systems</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-slate-200 text-xs font-mono-tech text-slate-800 shadow-xs">
+                <Shield className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Zero Trust Security</span>
+              </span>
             </div>
-          </motion.div>
+
+            {/* Primary Executive Actions */}
+            <div className="flex items-center gap-3 pt-3">
+              <button
+                type="button"
+                onClick={onOpenPortfolio}
+                className="px-6 py-3 rounded-full bg-slate-950 text-white text-sm font-semibold tracking-wide shadow-lg hover:bg-black hover:scale-105 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
+              >
+                <span>Enter Portfolio</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3 rounded-full bg-white/90 border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-white hover:text-black transition-all shadow-xs cursor-pointer"
+              >
+                View Resume
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Architectural Frosted Glass Portal Framing Isaac */}
+          <div className="lg:col-span-6 flex justify-center lg:justify-end">
+            <motion.div
+              animate={{
+                rotateX: -mousePos.y * 8,
+                rotateY: mousePos.x * 8,
+              }}
+              transition={{ type: "spring", stiffness: 160, damping: 22 }}
+              style={{ transformStyle: "preserve-3d" }}
+              className="relative w-[320px] sm:w-[380px] md:w-[420px] h-[480px] sm:h-[540px] rounded-3xl bg-white/40 border border-white/80 shadow-[0_30px_90px_rgba(15,23,42,0.18)] backdrop-blur-xl flex items-end justify-center overflow-hidden group"
+            >
+              {/* Subtle Ambient Backlight Glow behind Portrait */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(234,88,12,0.22)_0%,rgba(255,255,255,0.4)_45%,transparent_75%)] pointer-events-none" />
+
+              {/* Corner Architectural Monogram Badge */}
+              <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 text-white backdrop-blur-md text-[11px] font-mono-tech border border-white/20">
+                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                <span>VERIFIED PROFILE</span>
+              </div>
+
+              {/* Isaac's Studio Retouched Portrait */}
+              <div className="relative z-10 w-full h-[98%] flex items-end justify-center pointer-events-none">
+                <Image
+                  src={isaacPortraitBust}
+                  alt="Gbodimowo Isaac"
+                  priority
+                  className="h-full w-auto object-contain object-bottom select-none drop-shadow-[0_20px_45px_rgba(0,0,0,0.45)] scale-100 translate-y-1 transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Lower Glass Spec Bar */}
+              <div className="absolute bottom-0 inset-x-0 z-20 p-4 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent text-white flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-semibold tracking-wide">
+                    Gbodimowo Isaac
+                  </div>
+                  <div className="text-[11px] font-mono-tech text-slate-300">
+                    Senior Systems Engineer
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={onOpenPortfolio}
+                  className="w-8 h-8 rounded-full bg-white text-slate-950 flex items-center justify-center hover:bg-orange-500 hover:text-white transition-colors cursor-pointer shadow-md"
+                >
+                  <ArrowUpRight className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </main>
 
@@ -275,11 +296,11 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-slate-300 text-slate-900 font-medium hover:bg-white hover:border-slate-400 transition-all cursor-pointer shadow-xs"
         >
           <span>Click to open full portfolio</span>
-          <ArrowUpRight className="w-3.5 h-3.5 text-orange-600" />
+          <ArrowUpRight className="w-3.5 h-3.5" />
         </button>
 
-        <div className="hidden sm:block">
-          CISCO IOS // ZERO TRUST // NEXT.JS
+        <div className="hidden md:flex items-center gap-4 text-slate-600">
+          <span>CISCO IOS // ZERO TRUST // NEXT.JS</span>
         </div>
       </footer>
     </div>
