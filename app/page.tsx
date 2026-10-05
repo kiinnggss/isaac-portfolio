@@ -115,6 +115,16 @@ export default function Home() {
     return true;
   });
 
+  const handleOpenPortfolio = () => {
+    setIsCoverOpen(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
+  const handleShowCover = () => {
+    setIsCoverOpen(true);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
   return (
     <div className="relative min-h-screen text-slate-900 selection:bg-orange-600 selection:text-white">
       {/* 100vh Editorial Cover Page with Explicit Open Action */}
@@ -130,18 +140,20 @@ export default function Home() {
             }}
             className="fixed inset-0 z-50 overflow-y-auto"
           >
-            <CoverPage onOpenPortfolio={() => setIsCoverOpen(false)} />
+            <CoverPage onOpenPortfolio={handleOpenPortfolio} />
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Global Navigation */}
-      <Navbar
-        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-        onOpenResume={() => setResumeModalOpen(true)}
-        onCopyEmail={handleCopyEmail}
-        onShowCover={() => setIsCoverOpen(true)}
-      />
+      {!isCoverOpen && (
+        <Navbar
+          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+          onOpenResume={() => setResumeModalOpen(true)}
+          onCopyEmail={handleCopyEmail}
+          onShowCover={handleShowCover}
+        />
+      )}
 
       {/* Interactive Scroll Avatar Companion & Background Silhouette */}
       <ScrollAvatar />
