@@ -14,6 +14,7 @@ import {
   ArrowRight,
   X,
 } from "lucide-react";
+import { getAssetPath } from "@/lib/paths";
 
 export interface CommandItem {
   id: string;
@@ -63,7 +64,7 @@ export default function CommandPalette({
       category: "Documents",
       icon: ExternalLink,
       action: () => {
-        window.open("/Gbodimowo_Isaac_Resume.pdf", "_blank");
+        window.open(getAssetPath("/Gbodimowo_Isaac_Resume.pdf"), "_blank");
         onClose();
       },
     },

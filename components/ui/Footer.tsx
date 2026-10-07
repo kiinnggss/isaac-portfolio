@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import MagneticButton from "./MagneticButton";
+import { getAssetPath } from "@/lib/paths";
 
 export default function Footer() {
   const [lagosTime, setLagosTime] = useState("");
@@ -102,7 +103,7 @@ export default function Footer() {
             </a>
             <span>•</span>
             <a
-              href="/Gbodimowo_Isaac_Resume.pdf"
+              href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
               target="_blank"
               className="hover:text-slate-900 transition-colors"
             >

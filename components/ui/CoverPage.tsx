@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles, Terminal, Shield, Cpu, Network, CheckCircle2 } from "lucide-react";
 import isaacPortraitBust from "@/public/images/isaac-portrait-bust.png";
+import { getAssetPath } from "@/lib/paths";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -219,7 +220,7 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
               </button>
 
               <a
-                href="/resume.pdf"
+                href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3 rounded-full bg-white/90 border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-white hover:text-black transition-all shadow-xs cursor-pointer"

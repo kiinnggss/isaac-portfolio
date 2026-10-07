@@ -6,6 +6,7 @@ import { ArrowDown, Download, Terminal, ShieldCheck, Network, Maximize2 } from "
 import MagneticButton from "./MagneticButton";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
 import isaacPortrait from "@/public/images/isaac-portrait.jpg";
+import { getAssetPath } from "@/lib/paths";
 
 export default function HeroSection() {
   const [lagosTime, setLagosTime] = useState<string>("");
@@ -99,7 +100,7 @@ export default function HeroSection() {
             </MagneticButton>
 
             <MagneticButton
-              href="/Gbodimowo_Isaac_Resume.pdf"
+              href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
               target="_blank"
               className="crystal-button-secondary px-5 py-3 rounded-full text-slate-800 text-xs sm:text-sm font-medium inline-flex items-center gap-2 shadow-[0_6px_16px_-4px_rgba(15,23,42,0.06)]"
             >

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, Printer, ShieldCheck, GraduationCap, Briefcase, Network, Cpu } from "lucide-react";
+import { getAssetPath } from "@/lib/paths";
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -76,7 +77,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </button>
 
                 <a
-                  href="/Gbodimowo_Isaac_Resume.pdf"
+                  href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
                   target="_blank"
                   download="Gbodimowo_Isaac_Resume.pdf"
                   className="px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-xs font-medium inline-flex items-center gap-1.5 transition-colors shadow-xs"
