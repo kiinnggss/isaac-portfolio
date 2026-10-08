@@ -46,6 +46,54 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
     codeLink: "https://github.com/kiinnggss/car-pull",
   },
   {
+    id: "video-downloader",
+    title: "Crystal: Mobile Video Downloader & Media Vault",
+    subtitle: "Mobile-first stream inspector, SSE telemetry downloader, and PIN-secured vault",
+    category: "Full-Stack Web & Media Streaming Architecture",
+    summary:
+      "A mobile-first video extraction and media management web application engineered with translucent crystal glassmorphism. Powered by an asynchronous FastAPI backend using yt-dlp for media extraction, thread-isolated background workers with Server-Sent Events (SSE) telemetry broadcasting, HTTP 206 byte-range streaming for instant audio/video scrubbing, and a SHA-256 encrypted private vault.",
+    tags: ["FastAPI", "React 19", "Python 3.12", "yt-dlp", "Server-Sent Events", "Tailwind CSS", "HTTP 206 Streaming", "SQLite"],
+    metrics: [
+      { label: "Live Telemetry", value: "<50ms", detail: "Real-time SSE progress & transfer speed" },
+      { label: "Streaming Protocol", value: "HTTP 206", detail: "Byte-range seekable media playback" },
+      { label: "Test Coverage", value: "48 Tests", detail: "100% backend unit and E2E pass rate" },
+    ],
+    highlights: [
+      "In-app URL inspector parsing multi-platform video streams (YouTube, Vimeo, TikTok, Instagram) with thumbnail, duration, author, and resolution extraction.",
+      "Thread-isolated background download workers with Server-Sent Events broadcasting live transfer speeds (e.g. 20.00 Mb/s), byte counters, and completion states.",
+      "HTTP 206 byte-range video and audio streaming with suffix and range header support for instant media player scrubbing.",
+      "PIN-protected private vault with PBKDF2/SHA-256 hashing, bearer token authorization, and dark crystal UI theme transitions.",
+      "Responsive mobile interface using Tailwind CSS and crystal glassmorphism tokens (backdrop-blur-xl, border-white/20, ambient shadows, and pill capsules).",
+    ],
+    topology: [
+      "Client Layer: Mobile-first React 19 interface with floating crystal capsule navigation and live telemetry hooks.",
+      "API & Streaming Gateway: FastAPI ASGI server providing Server-Sent Events telemetry and HTTP 206 partial content streaming.",
+      "Worker Engine: Thread-isolated yt-dlp extraction and download worker with throttled database state transitions.",
+      "Persistence Layer: SQLite database storing download queue tasks, media metadata, and vault authentication records.",
+    ],
+    protocols: [
+      "Server-Sent Events (SSE) for sub-50ms live download speed and progress broadcast",
+      "RFC 7233 HTTP 206 Partial Content byte-range streaming",
+      "Bearer token authentication with sliding expiration for vault access",
+      "yt-dlp JSON extraction pipeline with format and audio stream selection",
+    ],
+    cliSnippet: `// FastAPI background worker dispatch & SSE telemetry stream
+@app.post("/api/downloads")
+def create_download(req: DownloadRequest):
+    task_id = start_download(req)
+    return {"task_id": task_id, "status": "queued"}
+
+@app.get("/api/downloads/stream")
+async def stream_telemetry():
+    async def event_generator():
+        async for data in subscribe_telemetry():
+            yield {"event": "progress", "data": json.dumps(data)}
+    return EventSourceResponse(event_generator())`,
+    demoLink: "https://github.com/kiinnggss/video-downloader",
+    codeLink: "https://github.com/kiinnggss/video-downloader",
+  },
+
+  {
     id: "cisco-network-topology",
     title: "Enterprise Network Simulation & Defense Topology",
     subtitle: "Multi-VLAN Cisco Packet Tracer infrastructure with HSRP high availability and ACL defense",

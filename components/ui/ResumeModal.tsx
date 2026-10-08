@@ -204,6 +204,17 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                     <div className="flex flex-wrap items-center justify-between gap-1">
                       <h3 className="text-sm font-bold text-slate-900">
+                        Crystal: Mobile Video Downloader & Media Vault
+                      </h3>
+                      <span className="text-xs text-blue-600 font-medium">FastAPI • React 19 • yt-dlp • SSE • HTTP 206</span>
+                    </div>
+                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                      Mobile-first video stream inspector and downloader with translucent crystal glassmorphism. Features background worker threads, sub-50ms SSE live transfer telemetry (speed, ETA, byte counters), seekable HTTP 206 byte-range media streaming, and a PIN-secured private vault.
+                    </p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-sm font-bold text-slate-900">
                         Google Antigravity Mobile Controller & Voice Assistant
                       </h3>
                       <span className="text-xs text-blue-600 font-medium">FastAPI • PWA • Web Speech • SSE</span>

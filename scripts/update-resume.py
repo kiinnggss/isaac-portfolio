@@ -125,23 +125,23 @@ def build_html_resume(projects):
         "<strong>Zero Trust Tunneling.</strong> Secured endpoints using HMAC SHA-256 session signatures, constant-time PIN authentication, and automated Cloudflare Quick Tunnel provisioning.",
     ]
 
-    hoffenheim = project_map.get("hoffenheim-tech-platforms", {
-        "title": "Client Web Platforms & Enterprise Tools (Hoffenheim Tech)",
-        "category": "Full-Stack Web & Systems Integration",
-        "tags": ["Next.js", "React", "Node.js", "REST APIs", "Tailwind CSS", "PostgreSQL"],
-        "metrics": [{"label": "Deployment Uptime", "value": "99.8%"}, {"label": "Data Ingestion", "value": "65% Faster"}, {"label": "Lighthouse Score", "value": "95+"}],
-        "codeLink": "https://github.com/kiinnggss/isaac-portfolio"
+    video_downloader = project_map.get("video-downloader", {
+        "title": "Crystal: Mobile Video Downloader & Media Vault",
+        "category": "Full-Stack Web & Media Streaming Architecture",
+        "tags": ["Python 3.12", "FastAPI", "React 19", "yt-dlp", "Server-Sent Events", "HTTP 206 Streaming"],
+        "metrics": [{"label": "Live Telemetry", "value": "<50ms"}, {"label": "Streaming", "value": "HTTP 206"}, {"label": "Test Coverage", "value": "48 Tests (100%)"}],
+        "codeLink": "https://github.com/kiinnggss/video-downloader"
     })
-    hoffenheim_bullets = [
-        "<strong>Client Portals & Data Ingestion.</strong> Built bespoke enterprise web applications with dynamic form intake, real-time input sanitization, and 99.8% deployment uptime.",
-        "<strong>API & Payment Integration.</strong> Integrated secure payment gateways, transactional email notifications, and modular reusable UI component systems.",
-        "<strong>Technical Consulting & Handover.</strong> Conducted staff training and authored systems architecture documentation for non-technical stakeholders.",
+    video_downloader_bullets = [
+        "<strong>Media Stream Extraction & Telemetry.</strong> Built an asynchronous FastAPI pipeline driving yt-dlp workers with sub-50ms Server-Sent Events broadcasting speed, ETA, and progress metrics.",
+        "<strong>Byte-Range Seekable Streaming.</strong> Implemented RFC 7233 HTTP 206 partial content streaming with range and suffix headers enabling instant audio and video playback scrubbing.",
+        "<strong>Encrypted Private Vault & Crystal UI.</strong> Constructed a PIN-protected private vault with PBKDF2/SHA-256 tokens and a mobile-first translucent crystal glassmorphism interface.",
     ]
 
     page1_p1 = build_project_entry(car_pull, car_pull_bullets)
     page1_p2 = build_project_entry(cisco_top, cisco_bullets)
     page2_p1 = build_project_entry(antigravity, antigravity_bullets)
-    page2_p2 = build_project_entry(hoffenheim, hoffenheim_bullets)
+    page2_p2 = build_project_entry(video_downloader, video_downloader_bullets)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -659,9 +659,9 @@ def build_html_resume(projects):
             <a href="https://github.com/kiinnggss/joyboy_sys" class="repo-card-link">github.com/kiinnggss/joyboy_sys</a>
           </div>
           <div class="repo-card">
-            <div class="repo-card-title">kiinnggss/isaac-portfolio</div>
-            <div class="repo-card-desc">Interactive portfolio, terminal emulator, and project specification</div>
-            <a href="https://github.com/kiinnggss/isaac-portfolio" class="repo-card-link">github.com/kiinnggss/isaac-portfolio</a>
+            <div class="repo-card-title">kiinnggss/video-downloader</div>
+            <div class="repo-card-desc">Mobile video inspector, SSE telemetry downloader, and private vault</div>
+            <a href="https://github.com/kiinnggss/video-downloader" class="repo-card-link">github.com/kiinnggss/video-downloader</a>
           </div>
         </div>
       </div>
