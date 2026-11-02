@@ -56,9 +56,10 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
     metrics: [
       { label: "Live Telemetry", value: "<50ms", detail: "Real-time SSE progress & transfer speed" },
       { label: "Streaming Protocol", value: "HTTP 206", detail: "Byte-range seekable media playback" },
-      { label: "Test Coverage", value: "50 Tests", detail: "100% backend unit and E2E pass rate" },
+      { label: "Test Coverage", value: "51 Tests", detail: "100% backend unit and E2E pass rate" },
     ],
     highlights: [
+      "Anonymous client device isolation: UUID tokens stored in localStorage inject X-Device-Id headers to isolate download queues and media libraries across separate devices without mandatory signups.",
       "Automated device storage pipeline: completed media streams immediately trigger browser-level saving directly to the user's phone or desktop file storage.",
       "Animated curved notched bottom navigation bar with an elevated gliding circular active bubble inspired by modern mobile Dribbble motion design.",
       "Live download queue controls supporting thread-safe pause, byte-level resume, and clean task cancellation with temp file scrubbing.",
