@@ -59,6 +59,7 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
       { label: "Test Coverage", value: "50 Tests", detail: "100% backend unit and E2E pass rate" },
     ],
     highlights: [
+      "Automated device storage pipeline: completed media streams immediately trigger browser-level saving directly to the user's phone or desktop file storage.",
       "Animated curved notched bottom navigation bar with an elevated gliding circular active bubble inspired by modern mobile Dribbble motion design.",
       "Live download queue controls supporting thread-safe pause, byte-level resume, and clean task cancellation with temp file scrubbing.",
       "In-app URL inspector parsing multi-platform video streams with thumbnail, duration, author, and resolution extraction.",
