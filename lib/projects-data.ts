@@ -89,7 +89,7 @@ async def stream_telemetry():
         async for data in subscribe_telemetry():
             yield {"event": "progress", "data": json.dumps(data)}
     return EventSourceResponse(event_generator())`,
-    demoLink: "https://sheet-womens-russell-program.trycloudflare.com",
+    demoLink: "https://video-downloader-7e07c.containers.snapdeploy.app",
     codeLink: "https://github.com/kiinnggss/video-downloader",
   },
 
