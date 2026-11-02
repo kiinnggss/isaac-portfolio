@@ -56,14 +56,15 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
     metrics: [
       { label: "Live Telemetry", value: "<50ms", detail: "Real-time SSE progress & transfer speed" },
       { label: "Streaming Protocol", value: "HTTP 206", detail: "Byte-range seekable media playback" },
-      { label: "Test Coverage", value: "48 Tests", detail: "100% backend unit and E2E pass rate" },
+      { label: "Test Coverage", value: "50 Tests", detail: "100% backend unit and E2E pass rate" },
     ],
     highlights: [
-      "In-app URL inspector parsing multi-platform video streams (YouTube, Vimeo, TikTok, Instagram) with thumbnail, duration, author, and resolution extraction.",
-      "Thread-isolated background download workers with Server-Sent Events broadcasting live transfer speeds (e.g. 20.00 Mb/s), byte counters, and completion states.",
+      "Animated curved notched bottom navigation bar with an elevated gliding circular active bubble inspired by modern mobile Dribbble motion design.",
+      "Live download queue controls supporting thread-safe pause, byte-level resume, and clean task cancellation with temp file scrubbing.",
+      "In-app URL inspector parsing multi-platform video streams with thumbnail, duration, author, and resolution extraction.",
+      "Persistent floating mini-player download banner providing cross-screen pause and cancel control while browsing media libraries.",
       "HTTP 206 byte-range video and audio streaming with suffix and range header support for instant media player scrubbing.",
       "PIN-protected private vault with PBKDF2/SHA-256 hashing, bearer token authorization, and dark crystal UI theme transitions.",
-      "Responsive mobile interface using Tailwind CSS and crystal glassmorphism tokens (backdrop-blur-xl, border-white/20, ambient shadows, and pill capsules).",
     ],
     topology: [
       "Client Layer: Mobile-first React 19 interface with floating crystal capsule navigation and live telemetry hooks.",
