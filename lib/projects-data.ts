@@ -56,7 +56,7 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
     metrics: [
       { label: "Live Telemetry", value: "<50ms", detail: "Real-time SSE progress & transfer speed" },
       { label: "Streaming Protocol", value: "HTTP 206", detail: "Byte-range seekable media playback" },
-      { label: "Test Coverage", value: "52 Tests", detail: "100% backend unit and E2E pass rate" },
+      { label: "Test Coverage", value: "53 Tests", detail: "100% backend unit and E2E pass rate" },
     ],
     highlights: [
       "Direct stream piping engine: streams raw media bytes immediately into browser device storage without server-side staging delays.",
