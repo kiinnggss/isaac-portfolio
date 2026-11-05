@@ -56,9 +56,10 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
     metrics: [
       { label: "Live Telemetry", value: "<50ms", detail: "Real-time SSE progress & transfer speed" },
       { label: "Streaming Protocol", value: "HTTP 206", detail: "Byte-range seekable media playback" },
-      { label: "Test Coverage", value: "55 Tests", detail: "100% backend unit and E2E pass rate" },
+      { label: "Test Coverage", value: "58 Tests", detail: "100% backend unit and E2E pass rate" },
     ],
     highlights: [
+      "Extractor patch engine and ad-filtering fallback parser overcoming outdated extractors and intrusive ad networks on video platforms.",
       "Progressive Web App (PWA) architecture with service worker caching, standalone mobile display, and native one-tap install for Android and iOS Safari.",
       "Anti-sleep keep-alive heartbeat and mobile Screen Wake Lock API keeping serverless containers awake and active during long transfers.",
       "Parallel 8-worker chunk downloading and 10MB buffer optimizations accelerating media stream retrieval.",
