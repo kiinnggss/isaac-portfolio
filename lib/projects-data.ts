@@ -56,9 +56,11 @@ export function calculateCorridorFare(baseKm: number, peakIndex: number, passeng
     metrics: [
       { label: "Live Telemetry", value: "<50ms", detail: "Real-time SSE progress & transfer speed" },
       { label: "Streaming Protocol", value: "HTTP 206", detail: "Byte-range seekable media playback" },
-      { label: "Test Coverage", value: "54 Tests", detail: "100% backend unit and E2E pass rate" },
+      { label: "Test Coverage", value: "55 Tests", detail: "100% backend unit and E2E pass rate" },
     ],
     highlights: [
+      "Anti-sleep keep-alive heartbeat and mobile Screen Wake Lock API keeping serverless containers awake and active during long transfers.",
+      "Parallel 8-worker chunk downloading and 10MB buffer optimizations accelerating media stream retrieval.",
       "Browser TLS impersonation via curl_cffi and device cookie session management to extract restricted media on YouTube, TikTok, and X.",
       "Direct stream piping engine: streams raw media bytes immediately into browser device storage without server-side staging delays.",
       "Anonymous client device isolation: UUID tokens stored in localStorage inject X-Device-Id headers to isolate download queues and media libraries across separate devices without mandatory signups.",
