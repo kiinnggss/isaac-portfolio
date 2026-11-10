@@ -90,7 +90,7 @@ export default function ContactSection() {
       }
 
       setSubmitSuccess(
-        `Message delivered successfully. I will review and reply promptly.`
+        "Message delivered. I will review your inquiry and reply shortly."
       );
       reset();
 
@@ -101,7 +101,7 @@ export default function ContactSection() {
       });
     } catch (err) {
       setSubmitError(
-        err instanceof Error ? err.message : "An unexpected error occurred. Please reach out directly via email."
+        err instanceof Error ? err.message : "Unable to reach endpoint. Please email isaacgbodimowo@gmail.com directly."
       );
     } finally {
       setIsSubmitting(false);
@@ -110,77 +110,77 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="mb-14">
-        <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/50 backdrop-blur-md">
-          Communication & Inquiries
+      <div className="mb-14 max-w-2xl">
+        <div className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-widest text-orange-600 font-semibold mb-3 px-3.5 py-1.5 rounded-full bg-white/80 border border-white shadow-xs">
+          <span>Communication & Inquiries</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-950 tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
           Get in Touch
         </h2>
-        <p className="mt-3 text-base text-slate-600 max-w-2xl font-normal">
+        <p className="mt-3 text-base text-slate-800 font-normal leading-relaxed">
           Available for software engineering roles, enterprise network architecture, and systems diagnostics.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Information Card */}
-        <div className="lg:col-span-5 crystal-surface rounded-3xl p-8 sm:p-9 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.07)] space-y-6">
+        {/* Left Obsidian Coordinates Card */}
+        <div className="lg:col-span-5 obsidian-surface rounded-3xl p-8 sm:p-9 space-y-6">
           <div>
-            <h3 className="text-xl font-bold text-slate-900 font-display">
+            <h3 className="text-xl font-bold text-white font-display">
               Direct Contact Channels
             </h3>
-            <p className="mt-1 text-sm text-slate-600 font-normal">
-              Reach out directly by email or connect via professional platforms.
+            <p className="mt-1 text-sm text-slate-300 font-normal">
+              Reach out directly by email or connect on GitHub and LinkedIn.
             </p>
           </div>
 
           <div className="space-y-3.5">
             <a
               href="mailto:isaacgbodimowo@gmail.com"
-              className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/70 backdrop-blur-md text-slate-700 hover:text-blue-600 hover:bg-white transition-all shadow-xs border border-white/80"
+              className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shrink-0">
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs text-slate-500 font-medium">Primary Email</div>
-                <div className="text-sm font-semibold text-slate-900 font-display">
+                <div className="text-xs text-slate-400 font-mono-tech">PRIMARY EMAIL</div>
+                <div className="text-sm font-semibold text-white font-display">
                   isaacgbodimowo@gmail.com
                 </div>
               </div>
             </a>
 
-            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/70 backdrop-blur-md text-slate-700 shadow-xs border border-white/80">
-              <div className="w-10 h-10 rounded-xl bg-slate-500/10 flex items-center justify-center text-slate-700 shrink-0">
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-orange-400 shrink-0">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs text-slate-500 font-medium">Location Base</div>
-                <div className="text-sm font-semibold text-slate-900 font-display">
-                  Lagos, Nigeria (West Africa Time, UTC+1)
+                <div className="text-xs text-slate-400 font-mono-tech">LOCATION BASE</div>
+                <div className="text-sm font-semibold text-white font-display">
+                  Lagos, Nigeria (UTC+1)
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/70 backdrop-blur-md text-slate-700 shadow-xs border border-white/80">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 shrink-0">
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
                 <Clock className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs text-slate-500 font-medium">Availability</div>
-                <div className="text-sm font-semibold text-slate-900 font-display">
+                <div className="text-xs text-slate-400 font-mono-tech">AVAILABILITY</div>
+                <div className="text-sm font-semibold text-white font-display">
                   Full-Time Software & Systems Roles
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-200/40 flex items-center gap-3">
+          <div className="pt-4 border-t border-white/10 flex items-center gap-3">
             <a
               href="https://github.com/kiinnggss"
               target="_blank"
               rel="noreferrer"
-              className="crystal-pill px-4 py-2 rounded-full text-slate-700 hover:text-slate-950 text-xs font-semibold inline-flex items-center gap-2 transition-all shadow-xs"
+              className="px-4 py-2 rounded-full bg-white/10 hover:bg-orange-600 text-white text-xs font-semibold inline-flex items-center gap-2 transition-all border border-white/15"
             >
               <GithubIcon className="w-4 h-4" />
               <span>GitHub</span>
@@ -190,96 +190,100 @@ export default function ContactSection() {
               href="https://www.linkedin.com/in/isaac-gbodimowo-743152294/"
               target="_blank"
               rel="noreferrer"
-              className="crystal-pill px-4 py-2 rounded-full text-slate-700 hover:text-blue-600 text-xs font-semibold inline-flex items-center gap-2 transition-all shadow-xs"
+              className="px-4 py-2 rounded-full bg-white/10 hover:bg-orange-600 text-white text-xs font-semibold inline-flex items-center gap-2 transition-all border border-white/15"
             >
-              <LinkedinIcon className="w-4 h-4 text-blue-600" />
+              <LinkedinIcon className="w-4 h-4" />
               <span>LinkedIn</span>
             </a>
           </div>
         </div>
 
-        {/* Right Form Card */}
-        <div className="lg:col-span-7 crystal-surface rounded-3xl p-8 sm:p-9 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.07)]">
-          <h3 className="text-xl font-bold text-slate-900 font-display mb-1">
+        {/* Right High-Contrast Form Card */}
+        <div className="lg:col-span-7 crystal-surface rounded-3xl p-8 sm:p-9">
+          <h3 className="text-xl font-bold text-[#090d16] font-display mb-1">
             Send a Direct Message
           </h3>
-          <p className="text-sm text-slate-600 mb-7 font-normal">
-            Inquiries are delivered directly to the server message queue.
+          <p className="text-sm text-slate-700 mb-7 font-normal">
+            Inquiries are validated and routed directly to the server message queue.
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-display">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="contact-name" className="block text-xs font-semibold text-[#090d16] font-display">
                   Your Name *
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   {...register("name")}
-                  placeholder="e.g. Alex Morgan"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/80 border border-white/90 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all shadow-xs"
+                  placeholder="e.g. Chidi Okonkwo"
+                  className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs"
                 />
                 {errors.name && (
-                  <p className="text-xs text-rose-600 mt-1">{errors.name.message}</p>
+                  <p className="text-xs text-rose-700 font-medium">{errors.name.message}</p>
                 )}
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-display">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="contact-email" className="block text-xs font-semibold text-[#090d16] font-display">
                   Email Address *
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   {...register("email")}
-                  placeholder="alex@company.com"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/80 border border-white/90 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all shadow-xs"
+                  placeholder="name@company.com"
+                  className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs"
                 />
                 {errors.email && (
-                  <p className="text-xs text-rose-600 mt-1">{errors.email.message}</p>
+                  <p className="text-xs text-rose-700 font-medium">{errors.email.message}</p>
                 )}
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-display">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="contact-subject" className="block text-xs font-semibold text-[#090d16] font-display">
                 Subject
               </label>
               <input
+                id="contact-subject"
                 type="text"
                 {...register("subject")}
-                placeholder="Software Engineering Role / Systems Consultation"
-                className="w-full px-4 py-3 rounded-2xl bg-white/80 border border-white/90 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all shadow-xs"
+                placeholder="Software Engineering Role / Network Architecture"
+                className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs"
               />
               {errors.subject && (
-                <p className="text-xs text-rose-600 mt-1">{errors.subject.message}</p>
+                <p className="text-xs text-rose-700 font-medium">{errors.subject.message}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-display">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="contact-message" className="block text-xs font-semibold text-[#090d16] font-display">
                 Message Content *
               </label>
               <textarea
+                id="contact-message"
                 rows={4}
                 {...register("message")}
-                placeholder="Describe project requirements, role scope, or technical topic..."
-                className="w-full px-4 py-3 rounded-2xl bg-white/80 border border-white/90 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition-all shadow-xs resize-y"
+                placeholder="Describe project requirements, role scope, or technical inquiry..."
+                className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs resize-y"
               />
               {errors.message && (
-                <p className="text-xs text-rose-600 mt-1">{errors.message.message}</p>
+                <p className="text-xs text-rose-700 font-medium">{errors.message.message}</p>
               )}
             </div>
 
             {submitSuccess && (
-              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-800 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-600/30 text-xs text-emerald-900 font-medium flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <span>{submitSuccess}</span>
               </div>
             )}
 
             {submitError && (
-              <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-800 flex items-start gap-2.5">
-                <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <div className="p-4 rounded-2xl bg-rose-500/15 border border-rose-600/30 text-xs text-rose-900 font-medium flex items-start gap-2.5">
+                <AlertTriangle className="w-4 h-4 text-rose-700 shrink-0 mt-0.5" />
                 <span>{submitError}</span>
               </div>
             )}
@@ -287,7 +291,7 @@ export default function ContactSection() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 px-6 rounded-full crystal-button disabled:opacity-50 text-white text-sm font-medium transition-all inline-flex items-center justify-center gap-2 shadow-md"
+              className="w-full py-3.5 px-6 rounded-full crystal-button disabled:opacity-50 text-white text-sm font-semibold transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
             >
               {isSubmitting ? (
                 <span>Delivering message...</span>

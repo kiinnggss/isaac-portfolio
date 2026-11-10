@@ -53,7 +53,7 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"
+            className="absolute inset-0 bg-[#090d16]/75 backdrop-blur-xs"
           />
 
           {/* Dialog Container */}
@@ -66,13 +66,13 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-[#090d16] text-white">
               <div className="flex items-center gap-2.5">
-                <span className="px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
+                <span className="px-2.5 py-1 rounded-md bg-[#ea580c]/15 border border-[#ea580c]/30 text-[#fb923c] text-[11px] font-mono-tech font-semibold uppercase tracking-wider">
                   {photo.tag}
                 </span>
-                <span className="text-xs text-slate-500 hidden sm:flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                <span className="text-xs text-slate-300 hidden sm:flex items-center gap-1 font-mono-tech">
+                  <MapPin className="w-3.5 h-3.5 text-[#ea580c]" />
                   {photo.location}
                 </span>
               </div>
@@ -80,7 +80,7 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+                className="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
                 aria-label="Close photo view"
               >
                 <X className="w-4 h-4" />
@@ -91,7 +91,7 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
             <div className="p-5 sm:p-7 overflow-y-auto grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
               {/* Image Frame */}
               <div className="md:col-span-7 flex items-center justify-center">
-                <div className="relative w-full max-h-[62vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100 flex items-center justify-center">
+                <div className="relative w-full max-h-[62vh] rounded-xl overflow-hidden border border-slate-200 bg-[#090d16] flex items-center justify-center">
                   <Image
                     src={photo.src}
                     alt={photo.alt}
@@ -105,10 +105,10 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
               {/* Information Column */}
               <div className="md:col-span-5 space-y-4">
                 <div>
-                  <div className="text-xs font-semibold text-blue-600 uppercase mb-1">
+                  <div className="text-[11px] font-mono-tech font-semibold text-[#ea580c] uppercase tracking-wider mb-1">
                     Authentic Documentation
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 leading-snug">
+                  <h3 className="text-xl font-display font-bold text-[#090d16] leading-snug">
                     {photo.title}
                   </h3>
                   <div className="text-sm font-medium text-slate-600 mt-1">
@@ -120,21 +120,29 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
                   {photo.context}
                 </div>
 
-                <div className="pt-2 text-xs text-slate-500 space-y-1">
-                  <div><strong>Location:</strong> {photo.location}</div>
-                  {photo.date && <div><strong>Context:</strong> {photo.date}</div>}
-                  <div><strong>Subject:</strong> Gbodimowo Isaac</div>
+                <div className="pt-2 text-xs text-slate-600 space-y-1 font-mono-tech">
+                  <div>
+                    <strong className="text-[#090d16]">Location:</strong> {photo.location}
+                  </div>
+                  {photo.date && (
+                    <div>
+                      <strong className="text-[#090d16]">Context:</strong> {photo.date}
+                    </div>
+                  )}
+                  <div>
+                    <strong className="text-[#090d16]">Subject:</strong> Gbodimowo Isaac
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Footer */}
             <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
-              <span>Gbodimowo Isaac Portfolio Archive</span>
+              <span className="font-mono-tech">Gbodimowo Isaac Portfolio Archive</span>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium transition-colors"
+                className="px-4 py-1.5 rounded-lg bg-[#090d16] text-white hover:bg-[#ea580c] font-semibold transition-colors"
               >
                 Close View
               </button>

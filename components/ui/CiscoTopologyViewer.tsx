@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Network, Server, ShieldCheck, Terminal, ArrowRight } from "lucide-react";
+import { Network, Terminal, Copy, Check } from "lucide-react";
 
 interface TopologyNode {
   id: string;
@@ -15,6 +15,7 @@ interface TopologyNode {
 
 export default function CiscoTopologyViewer() {
   const [selectedNodeId, setSelectedNodeId] = useState<string>("r1");
+  const [copied, setCopied] = useState(false);
 
   const nodes: Record<string, TopologyNode> = {
     r1: {
@@ -22,8 +23,9 @@ export default function CiscoTopologyViewer() {
       name: "R1-CORE-GW (Active)",
       type: "router",
       ip: "192.168.20.2 (VIP: 192.168.20.1)",
-      status: "HSRP v2 Active • Priority 110",
-      detail: "Cisco ISR 4331 Gateway. Handles primary traffic forwarding with preemption enabled. Sub-interfaces configured with dot1Q encapsulation for inter-VLAN routing.",
+      status: "HSRP v2 Active / Priority 110",
+      detail:
+        "Cisco ISR 4331 Gateway. Handles primary traffic forwarding with preemption enabled. Sub-interfaces configured with dot1Q encapsulation for inter-VLAN routing.",
       cliSnippet: `interface GigabitEthernet0/0.20
  description Corporate_Management_VLAN20
  encapsulation dot1Q 20
@@ -38,8 +40,9 @@ export default function CiscoTopologyViewer() {
       name: "R2-BACKUP-GW (Standby)",
       type: "router",
       ip: "192.168.20.3 (VIP: 192.168.20.1)",
-      status: "HSRP v2 Standby • Priority 100",
-      detail: "Redundant backup router listening for hello packets (3s hello / 10s dead timer). Assumes active gateway role within 10 seconds if R1 fails.",
+      status: "HSRP v2 Standby / Priority 100",
+      detail:
+        "Redundant backup router listening for hello packets (3s hello / 10s dead timer). Assumes active gateway role automatically if R1 fails.",
       cliSnippet: `interface GigabitEthernet0/0.20
  description Corporate_Management_VLAN20
  encapsulation dot1Q 20
@@ -53,8 +56,9 @@ export default function CiscoTopologyViewer() {
       name: "SW1-DIST-CORE",
       type: "switch",
       ip: "192.168.20.5 (Mgmt SVI)",
-      status: "Catalyst 3650 • 802.1Q Trunking",
-      detail: "Distribution switch with multi-VLAN support. Trunk ports configured with 802.1Q encapsulation, dynamic ARP inspection, and sticky port security.",
+      status: "Catalyst 3650 / 802.1Q Trunking",
+      detail:
+        "Distribution switch with multi-VLAN support. Trunk ports configured with 802.1Q encapsulation, dynamic ARP inspection, and sticky MAC port security.",
       cliSnippet: `interface GigabitEthernet1/0/1
  description TRUNK_TO_R1
  switchport mode trunk
@@ -68,7 +72,8 @@ export default function CiscoTopologyViewer() {
       type: "vlan",
       ip: "192.168.10.0/24 (GW: .1)",
       status: "Engineering & DevOps Access",
-      detail: "Dedicated broadcast domain for technical workstations with outbound access to development clusters and restricted direct access to DMZ.",
+      detail:
+        "Dedicated broadcast domain for technical workstations with outbound access to development clusters and restricted direct access to DMZ.",
       cliSnippet: `vlan 10
  name ENGINEERING_WORKSTATIONS
 !
@@ -82,8 +87,9 @@ ip dhcp pool VLAN10_POOL
       name: "VLAN 20: Corporate Management",
       type: "vlan",
       ip: "192.168.20.0/24 (VIP: .1)",
-      status: "Administrative Tier • HSRP Protected",
-      detail: "Corporate management segment with HSRP virtual IP default gateway. Traffic is filtered using extended ACLs.",
+      status: "Administrative Tier / HSRP Protected",
+      detail:
+        "Corporate management segment with HSRP virtual IP default gateway. Traffic is filtered using extended IPv4 ACLs.",
       cliSnippet: `vlan 20
  name CORPORATE_MANAGEMENT
 !
@@ -98,7 +104,8 @@ ip access-list extended RESTRICT_SERVER_FARM
       type: "server",
       ip: "192.168.30.10/24",
       status: "Production App & Database Node",
-      detail: "Enterprise server hosting web platforms and database endpoints. Protected behind Layer 4 ACLs and static NAT translation.",
+      detail:
+        "Enterprise server hosting web platforms and database endpoints. Protected behind Layer 4 ACLs and static NAT translation.",
       cliSnippet: `ip nat inside source static 192.168.30.10 203.0.113.10
 !
 interface GigabitEthernet0/1
@@ -113,53 +120,48 @@ interface GigabitEthernet0/0.30
 
   const selectedNode = nodes[selectedNodeId] || nodes.r1;
 
-  const handleSelect = (id: string) => {
-    setSelectedNodeId(id);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(selectedNode.cliSnippet);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="crystal-surface rounded-3xl p-8 sm:p-10 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.08)]">
+    <div className="crystal-surface rounded-3xl p-7 sm:p-10">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-200/50">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-900/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600 shadow-xs">
+          <div className="w-10 h-10 rounded-2xl bg-[#090d16] flex items-center justify-center text-orange-500">
             <Network className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-xl font-bold text-slate-900 font-display">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#090d16] font-display">
               Interactive Cisco IOS Topology Visualizer
-            </h4>
-            <div className="text-xs text-slate-500">
-              Router-on-a-Stick • HSRP v2 Redundancy • 802.1Q Trunks • Extended ACLs
+            </h3>
+            <div className="text-xs font-mono-tech text-slate-600">
+              Router-on-a-Stick / HSRP v2 Redundancy / 802.1Q Trunks / Extended ACLs
             </div>
           </div>
         </div>
 
-        <span className="crystal-pill text-xs font-medium px-3.5 py-1 rounded-full text-slate-700">
-          Click nodes to inspect running IOS config
+        <span className="px-3.5 py-1.5 rounded-full bg-[#090d16] text-orange-400 text-xs font-mono-tech font-semibold">
+          Click any node to inspect running config
         </span>
       </div>
 
-      {/* Borderless Floating Crystal Topology Canvas */}
-      <div className="relative my-7 rounded-2xl bg-gradient-to-b from-white/80 via-white/50 to-white/30 backdrop-blur-xl p-6 shadow-sm border border-white/80 overflow-x-auto">
+      {/* Obsidian Network Operations Schematic Canvas */}
+      <div className="relative my-7 rounded-2xl obsidian-surface p-6 overflow-x-auto">
         <svg
           viewBox="0 0 740 320"
           className="w-full min-w-[580px] h-auto select-none"
         >
-          {/* Subtle Ambient Drop Shadows for SVG nodes */}
-          <defs>
-            <filter id="nodeShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="6" stdDeviation="6" floodOpacity="0.08" />
-            </filter>
-          </defs>
-
-          {/* Connecting Trunks */}
+          {/* Active & Standby Trunks */}
           <line
             x1="260"
             y1="70"
             x2="370"
             y2="170"
-            stroke="#2563eb"
+            stroke="#ea580c"
             strokeWidth="2.5"
             strokeDasharray="6 4"
           />
@@ -168,7 +170,7 @@ interface GigabitEthernet0/0.30
             y1="70"
             x2="370"
             y2="170"
-            stroke="#94a3b8"
+            stroke="#475569"
             strokeWidth="2"
             strokeDasharray="4 4"
           />
@@ -177,7 +179,7 @@ interface GigabitEthernet0/0.30
             y1="170"
             x2="160"
             y2="265"
-            stroke="#cbd5e1"
+            stroke="#64748b"
             strokeWidth="2"
           />
           <line
@@ -185,7 +187,7 @@ interface GigabitEthernet0/0.30
             y1="170"
             x2="370"
             y2="265"
-            stroke="#cbd5e1"
+            stroke="#64748b"
             strokeWidth="2"
           />
           <line
@@ -193,206 +195,197 @@ interface GigabitEthernet0/0.30
             y1="170"
             x2="580"
             y2="265"
-            stroke="#2563eb"
+            stroke="#10b981"
             strokeWidth="2.5"
             strokeDasharray="6 4"
           />
 
-          {/* Nodes */}
-
           {/* R1 (Active) */}
-          <g
-            onClick={() => handleSelect("r1")}
-            className="cursor-pointer"
-            filter="url(#nodeShadow)"
-          >
+          <g onClick={() => setSelectedNodeId("r1")} className="cursor-pointer">
             <rect
               x="200"
               y="35"
               width="120"
               height="55"
               rx="14"
-              fill="#ffffff"
-              stroke={selectedNodeId === "r1" ? "#2563eb" : "rgba(255,255,255,0.9)"}
-              strokeWidth={selectedNodeId === "r1" ? "2.5" : "1"}
+              fill={selectedNodeId === "r1" ? "#1e293b" : "#0f172a"}
+              stroke={selectedNodeId === "r1" ? "#ea580c" : "#334155"}
+              strokeWidth={selectedNodeId === "r1" ? "2.5" : "1.5"}
             />
-            <text x="260" y="58" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">
+            <text x="260" y="58" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">
               R1 (Active)
             </text>
-            <text x="260" y="75" textAnchor="middle" fill="#2563eb" fontSize="10" fontWeight="600">
+            <text x="260" y="75" textAnchor="middle" fill="#fb923c" fontSize="10" fontWeight="600">
               HSRP Pri 110
             </text>
           </g>
 
           {/* R2 (Standby) */}
-          <g
-            onClick={() => handleSelect("r2")}
-            className="cursor-pointer"
-            filter="url(#nodeShadow)"
-          >
+          <g onClick={() => setSelectedNodeId("r2")} className="cursor-pointer">
             <rect
               x="420"
               y="35"
               width="120"
               height="55"
               rx="14"
-              fill="#ffffff"
-              stroke={selectedNodeId === "r2" ? "#2563eb" : "rgba(255,255,255,0.9)"}
-              strokeWidth={selectedNodeId === "r2" ? "2.5" : "1"}
+              fill={selectedNodeId === "r2" ? "#1e293b" : "#0f172a"}
+              stroke={selectedNodeId === "r2" ? "#ea580c" : "#334155"}
+              strokeWidth={selectedNodeId === "r2" ? "2.5" : "1.5"}
             />
-            <text x="480" y="58" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">
+            <text x="480" y="58" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">
               R2 (Standby)
             </text>
-            <text x="480" y="75" textAnchor="middle" fill="#64748b" fontSize="10">
+            <text x="480" y="75" textAnchor="middle" fill="#94a3b8" fontSize="10">
               HSRP Pri 100
             </text>
           </g>
 
           {/* Virtual IP Tag */}
           <rect
-            x="320"
+            x="315"
             y="20"
-            width="100"
+            width="110"
             height="26"
             rx="13"
-            fill="#eff6ff"
-            stroke="#bfdbfe"
+            fill="#ea580c"
           />
-          <text x="370" y="37" textAnchor="middle" fill="#1d4ed8" fontSize="10" fontWeight="bold">
-            VIP: .20.1
+          <text x="370" y="37" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="bold">
+            VIP: 192.168.20.1
           </text>
 
           {/* SW1 (Distribution Switch) */}
-          <g
-            onClick={() => handleSelect("sw1")}
-            className="cursor-pointer"
-            filter="url(#nodeShadow)"
-          >
+          <g onClick={() => setSelectedNodeId("sw1")} className="cursor-pointer">
             <rect
               x="300"
               y="140"
               width="140"
               height="55"
               rx="14"
-              fill="#ffffff"
-              stroke={selectedNodeId === "sw1" ? "#2563eb" : "rgba(255,255,255,0.9)"}
-              strokeWidth={selectedNodeId === "sw1" ? "2.5" : "1"}
+              fill={selectedNodeId === "sw1" ? "#1e293b" : "#0f172a"}
+              stroke={selectedNodeId === "sw1" ? "#ea580c" : "#334155"}
+              strokeWidth={selectedNodeId === "sw1" ? "2.5" : "1.5"}
             />
-            <text x="370" y="163" textAnchor="middle" fill="#0f172a" fontSize="12" fontWeight="bold">
+            <text x="370" y="163" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">
               SW1-DIST-CORE
             </text>
-            <text x="370" y="180" textAnchor="middle" fill="#64748b" fontSize="10">
+            <text x="370" y="180" textAnchor="middle" fill="#94a3b8" fontSize="10">
               Catalyst 3650
             </text>
           </g>
 
           {/* VLAN 10 */}
-          <g
-            onClick={() => handleSelect("vlan10")}
-            className="cursor-pointer"
-            filter="url(#nodeShadow)"
-          >
+          <g onClick={() => setSelectedNodeId("vlan10")} className="cursor-pointer">
             <rect
               x="100"
               y="245"
               width="120"
               height="50"
               rx="12"
-              fill="#ffffff"
-              stroke={selectedNodeId === "vlan10" ? "#2563eb" : "rgba(255,255,255,0.9)"}
-              strokeWidth={selectedNodeId === "vlan10" ? "2.5" : "1"}
+              fill={selectedNodeId === "vlan10" ? "#1e293b" : "#0f172a"}
+              stroke={selectedNodeId === "vlan10" ? "#ea580c" : "#334155"}
+              strokeWidth={selectedNodeId === "vlan10" ? "2.5" : "1.5"}
             />
-            <text x="160" y="267" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="bold">
+            <text x="160" y="267" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">
               VLAN 10: Eng
             </text>
-            <text x="160" y="282" textAnchor="middle" fill="#64748b" fontSize="9">
+            <text x="160" y="282" textAnchor="middle" fill="#94a3b8" fontSize="9">
               192.168.10.0/24
             </text>
           </g>
 
           {/* VLAN 20 */}
-          <g
-            onClick={() => handleSelect("vlan20")}
-            className="cursor-pointer"
-            filter="url(#nodeShadow)"
-          >
+          <g onClick={() => setSelectedNodeId("vlan20")} className="cursor-pointer">
             <rect
               x="310"
               y="245"
               width="120"
               height="50"
               rx="12"
-              fill="#ffffff"
-              stroke={selectedNodeId === "vlan20" ? "#2563eb" : "rgba(255,255,255,0.9)"}
-              strokeWidth={selectedNodeId === "vlan20" ? "2.5" : "1"}
+              fill={selectedNodeId === "vlan20" ? "#1e293b" : "#0f172a"}
+              stroke={selectedNodeId === "vlan20" ? "#ea580c" : "#334155"}
+              strokeWidth={selectedNodeId === "vlan20" ? "2.5" : "1.5"}
             />
-            <text x="370" y="267" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="bold">
+            <text x="370" y="267" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">
               VLAN 20: Corp
             </text>
-            <text x="370" y="282" textAnchor="middle" fill="#64748b" fontSize="9">
+            <text x="370" y="282" textAnchor="middle" fill="#94a3b8" fontSize="9">
               192.168.20.0/24
             </text>
           </g>
 
           {/* DMZ Server */}
-          <g
-            onClick={() => handleSelect("server")}
-            className="cursor-pointer"
-            filter="url(#nodeShadow)"
-          >
+          <g onClick={() => setSelectedNodeId("server")} className="cursor-pointer">
             <rect
               x="520"
               y="245"
               width="120"
               height="50"
               rx="12"
-              fill="#ffffff"
-              stroke={selectedNodeId === "server" ? "#2563eb" : "rgba(255,255,255,0.9)"}
-              strokeWidth={selectedNodeId === "server" ? "2.5" : "1"}
+              fill={selectedNodeId === "server" ? "#1e293b" : "#0f172a"}
+              stroke={selectedNodeId === "server" ? "#ea580c" : "#334155"}
+              strokeWidth={selectedNodeId === "server" ? "2.5" : "1.5"}
             />
-            <text x="580" y="267" textAnchor="middle" fill="#0f172a" fontSize="11" fontWeight="bold">
+            <text x="580" y="267" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">
               SRV-DMZ-01
             </text>
-            <text x="580" y="282" textAnchor="middle" fill="#16a34a" fontSize="9" fontWeight="bold">
+            <text x="580" y="282" textAnchor="middle" fill="#34d399" fontSize="9" fontWeight="bold">
               192.168.30.10
             </text>
           </g>
         </svg>
       </div>
 
-      {/* Selected Node Details & Configuration Inspector */}
+      {/* Selected Node Metadata & IOS Config Inspector */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
-        <div className="lg:col-span-5 p-5 rounded-2xl bg-white/70 backdrop-blur-md shadow-xs flex flex-col justify-between border border-white/80">
+        <div className="lg:col-span-5 p-6 rounded-2xl bg-white/85 border border-white flex flex-col justify-between shadow-xs">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase mb-1 font-display">
-              Active Node Metadata
+            <div className="text-[11px] font-mono-tech font-semibold text-orange-600 uppercase tracking-wider mb-1">
+              Selected Node Telemetry
             </div>
-            <h4 className="text-xl font-bold text-slate-900 font-display">
+            <h4 className="text-xl font-bold text-[#090d16] font-display">
               {selectedNode.name}
             </h4>
-            <div className="text-xs font-mono-tech text-slate-700 mt-1">
+            <div className="text-xs font-mono-tech text-slate-800 mt-1.5 font-semibold">
               IP: {selectedNode.ip}
             </div>
-            <div className="text-xs text-slate-500 font-medium mt-0.5">
+            <div className="text-xs text-slate-600 font-mono-tech mt-0.5">
               {selectedNode.status}
             </div>
-            <p className="mt-3.5 text-xs text-slate-600 leading-relaxed font-normal">
+            <p className="mt-3.5 text-xs text-slate-700 leading-relaxed">
               {selectedNode.detail}
             </p>
           </div>
 
-          <div className="mt-5 pt-3 border-t border-slate-200/40 text-xs text-slate-400">
-            Click any network node above to inspect its configuration.
+          <div className="mt-5 pt-3 border-t border-slate-900/10 text-[11px] font-mono-tech text-slate-500">
+            Select R1, R2, SW1, VLANs, or DMZ Server above
           </div>
         </div>
 
-        {/* Cisco Running Configuration */}
-        <div className="lg:col-span-7">
-          <div className="text-xs font-semibold text-slate-800 mb-2 flex items-center gap-2 font-display">
-            <Terminal className="w-4 h-4 text-slate-600" />
-            <span>Cisco IOS Running Configuration</span>
+        <div className="lg:col-span-7 flex flex-col">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-xs font-semibold text-[#090d16] flex items-center gap-2 font-display">
+              <Terminal className="w-4 h-4 text-orange-600" />
+              <span>Cisco IOS Running Configuration</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="px-3 py-1 rounded-full bg-white/85 hover:bg-white border border-white text-xs font-mono-tech text-slate-800 inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-700">Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-3.5 h-3.5 text-orange-600" />
+                  <span>Copy Snippet</span>
+                </>
+              )}
+            </button>
           </div>
-          <div className="rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-slate-800/80 p-5 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed max-h-56 shadow-[0_16px_32px_-8px_rgba(15,23,42,0.3)]">
+          <div className="flex-1 rounded-2xl obsidian-surface p-5 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed">
             <pre>{selectedNode.cliSnippet}</pre>
           </div>
         </div>

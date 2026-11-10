@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 import isaac3dAvatar from "@/public/images/isaac-3d-avatar.jpg";
 import {
@@ -11,6 +12,7 @@ import {
   Search,
   FileText,
   Copy,
+  Layers,
 } from "lucide-react";
 
 interface NavbarProps {
@@ -28,55 +30,64 @@ export default function Navbar({
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const isNowScrolled = latest > 24;
+    if (isNowScrolled !== scrolled) {
+      setScrolled(isNowScrolled);
+    }
+  });
 
   const navLinks = [
-    { name: "Projects", href: "#work" },
-    { name: "Skills", href: "#skills" },
-    { name: "Terminal", href: "#terminal" },
+    { name: "Overview", href: "#overview" },
+    { name: "Works", href: "#work" },
+    { name: "Systems", href: "#skills" },
+    { name: "Topology", href: "#terminal" },
     { name: "Experience", href: "#experience" },
-    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 py-4 px-4 sm:px-6 lg:px-8 transition-all duration-300">
-      <div className="max-w-6xl mx-auto">
+    <header className="fixed top-0 left-0 right-0 z-40 py-3 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <div
-          className={`flex items-center justify-between px-5 py-3 rounded-full transition-all duration-300 ${
+          className={`h-16 flex items-center justify-between px-4 sm:px-5 rounded-full transition-all duration-300 ${
             scrolled
-              ? "crystal-surface shadow-[0_16px_36px_-6px_rgba(15,23,42,0.1),0_0_1px_1px_rgba(255,255,255,0.8)]"
-              : "bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.04)]"
+              ? "obsidian-surface shadow-[0_20px_44px_-10px_rgba(9,13,22,0.45)]"
+              : "crystal-surface"
           }`}
         >
-          {/* Brand Monogram & Cover Toggle */}
-          <div className="flex items-center gap-3">
+          {/* Brand Identity & Cover Switch */}
+          <div className="flex items-center gap-2.5">
             <a
-              href="#"
-              className="group flex items-center gap-3 focus:outline-none"
+              href="#overview"
+              className="group flex items-center gap-2.5 focus:outline-none"
             >
-              <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/90 shadow-[0_4px_12px_rgba(15,23,42,0.18)] transition-transform group-hover:scale-105 bg-slate-900">
+              <div className="relative w-9 h-9 rounded-full overflow-hidden ring-2 ring-orange-600/80 shadow-sm transition-transform group-hover:scale-105 bg-[#090d16]">
                 <Image
                   src={isaac3dAvatar}
-                  alt="Isaac 3D Avatar"
+                  alt="Gbodimowo Isaac"
                   width={36}
                   height={36}
                   className="w-full h-full object-cover"
                 />
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
               </div>
-              <div>
-                <div className="text-sm font-semibold text-slate-900 group-hover:text-orange-600 transition-colors">
+              <div className="leading-tight">
+                <div
+                  className={`text-sm font-display font-bold transition-colors ${
+                    scrolled
+                      ? "text-white group-hover:text-orange-400"
+                      : "text-[#090d16] group-hover:text-orange-600"
+                  }`}
+                >
                   Gbodimowo Isaac
                 </div>
-                <div className="text-[11px] text-slate-500 hidden sm:block">
-                  Software & Systems
+                <div
+                  className={`text-[10px] font-mono-tech hidden sm:block ${
+                    scrolled ? "text-slate-400" : "text-slate-600"
+                  }`}
+                >
+                  SOFTWARE & NETWORKS
                 </div>
               </div>
             </a>
@@ -85,64 +96,81 @@ export default function Navbar({
               <button
                 type="button"
                 onClick={onShowCover}
-                className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-white/80 hover:bg-white text-slate-800 border border-slate-200/80 shadow-xs transition-all cursor-pointer"
+                title="Return to Cover Portal"
+                className={`hidden lg:inline-flex items-center gap-1.5 text-[11px] font-mono-tech px-3 py-1 rounded-full border transition-all cursor-pointer ml-1 ${
+                  scrolled
+                    ? "bg-white/10 hover:bg-white/20 text-slate-200 border-white/15"
+                    : "bg-white/80 hover:bg-white text-slate-800 border-slate-300/80"
+                }`}
               >
-                <span>← Cover Page</span>
+                <Layers className="w-3 h-3 text-orange-500" />
+                <span>Cover</span>
               </button>
             )}
           </div>
 
-          {/* Desktop Navigation Links */}
+          {/* Single-Line Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-white/70 transition-all duration-200"
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                  scrolled
+                    ? "text-slate-300 hover:text-white hover:bg-white/10"
+                    : "text-slate-700 hover:text-[#090d16] hover:bg-white/80"
+                }`}
               >
                 {link.name}
               </a>
             ))}
           </nav>
 
-          {/* Right Controls & Quick Actions */}
+          {/* Right Quick Controls */}
           <div className="hidden md:flex items-center gap-2">
-            {/* Search Pill */}
             {onOpenCommandPalette && (
               <button
                 type="button"
                 onClick={onOpenCommandPalette}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 hover:bg-white border border-white/80 text-slate-600 hover:text-slate-950 text-xs font-medium shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-all"
-                title="Search commands (Cmd+K)"
+                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium transition-all cursor-pointer ${
+                  scrolled
+                    ? "bg-white/10 hover:bg-white/15 border-white/15 text-slate-200"
+                    : "bg-white/75 hover:bg-white border-white text-slate-700"
+                }`}
+                title="Command Palette (Cmd+K)"
               >
-                <Search className="w-3.5 h-3.5 text-slate-400" />
-                <span>Search</span>
-                <kbd className="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-500 font-mono-tech border border-slate-200/60">
-                  ⌘K
-                </kbd>
+                <Search className="w-3.5 h-3.5 text-orange-500" />
+                <kbd className="text-[10px] font-mono-tech">⌘K</kbd>
               </button>
             )}
 
-            {/* Resume Button */}
             {onOpenResume && (
               <button
                 type="button"
                 onClick={onOpenResume}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/70 hover:bg-white border border-white/90 text-slate-700 text-xs font-medium shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-all"
-                title="View Resume"
+                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all cursor-pointer ${
+                  scrolled
+                    ? "bg-white/10 hover:bg-white/15 border-white/15 text-slate-200"
+                    : "bg-white/75 hover:bg-white border-white text-slate-800"
+                }`}
+                title="Open Resume Reader"
               >
-                <FileText className="w-3.5 h-3.5 text-blue-600" />
+                <FileText className="w-3.5 h-3.5 text-orange-500" />
                 <span>Resume</span>
               </button>
             )}
 
-            {/* Copy Email Button */}
             {onCopyEmail && (
               <button
                 type="button"
                 onClick={onCopyEmail}
-                className="p-2 rounded-full bg-white/60 hover:bg-white border border-white/80 text-slate-600 hover:text-slate-950 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-all"
+                className={`p-2 rounded-full border transition-all cursor-pointer ${
+                  scrolled
+                    ? "bg-white/10 hover:bg-white/15 border-white/15 text-slate-200"
+                    : "bg-white/75 hover:bg-white border-white text-slate-700"
+                }`}
                 title="Copy email address"
+                aria-label="Copy email address"
               >
                 <Copy className="w-3.5 h-3.5" />
               </button>
@@ -150,18 +178,22 @@ export default function Navbar({
 
             <MagneticButton
               href="#contact"
-              className="crystal-button inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-white font-medium text-xs shadow-[0_8px_20px_-4px_rgba(15,23,42,0.3)] ml-1"
+              className="px-4 py-2 rounded-full bg-orange-600 hover:bg-orange-500 text-white font-semibold text-xs inline-flex items-center gap-1.5 shadow-sm transition-colors"
             >
               <span>Get in Touch</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-slate-300" />
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </MagneticButton>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-full bg-white/70 border border-white/90 text-slate-700 hover:text-slate-950 shadow-xs"
+            className={`md:hidden p-2 rounded-full border ${
+              scrolled
+                ? "bg-white/10 border-white/15 text-white"
+                : "bg-white/80 border-white text-[#090d16]"
+            }`}
             aria-label="Toggle navigation"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -171,21 +203,21 @@ export default function Navbar({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto crystal-surface rounded-3xl p-5 space-y-3 shadow-xl">
+        <div className="md:hidden mt-2 max-w-7xl mx-auto obsidian-surface rounded-3xl p-5 space-y-3 shadow-2xl">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-950 hover:bg-white/80 transition-colors"
+                className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="pt-3 border-t border-slate-200/60 flex flex-col gap-2">
+          <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
             {onOpenResume && (
               <button
                 type="button"
@@ -193,17 +225,17 @@ export default function Navbar({
                   setMobileMenuOpen(false);
                   onOpenResume();
                 }}
-                className="w-full py-2.5 px-4 rounded-xl bg-white/80 text-slate-800 text-xs font-medium flex items-center justify-center gap-1.5 shadow-xs"
+                className="w-full py-2.5 px-4 rounded-xl bg-white/10 text-white text-xs font-medium flex items-center justify-center gap-1.5 border border-white/15"
               >
-                <FileText className="w-3.5 h-3.5 text-blue-600" />
-                <span>View Resume</span>
+                <FileText className="w-3.5 h-3.5 text-orange-400" />
+                <span>Quick Read Resume</span>
               </button>
             )}
 
             <a
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-2.5 px-4 rounded-xl crystal-button text-white text-xs font-medium text-center shadow-md"
+              className="w-full py-2.5 px-4 rounded-xl bg-orange-600 text-white text-xs font-semibold text-center shadow-md"
             >
               Get in Touch
             </a>

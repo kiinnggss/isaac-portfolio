@@ -33,11 +33,14 @@ export default function Home() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd+K or Ctrl+K or '/' to open command palette
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setCommandPaletteOpen((prev) => !prev);
-      } else if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
+      } else if (
+        e.key === "/" &&
+        document.activeElement?.tagName !== "INPUT" &&
+        document.activeElement?.tagName !== "TEXTAREA"
+      ) {
         e.preventDefault();
         setCommandPaletteOpen(true);
       }
@@ -74,7 +77,7 @@ export default function Home() {
         src: isaacGraduation,
         alt: "Gbodimowo Isaac at Babcock University Convocation in academic regalia",
         title: "Academic Convocation Ceremony",
-        subtitle: "B.Sc. in Computer Science • Babcock University",
+        subtitle: "B.Sc. in Computer Science / Babcock University",
         tag: "DEGREE CONFERRAL",
         location: "Babcock University, Nigeria",
         date: "Class of Computer Science",
@@ -86,7 +89,7 @@ export default function Home() {
         src: isaacWorkspace,
         alt: "Gbodimowo Isaac at engineering workstation with headphones in deep flow state",
         title: "Systems Engineering Workstation",
-        subtitle: "Lagos Tech Hub • Systems & Architecture Lab",
+        subtitle: "Lagos Tech Hub / Systems & Architecture Lab",
         tag: "ENGINEERING",
         location: "Lagos, Nigeria",
         date: "Active Development",
@@ -103,7 +106,8 @@ export default function Home() {
         project.category.toLowerCase().includes("transit") ||
         project.category.toLowerCase().includes("web") ||
         project.category.toLowerCase().includes("peer") ||
-        project.category.toLowerCase().includes("ai")
+        project.category.toLowerCase().includes("ai") ||
+        project.category.toLowerCase().includes("mobile")
       );
     }
     if (activeFilter === "network") {
@@ -115,9 +119,18 @@ export default function Home() {
     return true;
   });
 
-  const handleOpenPortfolio = () => {
+  const handleOpenPortfolio = (sectionHash?: string) => {
     setIsCoverOpen(false);
-    window.scrollTo({ top: 0, behavior: "instant" });
+    if (sectionHash) {
+      setTimeout(() => {
+        const el = document.getElementById(sectionHash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 120);
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
   };
 
   const handleShowCover = () => {
@@ -126,8 +139,8 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen text-slate-900 selection:bg-orange-600 selection:text-white">
-      {/* 100vh Editorial Cover Page with Explicit Open Action */}
+    <div className="relative min-h-screen text-[#090d16] selection:bg-orange-600 selection:text-white">
+      {/* 100dvh Editorial Cover Page with Explicit Open Action */}
       <AnimatePresence>
         {isCoverOpen && (
           <motion.div
@@ -155,30 +168,31 @@ export default function Home() {
         />
       )}
 
-      {/* Interactive Scroll Avatar Companion & Background Silhouette */}
+      {/* Subtle Periphery Scroll Silhouette */}
       <ScrollAvatar />
 
       <main className="relative z-10">
-        {/* Editorial Hero Section */}
+        {/* Split Executive Hero Section */}
         <HeroSection />
 
-        {/* Featured Projects Showcase */}
+        {/* Featured Projects Showcase (2x2 Balanced Grid) */}
         <section id="work" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/50 backdrop-blur-md">
-                Production Systems & Architecture
+              <div className="inline-flex items-center gap-2 text-[11px] font-mono-tech font-semibold uppercase tracking-[0.16em] text-[#ea580c] mb-3 px-3.5 py-1.5 rounded-full bg-[#090d16] border border-slate-800 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ea580c]" />
+                <span>Production Systems & Architecture</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-950 tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
                 Selected Works
               </h2>
-              <p className="mt-3 text-base text-slate-600 max-w-2xl font-normal">
+              <p className="mt-3 text-base text-slate-700 max-w-[60ch] font-normal">
                 Distributed web architectures, Cisco Packet Tracer enterprise topologies, and high-concurrency client platforms.
               </p>
             </div>
 
-            {/* Seamless Crystal Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full bg-white/70 backdrop-blur-md shadow-xs border border-white/80">
+            {/* Crystal Filter Pills */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-full bg-white/80 backdrop-blur-md shadow-xs border border-white">
               {(
                 [
                   { id: "all", label: `All Works (${featuredProjects.length})` },
@@ -192,8 +206,8 @@ export default function Home() {
                   onClick={() => setActiveFilter(tab.id)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
                     activeFilter === tab.id
-                      ? "crystal-button text-white shadow-sm"
-                      : "text-slate-600 hover:text-slate-950 hover:bg-white/60"
+                      ? "bg-[#090d16] text-white shadow-xs"
+                      : "text-slate-700 hover:text-[#090d16] hover:bg-slate-200/60"
                   }`}
                 >
                   {tab.label}
@@ -202,8 +216,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Projects Grid */}
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* 2x2 Balanced Projects Grid */}
+          <motion.div layout className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
@@ -219,19 +233,17 @@ export default function Home() {
         <section id="terminal" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/50 backdrop-blur-md">
-                Systems Diagnostics & Network Simulation
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-950 tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
                 Network Terminal & Topology
               </h2>
-              <p className="mt-3 text-base text-slate-600 max-w-2xl font-normal">
+              <p className="mt-3 text-base text-slate-700 max-w-[60ch] font-normal">
                 Run live probes against the network edge, inspect HSRP gateway redundancy, or explore the interactive Cisco topology below.
               </p>
             </div>
 
-            <div className="crystal-pill px-4 py-1.5 rounded-full text-xs text-slate-700 font-medium shadow-xs">
-              Active Edge Node: Lagos
+            <div className="px-4 py-2 rounded-full bg-[#090d16] border border-slate-800 text-xs font-mono-tech text-slate-200 flex items-center gap-2 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Active Edge Node: Lagos</span>
             </div>
           </div>
 

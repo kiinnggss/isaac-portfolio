@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Network, Layers, ShieldCheck, Terminal, Cpu, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Terminal } from "lucide-react";
 import ProjectModal, { type ProjectData } from "./ProjectModal";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -30,22 +30,19 @@ interface ProjectCardProps {
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const isNetwork = project.category.toLowerCase().includes("network") || project.category.toLowerCase().includes("defense");
-  const isTransport = project.category.toLowerCase().includes("transit") || project.category.toLowerCase().includes("peer");
-
   return (
     <>
-      <motion.div
+      <motion.article
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="crystal-surface crystal-surface-hover rounded-3xl p-7 flex flex-col justify-between"
+        transition={{ duration: 0.45, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+        className="crystal-surface crystal-surface-hover rounded-3xl p-7 sm:p-8 flex flex-col justify-between group"
       >
         <div>
-          {/* Top Meta Bar */}
-          <div className="flex items-center justify-between mb-5">
-            <span className="crystal-pill px-3 py-1 rounded-full text-xs font-medium text-slate-700">
+          {/* Top Meta Header */}
+          <div className="flex items-center justify-between gap-3 mb-5">
+            <span className="px-3.5 py-1 rounded-full bg-[#090d16] text-white text-[11px] font-mono-tech uppercase tracking-wider">
               {project.category}
             </span>
 
@@ -55,8 +52,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                   href={project.codeLink}
                   target="_blank"
                   rel="noreferrer"
-                  title="View repository on GitHub"
-                  className="p-2 rounded-full bg-white/70 hover:bg-white border border-white/80 text-slate-600 hover:text-slate-900 shadow-xs transition-colors"
+                  title="View source repository on GitHub"
+                  aria-label="View source repository on GitHub"
+                  className="w-8 h-8 rounded-full bg-white/85 hover:bg-[#090d16] hover:text-white border border-white flex items-center justify-center text-slate-800 transition-colors shadow-xs"
                 >
                   <GithubIcon className="w-3.5 h-3.5" />
                 </a>
@@ -66,182 +64,109 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                   href={project.demoLink}
                   target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                   rel="noreferrer"
-                  title="Launch live project"
-                  className="px-3 py-1 rounded-full bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 border border-blue-200/60 text-xs font-medium inline-flex items-center gap-1 shadow-xs transition-colors"
+                  title="Open deployment"
+                  className="px-3.5 py-1 rounded-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 shadow-xs transition-colors"
                 >
-                  <span>Launch</span>
+                  <span>Live</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               )}
             </div>
           </div>
 
-          {/* Title & Description */}
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-display leading-tight">
+          {/* Title & Subtitle */}
+          <h3
+            onClick={() => setModalOpen(true)}
+            className="text-2xl sm:text-3xl font-bold text-[#090d16] font-display leading-tight cursor-pointer group-hover:text-orange-600 transition-colors"
+          >
             {project.title}
           </h3>
-          <p className="mt-2 text-sm text-slate-600 leading-relaxed font-normal">
+          <p className="mt-2.5 text-sm text-slate-700 leading-relaxed font-normal">
             {project.subtitle}
           </p>
 
-          {/* Seamless Crystal Architecture Plinth */}
+          {/* Real Quantified Metrics Strip (Obsidian Instrument Panel) */}
           <div
             onClick={() => setModalOpen(true)}
-            className="my-6 rounded-2xl bg-gradient-to-b from-white/70 to-white/35 backdrop-blur-xl p-4 cursor-pointer hover:bg-white/80 border border-white/80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_6px_20px_-6px_rgba(15,23,42,0.05)] transition-all"
+            className="my-6 obsidian-surface rounded-2xl p-4 sm:p-5 cursor-pointer transition-transform duration-300 hover:scale-[1.01]"
           >
-            <div className="flex items-center justify-between text-xs text-slate-500 pb-3 border-b border-slate-200/50">
-              <span className="font-semibold text-slate-700 font-display">System Topology</span>
-              <span className="text-blue-600 font-medium">Inspect Spec →</span>
-            </div>
-
-            {/* Architecture Node Flow */}
-            <div className="py-4 flex items-center justify-around">
-              {isNetwork ? (
-                <>
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-blue-600 ring-1 ring-white/90">
-                      <Network className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">R1 / R2</span>
-                    <span className="text-[10px] text-slate-500">HSRP Gateway</span>
-                  </div>
-
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-blue-300 to-indigo-300 mx-2" />
-
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-slate-700 ring-1 ring-white/90">
-                      <ShieldCheck className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Dist SW</span>
-                    <span className="text-[10px] text-slate-500">802.1Q Trunks</span>
-                  </div>
-
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-indigo-300 to-emerald-300 mx-2" />
-
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-emerald-600 ring-1 ring-white/90">
-                      <Cpu className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Server Farm</span>
-                    <span className="text-[10px] text-slate-500">ACLs & NAT</span>
-                  </div>
-                </>
-              ) : isTransport ? (
-                <>
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-blue-600 ring-1 ring-white/90">
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Origin</span>
-                    <span className="text-[10px] text-slate-500">Mainland</span>
-                  </div>
-
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-blue-300 to-indigo-300 mx-2" />
-
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-slate-700 ring-1 ring-white/90">
-                      <Cpu className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">GeoMatch</span>
-                    <span className="text-[10px] text-slate-500">Spatial Index</span>
-                  </div>
-
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-indigo-300 to-emerald-300 mx-2" />
-
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-emerald-600 ring-1 ring-white/90">
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Destination</span>
-                    <span className="text-[10px] text-slate-500">Lekki / Island</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-blue-600 ring-1 ring-white/90">
-                      <Terminal className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Client Web</span>
-                    <span className="text-[10px] text-slate-500">Next.js UI</span>
-                  </div>
-
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-blue-300 to-indigo-300 mx-2" />
-
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-slate-700 ring-1 ring-white/90">
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Edge Gateway</span>
-                    <span className="text-[10px] text-slate-500">Route Handlers</span>
-                  </div>
-
-                  <div className="flex-1 h-[2px] bg-gradient-to-r from-indigo-300 to-emerald-300 mx-2" />
-
-                  <div className="flex flex-col items-center gap-1 text-center">
-                    <div className="w-10 h-10 rounded-2xl bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] flex items-center justify-center text-emerald-600 ring-1 ring-white/90">
-                      <Cpu className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-800">Database</span>
-                    <span className="text-[10px] text-slate-500">WAL SQLite</span>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Bottom Key Metric */}
-            <div className="pt-3 border-t border-slate-200/50 flex items-center justify-between text-xs text-slate-600">
-              <span>{project.metrics[0]?.label}: <strong className="text-slate-900 font-semibold">{project.metrics[0]?.value}</strong></span>
-              <span className="text-blue-600 font-medium inline-flex items-center gap-1">
-                Inspect Specs <ArrowUpRight className="w-3.5 h-3.5" />
+            <div className="flex items-center justify-between text-[11px] font-mono-tech text-slate-400 pb-3 mb-3 border-b border-white/10">
+              <span className="uppercase tracking-wider text-orange-400 font-semibold">
+                Verified System Telemetry
               </span>
+              <span className="text-slate-300 inline-flex items-center gap-1">
+                <span>Inspect Architecture</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-orange-400" />
+              </span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              {project.metrics.slice(0, 3).map((metric) => (
+                <div key={metric.label} className="space-y-0.5">
+                  <div className="text-[10px] font-mono-tech text-slate-400 uppercase truncate">
+                    {metric.label}
+                  </div>
+                  <div className="text-lg sm:text-xl font-display font-bold text-white">
+                    {metric.value}
+                  </div>
+                  <div className="text-[10px] text-slate-400 truncate">
+                    {metric.detail}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            {project.tags.slice(0, 4).map((tag) => (
+          {/* Real Architecture Topology Preview (Top 2 Layers) */}
+          <div className="space-y-2 mb-5">
+            {project.topology.slice(0, 2).map((layer, i) => (
+              <div
+                key={i}
+                className="px-3.5 py-2 rounded-xl bg-white/75 border border-white text-xs text-slate-800 flex items-start gap-2.5"
+              >
+                <Terminal className="w-3.5 h-3.5 text-orange-600 shrink-0 mt-0.5" />
+                <span className="leading-snug">{layer}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Tech Stack Pills */}
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.slice(0, 6).map((tag) => (
               <span
                 key={tag}
-                className="crystal-pill px-2.5 py-1 rounded-full text-xs text-slate-600 font-medium"
+                className="crystal-pill px-2.5 py-1 rounded-full text-[11px] font-mono-tech text-slate-800 font-medium"
               >
                 {tag}
               </span>
             ))}
-            {project.tags.length > 4 && (
-              <span className="crystal-pill px-2.5 py-1 rounded-full text-xs text-slate-400 font-medium">
-                +{project.tags.length - 4} more
-              </span>
-            )}
           </div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="mt-7 pt-4 border-t border-slate-200/50 flex items-center justify-between gap-3">
+        {/* Footer Action Bar */}
+        <div className="mt-6 pt-4 border-t border-slate-900/10 flex items-center justify-between gap-3">
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="text-xs font-medium text-slate-700 hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
+            className="text-xs font-semibold text-[#090d16] hover:text-orange-600 inline-flex items-center gap-1.5 transition-colors cursor-pointer"
           >
-            <span>Architecture Specs</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+            <span>Open Technical Dossier</span>
+            <ArrowUpRight className="w-4 h-4 text-orange-600" />
           </button>
 
-          {project.demoLink && (
+          {project.codeLink && (
             <a
-              href={project.demoLink}
-              target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
+              href={project.codeLink}
+              target="_blank"
               rel="noreferrer"
-              className="crystal-button px-4 py-2 rounded-full text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-[0_6px_16px_-2px_rgba(15,23,42,0.25)]"
+              className="text-xs font-mono-tech text-slate-600 hover:text-[#090d16] transition-colors"
             >
-              <span>Launch</span>
-              <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
+              {project.codeLink.replace("https://", "")}
             </a>
           )}
         </div>
-      </motion.div>
+      </motion.article>
 
-      {/* Modal */}
       <ProjectModal
         project={project}
         isOpen={modalOpen}

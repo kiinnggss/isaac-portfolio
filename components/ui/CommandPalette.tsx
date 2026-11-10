@@ -261,7 +261,7 @@ export default function CommandPalette({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"
+            className="absolute inset-0 bg-[#090d16]/75 backdrop-blur-xs"
           />
 
           {/* Modal Container */}
@@ -274,23 +274,28 @@ export default function CommandPalette({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search Input Bar */}
-            <div className="p-4 border-b border-slate-200 flex items-center gap-3 bg-slate-50">
-              <Search className="w-5 h-5 text-slate-400 shrink-0" />
+            <div className="p-4 border-b border-slate-800 flex items-center gap-3 bg-[#090d16] text-white">
+              <Search className="w-5 h-5 text-[#ea580c] shrink-0" />
+              <label htmlFor="command-palette-search" className="sr-only">
+                Search portfolio commands and sections
+              </label>
               <input
+                id="command-palette-search"
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Type a command, project, or section (e.g. resume, cisco, contact)..."
-                className="w-full bg-transparent text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                className="w-full bg-transparent text-sm sm:text-base text-white placeholder:text-slate-400 focus:outline-none"
               />
-              <span className="hidden sm:inline px-2 py-0.5 rounded bg-white text-xs text-slate-500 border border-slate-300 font-mono-tech">
+              <span className="hidden sm:inline px-2 py-0.5 rounded bg-slate-900 text-xs text-slate-300 border border-slate-700 font-mono-tech">
                 ESC
               </span>
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 sm:hidden"
+                className="p-1 rounded-lg text-slate-400 hover:text-white sm:hidden"
+                aria-label="Close command palette"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -313,7 +318,7 @@ export default function CommandPalette({
                       onMouseEnter={() => setSelectedIndex(idx)}
                       className={`p-3 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition-colors ${
                         isSelected
-                          ? "bg-blue-50 border border-blue-200"
+                          ? "bg-orange-50/90 border border-orange-200"
                           : "hover:bg-slate-50 border border-transparent"
                       }`}
                     >
@@ -321,16 +326,16 @@ export default function CommandPalette({
                         <div
                           className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                             isSelected
-                              ? "bg-blue-600 text-white"
-                              : "bg-slate-100 text-slate-600"
+                              ? "bg-[#ea580c] text-white"
+                              : "bg-slate-100 text-[#090d16]"
                           }`}
                         >
                           <Icon className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
-                          <div className="text-xs sm:text-sm font-semibold text-slate-900 truncate flex items-center gap-2">
+                          <div className="text-xs sm:text-sm font-semibold text-[#090d16] truncate flex items-center gap-2">
                             <span>{item.title}</span>
-                            <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
+                            <span className="text-[10px] font-mono-tech font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
                               {item.category}
                             </span>
                           </div>
@@ -342,7 +347,7 @@ export default function CommandPalette({
 
                       <div className="flex items-center gap-1.5 shrink-0">
                         {isSelected && (
-                          <span className="text-xs font-medium text-blue-600 flex items-center gap-1">
+                          <span className="text-xs font-semibold text-[#ea580c] flex items-center gap-1">
                             <span>Select</span>
                             <ArrowRight className="w-3 h-3" />
                           </span>
@@ -355,12 +360,12 @@ export default function CommandPalette({
             </div>
 
             {/* Footer Hints */}
-            <div className="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+            <div className="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs font-mono-tech text-slate-500">
               <div className="flex items-center gap-3">
                 <span>↑↓ Navigate</span>
-                <span>•</span>
+                <span>/</span>
                 <span>↵ Select</span>
-                <span>•</span>
+                <span>/</span>
                 <span>ESC Dismiss</span>
               </div>
               <span className="text-slate-400 hidden sm:inline">

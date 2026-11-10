@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Gbodimowo Isaac: Software Engineer & Network Systems Specialist",
   description:
-    "Portfolio of Gbodimowo Isaac: Software Engineer and Network Systems Specialist based in Lagos, Nigeria. Specializing in resilient digital infrastructure, modern full-stack web applications, Cisco IOS enterprise topologies, and systems diagnostics.",
+    "Portfolio of Gbodimowo Isaac: Software Engineer and Network Systems Specialist based in Lagos, Nigeria. Engineering distributed web applications, Cisco IOS enterprise topologies, and systems diagnostics.",
   keywords: [
     "Gbodimowo Isaac",
     "Software Engineer",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gbodimowo Isaac: Software Engineer & Network Systems Specialist",
     description:
-      "Architecting resilient digital infrastructure, bridging scalable web development with enterprise networking and systems diagnostics.",
-    url: "https://isaacgbodimowo.dev",
+      "Engineering resilient digital infrastructure across scalable web platforms, Cisco IOS enterprise routing, and hardware diagnostics.",
+    url: "https://kiinnggss.github.io/isaac-portfolio/",
     siteName: "Gbodimowo Isaac Portfolio",
     locale: "en_US",
     type: "website",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gbodimowo Isaac: Software Engineer & Network Systems Specialist",
     description:
-      "Architecting resilient digital infrastructure, bridging scalable web development with enterprise networking and systems diagnostics.",
+      "Engineering resilient digital infrastructure across scalable web platforms, Cisco IOS enterprise routing, and hardware diagnostics.",
   },
 };
 
@@ -61,7 +61,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#f8fafc] text-slate-900 selection:bg-blue-600 selection:text-white">
+      <body className="min-h-full flex flex-col bg-[#a8b4bc] text-[#090d16] selection:bg-orange-600 selection:text-white">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

@@ -1,166 +1,161 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { ArrowDown, Download, Terminal, ShieldCheck, Network, Maximize2 } from "lucide-react";
+import { ArrowDown, Download, ShieldCheck, Network, Cpu, Maximize2 } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
 import isaacPortrait from "@/public/images/isaac-portrait.jpg";
 import { getAssetPath } from "@/lib/paths";
 
 export default function HeroSection() {
-  const [lagosTime, setLagosTime] = useState<string>("");
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const formatted = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Africa/Lagos",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      }).format(now);
-      setLagosTime(formatted);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section id="overview" className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Ambient Light Refraction Background Orbs */}
-      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-blue-300/25 blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-1/4 right-10 w-[450px] h-[450px] bg-indigo-200/30 blur-[110px] rounded-full pointer-events-none -z-10" />
-
-      {/* Floating Crystal Status Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="crystal-pill inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-800">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-            <span>Open for Software & Systems Roles</span>
+    <section
+      id="overview"
+      className="relative min-h-[100dvh] pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col justify-center"
+    >
+      {/* Main Split Architecture Hero (Strictly 4 Text Elements on Left) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        {/* Left Column: 4-Element Hero Stack */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* 1. Eyebrow */}
+          <div className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-widest text-orange-600 font-semibold px-3.5 py-1.5 rounded-full bg-white/80 border border-white shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-orange-600" />
+            <span>Software Engineer & Network Systems Specialist</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 text-xs text-slate-500 font-medium">
-            <span>Lagos, Nigeria</span>
-            <span className="text-slate-300">•</span>
-            <span>WAT (UTC+1)</span>
-            {lagosTime && (
-              <>
-                <span className="text-slate-300">•</span>
-                <span className="font-mono-tech text-slate-700">{lagosTime}</span>
-              </>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 text-xs text-slate-600 font-medium">
-          <span className="inline-flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-blue-600" />
-            CompTIA A+ Certified
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Network className="w-4 h-4 text-slate-600" />
-            CCNA Candidate
-          </span>
-        </div>
-      </div>
-
-      {/* Hero Layout */}
-      <div className="py-8 sm:py-14 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        {/* Left Column: Typographic Focus */}
-        <div className="lg:col-span-7 xl:col-span-8">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 mb-3 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200/60 backdrop-blur-md">
-            Software Engineer & Network Systems Specialist
-          </div>
-
-          <h1 className="font-display font-bold text-4xl sm:text-6xl md:text-7xl lg:text-[80px] tracking-tight text-slate-950 leading-[1.0] select-none">
-            Gbodimowo Isaac
+          {/* 2. Headline (2 lines max on desktop) */}
+          <h1 className="font-display font-bold text-4xl sm:text-6xl lg:text-[64px] tracking-tight text-[#090d16] leading-[1.02]">
+            Resilient Web Platforms &{" "}
+            <span className="text-orange-600">Enterprise Networks.</span>
           </h1>
 
-          <p className="mt-6 text-lg sm:text-xl text-slate-700 font-normal leading-relaxed max-w-2xl">
-            Engineering resilient digital infrastructure. Bridging full-stack web platforms with enterprise Cisco network routing and hardware diagnostics.
+          {/* 3. Subtext (<= 20 words) */}
+          <p className="text-base sm:text-lg text-slate-800 font-normal leading-relaxed max-w-xl">
+            Full-stack TypeScript and Next.js engineering paired with fault-tolerant Cisco IOS routing topologies and CompTIA A+ hardware diagnostics.
           </p>
 
-          <p className="mt-3 text-sm text-slate-500 leading-relaxed max-w-2xl">
-            Computer Science graduate from Babcock University with dual competency across scalable Next.js architectures, Cisco IOS enterprise topologies (HSRP, Router-on-a-Stick, extended ACLs), and CompTIA A+ verified hardware diagnostics.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="mt-9 flex flex-wrap items-center gap-3.5">
+          {/* 4. CTAs (1 Primary + 1 Secondary) */}
+          <div className="pt-2 flex flex-wrap items-center gap-3.5">
             <MagneticButton
               href="#work"
-              className="crystal-button px-6 py-3 rounded-full text-white text-xs sm:text-sm font-medium inline-flex items-center gap-2 shadow-[0_12px_24px_-6px_rgba(15,23,42,0.3)]"
+              className="crystal-button px-7 py-3.5 rounded-full text-white text-xs sm:text-sm font-semibold inline-flex items-center gap-2"
             >
-              <span>Explore Projects</span>
-              <ArrowDown className="w-4 h-4 text-slate-300" />
+              <span>Selected Works</span>
+              <ArrowDown className="w-4 h-4 text-orange-400" />
             </MagneticButton>
 
             <MagneticButton
               href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
               target="_blank"
-              className="crystal-button-secondary px-5 py-3 rounded-full text-slate-800 text-xs sm:text-sm font-medium inline-flex items-center gap-2 shadow-[0_6px_16px_-4px_rgba(15,23,42,0.06)]"
+              className="crystal-button-secondary px-6 py-3.5 rounded-full text-[#090d16] text-xs sm:text-sm font-semibold inline-flex items-center gap-2"
             >
-              <Download className="w-4 h-4 text-blue-600" />
+              <Download className="w-4 h-4 text-orange-600" />
               <span>Download Resume</span>
             </MagneticButton>
-
-            <a
-              href="#terminal"
-              className="crystal-pill px-4 py-3 rounded-full text-slate-700 hover:text-slate-950 text-xs font-medium inline-flex items-center gap-2 transition-all shadow-[0_4px_12px_rgba(15,23,42,0.04)]"
-            >
-              <Terminal className="w-4 h-4 text-slate-500" />
-              <span>Interactive CLI</span>
-            </a>
           </div>
         </div>
 
-        {/* Right Column: Floating Crystal Portrait */}
-        <div className="lg:col-span-5 xl:col-span-4 flex justify-center lg:justify-end">
+        {/* Right Column: Dual-Surface Executive Dossier */}
+        <div className="lg:col-span-5 flex flex-col gap-4">
           <div
             onClick={() =>
               setSelectedPhoto({
                 src: isaacPortrait,
-                alt: "Gbodimowo Isaac in navy suit and sunglasses",
+                alt: "Gbodimowo Isaac in dark formal suit and sunglasses",
                 title: "Gbodimowo Isaac",
                 subtitle: "Software Engineer & Network Systems Specialist",
-                tag: "PORTRAIT",
+                tag: "EXECUTIVE PORTRAIT",
                 location: "Lagos, Nigeria",
-                date: "Verified Spec",
+                date: "Verified Dossier",
                 context:
-                  "Official portrait of Gbodimowo Isaac. Dual expertise across scalable Next.js web architectures, enterprise Cisco IOS topologies, and hardware diagnostic engineering.",
+                  "Official portrait of Gbodimowo Isaac. Dual competency across scalable Next.js web architectures, enterprise Cisco IOS topologies, and hardware diagnostic engineering.",
               })
             }
-            className="group relative w-full max-w-sm crystal-surface rounded-3xl p-3.5 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.12),0_0_1px_1px_rgba(255,255,255,0.9)] cursor-pointer hover:shadow-[0_32px_64px_-16px_rgba(37,99,235,0.15)] transition-all duration-500"
+            className="group relative crystal-surface crystal-surface-hover rounded-3xl p-4 cursor-pointer"
           >
-            {/* Luminous Specular Refraction Catchlight */}
-            <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100/60 shadow-inner">
-              <Image
-                src={isaacPortrait}
-                alt="Gbodimowo Isaac in navy suit and sunglasses"
-                priority
-                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-              <div className="absolute top-3 right-3 p-2 rounded-full crystal-pill text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
-                <Maximize2 className="w-3.5 h-3.5" />
+            <div className="grid grid-cols-12 gap-4 items-center">
+              <div className="col-span-5 relative aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-inner">
+                <Image
+                  src={isaacPortrait}
+                  alt="Gbodimowo Isaac in dark formal suit"
+                  priority
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute top-2 right-2 p-1.5 rounded-full bg-[#090d16]/80 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3 h-3" />
+                </div>
+              </div>
+
+              <div className="col-span-7 space-y-3 pr-1">
+                <div>
+                  <span className="text-[10px] font-mono-tech uppercase tracking-wider text-orange-600 font-semibold">
+                    ARCHITECT DOSSIER
+                  </span>
+                  <h2 className="text-lg font-display font-bold text-[#090d16] leading-snug">
+                    Gbodimowo Isaac
+                  </h2>
+                  <p className="text-xs text-slate-600 mt-0.5">
+                    B.Sc. Computer Science, Babcock University
+                  </p>
+                </div>
+
+                <div className="space-y-1.5 pt-2 border-t border-slate-900/10 text-xs">
+                  <div className="flex items-center gap-2 text-slate-800 font-medium">
+                    <ShieldCheck className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+                    <span>CompTIA A+ Certified Core</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-800 font-medium">
+                    <Network className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+                    <span>Cisco CCNA 200-301 Track</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-800 font-medium">
+                    <Cpu className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+                    <span>Full-Stack Web & FastAPI</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Obsidian Telemetry Readout Strip */}
+          <div className="obsidian-surface rounded-3xl p-5 grid grid-cols-3 gap-4 text-left">
+            <div>
+              <div className="text-[10px] font-mono-tech uppercase text-slate-400">
+                HSRP Failover
+              </div>
+              <div className="text-2xl font-display font-bold text-white mt-0.5">
+                &lt;3.0s
+              </div>
+              <div className="text-[11px] text-orange-400 font-mono-tech">
+                Preempt Active
               </div>
             </div>
 
-            <div className="pt-3.5 px-1.5 flex items-center justify-between">
-              <div>
-                <div className="text-sm font-semibold text-slate-900 font-display">
-                  Gbodimowo Isaac
-                </div>
-                <div className="text-xs text-slate-500">
-                  B.Sc. Computer Science • CompTIA A+
-                </div>
+            <div className="border-l border-white/10 pl-4">
+              <div className="text-[10px] font-mono-tech uppercase text-slate-400">
+                Spatial Index
               </div>
-              <span className="crystal-pill text-[11px] font-medium text-slate-700 px-3 py-1 rounded-full">
-                Lagos, NG
-              </span>
+              <div className="text-2xl font-display font-bold text-white mt-0.5">
+                &lt;45ms
+              </div>
+              <div className="text-[11px] text-emerald-400 font-mono-tech">
+                Corridor Match
+              </div>
+            </div>
+
+            <div className="border-l border-white/10 pl-4">
+              <div className="text-[10px] font-mono-tech uppercase text-slate-400">
+                SSE Telemetry
+              </div>
+              <div className="text-2xl font-display font-bold text-white mt-0.5">
+                &lt;15ms
+              </div>
+              <div className="text-[11px] text-slate-300 font-mono-tech">
+                66/66 Tests Pass
+              </div>
             </div>
           </div>
         </div>

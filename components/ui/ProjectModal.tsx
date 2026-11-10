@@ -6,14 +6,9 @@ import {
   X,
   CheckCircle2,
   Network,
-  Cpu,
-  ArrowUpRight,
   Copy,
   Check,
-  Terminal,
   ExternalLink,
-  Globe,
-  Code2,
 } from "lucide-react";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -95,7 +90,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-all"
+            className="fixed inset-0 bg-[#090d16]/75 backdrop-blur-sm transition-all"
           />
 
           {/* Modal Container */}
@@ -107,20 +102,20 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden z-10 my-auto max-h-[90vh] flex flex-col"
           >
             {/* Modal Header */}
-            <div className="p-6 sm:p-7 border-b border-slate-200 bg-slate-50 flex items-start justify-between gap-4">
+            <div className="p-6 sm:p-7 border-b border-slate-800 bg-[#090d16] text-white flex items-start justify-between gap-4">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                <div className="flex items-center gap-2.5 mb-2">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono-tech font-semibold uppercase tracking-wider bg-[#ea580c]/15 text-[#fb923c] border border-[#ea580c]/30">
                     {project.category}
                   </span>
                   <span className="text-xs text-slate-400 font-mono-tech">
                     ID: {project.id}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
+                <h3 className="text-2xl font-display font-bold text-white tracking-tight">
                   {project.title}
                 </h3>
-                <p className="text-sm text-slate-600">{project.subtitle}</p>
+                <p className="text-sm text-slate-300">{project.subtitle}</p>
               </div>
 
               <div className="flex items-center gap-2">
@@ -129,16 +124,16 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                     href={project.demoLink}
                     target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                     rel="noreferrer"
-                    className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors shadow-xs"
+                    className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#ea580c] text-white text-xs font-semibold hover:bg-[#c2410c] transition-colors shadow-xs"
                   >
                     <span>Launch Project</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
                 <button
                   type="button"
                   onClick={onClose}
-                  className="p-2 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+                  className="p-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
                   aria-label="Close modal"
                 >
                   <X className="w-4 h-4" />
@@ -147,14 +142,14 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex border-b border-slate-200 px-6 sm:px-8 bg-white">
+            <div className="flex border-b border-slate-200 px-6 sm:px-8 bg-slate-50">
               <button
                 type="button"
                 onClick={() => setActiveTab("overview")}
-                className={`py-3 px-4 text-xs font-medium border-b-2 transition-colors ${
+                className={`py-3.5 px-4 text-xs font-semibold border-b-2 transition-colors ${
                   activeTab === "overview"
-                    ? "border-blue-600 text-blue-600 font-semibold"
-                    : "border-transparent text-slate-500 hover:text-slate-800"
+                    ? "border-[#ea580c] text-[#090d16]"
+                    : "border-transparent text-slate-500 hover:text-[#090d16]"
                 }`}
               >
                 Systems Overview
@@ -162,10 +157,10 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               <button
                 type="button"
                 onClick={() => setActiveTab("architecture")}
-                className={`py-3 px-4 text-xs font-medium border-b-2 transition-colors ${
+                className={`py-3.5 px-4 text-xs font-semibold border-b-2 transition-colors ${
                   activeTab === "architecture"
-                    ? "border-blue-600 text-blue-600 font-semibold"
-                    : "border-transparent text-slate-500 hover:text-slate-800"
+                    ? "border-[#ea580c] text-[#090d16]"
+                    : "border-transparent text-slate-500 hover:text-[#090d16]"
                 }`}
               >
                 Network & Protocols
@@ -174,10 +169,10 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 <button
                   type="button"
                   onClick={() => setActiveTab("cli")}
-                  className={`py-3 px-4 text-xs font-medium border-b-2 transition-colors ${
+                  className={`py-3.5 px-4 text-xs font-semibold border-b-2 transition-colors ${
                     activeTab === "cli"
-                      ? "border-blue-600 text-blue-600 font-semibold"
-                      : "border-transparent text-slate-500 hover:text-slate-800"
+                      ? "border-[#ea580c] text-[#090d16]"
+                      : "border-transparent text-slate-500 hover:text-[#090d16]"
                   }`}
                 >
                   CLI Config / Snippet
@@ -193,11 +188,13 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   {(project.demoLink || project.codeLink) && (
                     <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-3">
                       <div>
-                        <div className="text-xs font-semibold text-slate-900">
+                        <div className="text-xs font-bold text-[#090d16]">
                           Deployment & Repository Access
                         </div>
                         <div className="text-xs text-slate-600 mt-0.5">
-                          {project.demoLink ? "Production application is active." : "Repository source code available."}
+                          {project.demoLink
+                            ? "Production application is active."
+                            : "Repository source code available."}
                         </div>
                       </div>
 
@@ -207,10 +204,10 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                             href={project.demoLink}
                             target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                             rel="noreferrer"
-                            className="px-4 py-2 rounded-lg bg-slate-900 text-white font-medium text-xs hover:bg-slate-800 transition-colors inline-flex items-center gap-1.5 shadow-xs"
+                            className="px-4 py-2 rounded-lg bg-[#090d16] text-white font-semibold text-xs hover:bg-[#ea580c] transition-colors inline-flex items-center gap-1.5 shadow-xs"
                           >
                             <span>Open Project</span>
-                            <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
+                            <ExternalLink className="w-3.5 h-3.5" />
                           </a>
                         )}
                         {project.codeLink && (
@@ -218,7 +215,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                             href={project.codeLink}
                             target="_blank"
                             rel="noreferrer"
-                            className="px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-medium hover:bg-slate-100 inline-flex items-center gap-1.5 transition-colors"
+                            className="px-3.5 py-2 rounded-lg bg-white border border-slate-300 text-[#090d16] text-xs font-semibold hover:border-[#090d16] inline-flex items-center gap-1.5 transition-colors"
                           >
                             <GithubIcon className="w-3.5 h-3.5" />
                             <span>GitHub</span>
@@ -229,7 +226,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   )}
 
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-semibold text-slate-500 mb-2">
+                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-2">
                       Engineering Scope
                     </h4>
                     <p className="text-sm text-slate-700 leading-relaxed">
@@ -242,15 +239,15 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                     {project.metrics.map((m, idx) => (
                       <div
                         key={idx}
-                        className="p-4 rounded-xl bg-slate-50 border border-slate-200"
+                        className="p-4 rounded-xl bg-[#090d16] text-white border border-slate-800"
                       >
-                        <div className="text-xs font-medium text-slate-500 uppercase">
+                        <div className="text-[11px] font-mono-tech text-slate-400 uppercase tracking-wider">
                           {m.label}
                         </div>
-                        <div className="text-xl font-bold text-slate-900 mt-1">
+                        <div className="text-xl font-display font-bold text-white mt-1 tabular-nums">
                           {m.value}
                         </div>
-                        <div className="text-xs text-slate-600 mt-0.5">
+                        <div className="text-xs text-slate-400 mt-0.5">
                           {m.detail}
                         </div>
                       </div>
@@ -259,7 +256,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
                   {/* Key Engineering Highlights */}
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-semibold text-slate-500 mb-3">
+                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-3">
                       Core Implementation Highlights
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -268,7 +265,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                           key={idx}
                           className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-start gap-3"
                         >
-                          <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-[#ea580c] shrink-0 mt-0.5" />
                           <span className="text-xs text-slate-700 leading-relaxed">
                             {highlight}
                           </span>
@@ -282,7 +279,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               {activeTab === "architecture" && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-semibold text-slate-500 mb-3">
+                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-3">
                       Network Topology & Component Hierarchy
                     </h4>
                     <div className="space-y-2.5">
@@ -291,9 +288,9 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                           key={idx}
                           className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-start gap-3"
                         >
-                          <Network className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                          <div className="text-xs text-slate-700 leading-relaxed">
-                            <span className="font-semibold text-slate-900">Step {idx + 1}:</span> {topo}
+                          <Network className="w-4 h-4 text-[#ea580c] shrink-0 mt-0.5" />
+                          <div className="text-xs text-slate-800 leading-relaxed font-medium">
+                            {topo}
                           </div>
                         </div>
                       ))}
@@ -301,14 +298,14 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   </div>
 
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-semibold text-slate-500 mb-3">
+                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-3">
                       Protocols & Standards Implemented
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {project.protocols.map((proto, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1.5 rounded-md text-xs font-mono-tech bg-slate-100 border border-slate-200 text-slate-800"
+                          className="px-3 py-1.5 rounded-md text-xs font-mono-tech bg-[#090d16] text-slate-200 border border-slate-800"
                         >
                           {proto}
                         </span>
@@ -321,29 +318,29 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               {activeTab === "cli" && project.cliSnippet && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="text-xs text-slate-600">
+                    <div className="text-xs font-mono-tech text-slate-600">
                       Configuration syntax for Cisco IOS / Platform
                     </div>
                     <button
                       type="button"
                       onClick={handleCopyCli}
-                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-slate-700 inline-flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs font-semibold text-[#090d16] inline-flex items-center gap-1.5 transition-colors"
                     >
                       {copied ? (
                         <>
                           <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="text-emerald-700 font-medium">Copied</span>
+                          <span className="text-emerald-700">Copied</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3.5 h-3.5 text-slate-500" />
+                          <Copy className="w-3.5 h-3.5 text-slate-600" />
                           <span>Copy Config</span>
                         </>
                       )}
                     </button>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed">
+                  <div className="p-4 rounded-xl bg-[#090d16] border border-slate-800 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed">
                     <pre>{project.cliSnippet}</pre>
                   </div>
                 </div>
@@ -356,7 +353,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 text-[11px]"
+                    className="px-2.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700 font-mono-tech text-[11px]"
                   >
                     {tag}
                   </span>
@@ -366,7 +363,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-medium transition-colors"
+                className="px-4 py-1.5 rounded-lg bg-[#090d16] text-white hover:bg-[#ea580c] text-xs font-semibold transition-colors"
               >
                 Close
               </button>

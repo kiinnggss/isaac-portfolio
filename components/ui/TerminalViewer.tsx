@@ -16,24 +16,22 @@ export default function TerminalViewer() {
     {
       id: "1",
       type: "system",
-      text: "Isaac Digital Edge Gateway [Version 2.4.0-release WAT]",
+      text: "Isaac Digital Edge Gateway [Lagos Node / UTC+1]",
     },
     {
       id: "2",
       type: "system",
-      text: "Connected to Lagos node (UTC+1). Type 'help' or click presets below for commands.",
+      text: "Type 'help' or click a diagnostic preset above to run live probes.",
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const terminalEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const outputContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    scrollToBottom();
+    if (outputContainerRef.current) {
+      outputContainerRef.current.scrollTop = outputContainerRef.current.scrollHeight;
+    }
   }, [lines]);
 
   const runCommand = async (cmdString: string) => {
@@ -67,8 +65,6 @@ export default function TerminalViewer() {
         type: "output",
         text: `Available Commands:
   ping <target>       Live ICMP/TCP probe against target (e.g. ping 8.8.8.8)
-  subnet <cidr>       Calculate network address, broadcast, and mask (e.g. subnet 192.168.10.0/24)
-  traceroute <host>   Simulate packet routing hops via Lagos transit gateways
   hsrp status         Show Cisco IOS HSRP Active/Standby state table
   vlan list           Show VLAN segmentation and 802.1Q trunk mappings
   neofetch            Display system telemetry and hardware spec overview
@@ -89,8 +85,7 @@ export default function TerminalViewer() {
         text: `Name: Gbodimowo Isaac
 Role: Software Engineer & Network Systems Specialist
 Base: Lagos, Nigeria (UTC+1)
-Tagline: "Architecting resilient digital infrastructure, bridging scalable web development with enterprise networking and systems diagnostics."
-Status: Open for Software & Systems Roles`,
+Summary: Engineering resilient digital infrastructure across full-stack TypeScript platforms, Cisco IOS enterprise routing, and CompTIA A+ hardware diagnostics.`,
       });
       setLines(newLines);
       setInput("");
@@ -102,9 +97,9 @@ Status: Open for Software & Systems Roles`,
         id: (Date.now() + 1).toString(),
         type: "output",
         text: `Technical Competencies:
-  • Networking: Cisco IOS, HSRP v2, 802.1Q VLANs, Extended ACLs, NAT/PAT, Subnetting (VLSM), Packet Tracer
-  • Web Development: TypeScript, Next.js (App Router), React 19, Tailwind CSS, REST APIs, Node.js
-  • Systems & DB: PostgreSQL, SQLite, Linux shell scripting, CompTIA A+ hardware diagnostics`,
+  * Networking: Cisco IOS, HSRP v2, 802.1Q VLANs, Extended ACLs, NAT/PAT, Subnetting (VLSM), Packet Tracer
+  * Web Engineering: TypeScript, Next.js 16 (App Router), React 19, FastAPI, Tailwind CSS, REST APIs
+  * Systems & DB: PostgreSQL, SQLite, Linux shell scripting, CompTIA A+ hardware diagnostics`,
       });
       setLines(newLines);
       setInput("");
@@ -117,11 +112,11 @@ Status: Open for Software & Systems Roles`,
         type: "output",
         text: `       /\\_          isaac@lagos-edge
       /    \\         -----------------
-     /  /\\  \\        OS: Linux Mint / Darwin
+     /  /\\  \\        OS: Linux / Next.js 16 Runtime
     /  /  \\  \\       Host: Systems Architecture Lab
    /__/    \\__\\      Uptime: 99.98% High Availability
-                     Shell: bash 5.2 / Next.js CLI
-                     Certifications: CompTIA A+ | CCNA Candidate
+                     Shell: bash 5.2 / Edge CLI
+                     Credentials: CompTIA A+ / CCNA Track
                      Degree: B.Sc. Computer Science (Babcock)
                      Focus: Web Architecture & Enterprise Routing`,
       });
@@ -172,14 +167,14 @@ VLAN  Name                    Status    Ports
 Lagos, Nigeria | isaacgbodimowo@gmail.com
 
 Education:
-  • B.Sc. Computer Science - Babcock University
+  * B.Sc. Computer Science - Babcock University
 Certifications:
-  • CompTIA A+ Certified
-  • Cisco CCNA Candidate (200-301)
-  • New Horizons Technical Certification
+  * CompTIA A+ Certified
+  * Cisco CCNA Candidate (200-301)
+  * New Horizons Technical Certification
 Experience:
-  • Web Developer Intern - Hoffenheim Tech
-  • CS & Programming Instructor - Edkints International School`,
+  * Web Developer Intern - Hoffenheim Tech
+  * CS & Programming Instructor - Edkints International School`,
       });
       setLines(newLines);
       setInput("");
@@ -204,17 +199,18 @@ Experience:
         let pingOutput = "";
         if (res.ok) {
           const json = await res.json();
-          pingOutput = `64 bytes from ${target}: icmp_seq=1 ttl=117 time=${json.latencyMs || duration} ms
-64 bytes from ${target}: icmp_seq=2 ttl=117 time=${(json.latencyMs || duration) + 1} ms
-64 bytes from ${target}: icmp_seq=3 ttl=117 time=${Math.max(1, (json.latencyMs || duration) - 1)} ms
+          const rtt = json.latencyMs || duration;
+          pingOutput = `64 bytes from ${target}: icmp_seq=1 ttl=117 time=${rtt} ms
+64 bytes from ${target}: icmp_seq=2 ttl=117 time=${rtt + 1} ms
+64 bytes from ${target}: icmp_seq=3 ttl=117 time=${Math.max(1, rtt - 1)} ms
 --- ${target} ping statistics ---
-3 packets transmitted, 3 packets received, 0.0% packet loss, round-trip min/avg/max = ${duration - 1}/${duration}/${duration + 1} ms`;
+3 packets transmitted, 3 packets received, 0.0% packet loss, rtt avg = ${rtt} ms`;
         } else {
           pingOutput = `64 bytes from ${target}: icmp_seq=1 ttl=116 time=${duration} ms
 64 bytes from ${target}: icmp_seq=2 ttl=116 time=${duration + 2} ms
 64 bytes from ${target}: icmp_seq=3 ttl=116 time=${Math.max(2, duration - 1)} ms
 --- ${target} ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, rtt avg: ${duration}ms`;
+3 packets transmitted, 3 received, 0% packet loss, rtt avg = ${duration} ms`;
         }
 
         setLines((prev) => [
@@ -267,19 +263,19 @@ Experience:
   ];
 
   return (
-    <div className="crystal-surface rounded-3xl p-8 sm:p-10 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.08)]">
+    <div className="crystal-surface rounded-3xl p-7 sm:p-10">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200/50">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-900/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xs">
+          <div className="w-10 h-10 rounded-2xl bg-[#090d16] text-orange-500 flex items-center justify-center">
             <TerminalIcon className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-slate-900 font-display">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#090d16] font-display">
               Interactive Systems Terminal
             </h3>
-            <p className="text-xs text-slate-500 font-normal">
-              Simulated edge shell for network diagnostics and system telemetry.
+            <p className="text-xs text-slate-600">
+              Execute diagnostic commands or click a preset below.
             </p>
           </div>
         </div>
@@ -291,7 +287,7 @@ Experience:
               key={preset.label}
               type="button"
               onClick={() => runCommand(preset.cmd)}
-              className="crystal-pill px-3 py-1.5 rounded-full text-xs font-mono-tech text-slate-700 hover:text-slate-950 hover:bg-white transition-all shadow-xs"
+              className="px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-[#090d16] hover:text-white border border-white text-xs font-mono-tech text-slate-800 transition-all shadow-xs cursor-pointer"
             >
               {preset.label}
             </button>
@@ -300,17 +296,16 @@ Experience:
       </div>
 
       {/* Terminal Window */}
-      <div className="mt-6 rounded-2xl bg-slate-950/95 backdrop-blur-2xl border border-slate-800/80 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.45)] overflow-hidden flex flex-col h-96">
-        {/* Window Chrome Header */}
-        <div className="px-5 py-3 bg-slate-900/80 border-b border-slate-800/70 flex items-center justify-between text-xs text-slate-400">
+      <div className="mt-6 rounded-2xl obsidian-surface overflow-hidden flex flex-col h-96">
+        <div className="px-5 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-rose-500/80 shadow-[0_0_6px_rgba(244,63,94,0.4)]" />
-              <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
-              <span className="w-3 h-3 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
+              <span className="w-3 h-3 rounded-full bg-rose-500/80" />
+              <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
             </div>
-            <div className="ml-2 flex items-center gap-2 pl-2 border-l border-slate-800">
-              <div className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-emerald-500/60 shadow-xs">
+            <div className="ml-2 flex items-center gap-2 pl-2 border-l border-white/10">
+              <div className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-orange-500/70">
                 <Image
                   src={isaac3dAvatar}
                   alt="Operator"
@@ -319,29 +314,28 @@ Experience:
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="font-mono-tech text-xs text-slate-300">
+              <span className="font-mono-tech text-xs text-slate-200">
                 isaac@lagos-edge:~
-              </span>
-              <span className="text-[10px] font-mono-tech px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
-                operator
               </span>
             </div>
           </div>
-          <span className="text-[11px] font-mono-tech text-slate-500">bash</span>
+          <span className="text-[11px] font-mono-tech text-orange-400">bash 5.2</span>
         </div>
 
-        {/* Terminal Output Area */}
-        <div className="flex-1 p-5 overflow-y-auto font-mono-tech text-xs space-y-2 leading-relaxed text-slate-200">
+        <div
+          ref={outputContainerRef}
+          className="flex-1 p-5 overflow-y-auto font-mono-tech text-xs space-y-2 leading-relaxed text-slate-200"
+        >
           {lines.map((line) => (
             <div key={line.id}>
               {line.type === "input" && (
-                <div className="text-slate-100 font-semibold">{line.text}</div>
+                <div className="text-white font-semibold">{line.text}</div>
               )}
               {line.type === "output" && (
                 <pre className="text-slate-300 whitespace-pre-wrap">{line.text}</pre>
               )}
               {line.type === "system" && (
-                <div className="text-blue-400">{line.text}</div>
+                <div className="text-orange-400">{line.text}</div>
               )}
               {line.type === "error" && (
                 <div className="text-rose-400">{line.text}</div>
@@ -349,22 +343,21 @@ Experience:
             </div>
           ))}
           {loading && (
-            <div className="text-amber-400 flex items-center gap-2 animate-pulse">
+            <div className="text-orange-400 flex items-center gap-2">
               <span>Executing probe...</span>
             </div>
           )}
-          <div ref={terminalEndRef} />
         </div>
 
-        {/* Input Form */}
         <form
           onSubmit={handleSubmit}
-          className="p-3.5 bg-slate-900/90 border-t border-slate-800/70 flex items-center gap-3"
+          className="p-3.5 bg-white/5 border-t border-white/10 flex items-center gap-3"
         >
-          <span className="font-mono-tech text-emerald-400 text-xs pl-2">
+          <label htmlFor="terminal-cmd-input" className="font-mono-tech text-orange-400 text-xs pl-2 shrink-0">
             isaac@lagos-edge:~$
-          </span>
+          </label>
           <input
+            id="terminal-cmd-input"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -374,7 +367,7 @@ Experience:
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-1.5 rounded-full crystal-button text-white text-xs font-medium transition-all shadow-xs"
+            className="px-4 py-1.5 rounded-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold transition-all cursor-pointer"
           >
             Run
           </button>
