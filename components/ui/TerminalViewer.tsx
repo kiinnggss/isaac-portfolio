@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Terminal as TerminalIcon } from "lucide-react";
-import isaac3dAvatar from "@/public/images/isaac-3d-avatar.jpg";
+import isaac3dAvatar from "@/public/images/isaac-clay-bust.png";
 
 interface TerminalLine {
   id: string;
@@ -263,18 +263,28 @@ Experience:
   ];
 
   return (
-    <div className="crystal-surface rounded-3xl p-7 sm:p-10">
+    <div className="neo-card rounded-3xl p-6 sm:p-8">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-900/10">
+      <div
+        className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b-2"
+        style={{ borderColor: "var(--theme-border)" }}
+      >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#090d16] text-orange-500 flex items-center justify-center">
+          <div
+            className="w-10 h-10 rounded-2xl flex items-center justify-center border-2"
+            style={{
+              backgroundColor: "var(--theme-accent)",
+              color: "var(--theme-accent-text)",
+              borderColor: "var(--theme-border)",
+            }}
+          >
             <TerminalIcon className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-[#090d16] font-display">
+            <h3 className="text-xl sm:text-2xl font-extrabold font-display uppercase tracking-wide">
               Interactive Systems Terminal
             </h3>
-            <p className="text-xs text-slate-600">
+            <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
               Execute diagnostic commands or click a preset below.
             </p>
           </div>
@@ -287,7 +297,7 @@ Experience:
               key={preset.label}
               type="button"
               onClick={() => runCommand(preset.cmd)}
-              className="px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-[#090d16] hover:text-white border border-white text-xs font-mono-tech text-slate-800 transition-all shadow-xs cursor-pointer"
+              className="px-3.5 py-1.5 rounded-full neo-pill text-xs font-mono-tech font-semibold hover:opacity-80 transition-opacity cursor-pointer"
             >
               {preset.label}
             </button>
@@ -296,7 +306,7 @@ Experience:
       </div>
 
       {/* Terminal Window */}
-      <div className="mt-6 rounded-2xl obsidian-surface overflow-hidden flex flex-col h-96">
+      <div className="mt-6 rounded-2xl neo-console overflow-hidden flex flex-col h-96">
         <div className="px-5 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5">
@@ -305,7 +315,7 @@ Experience:
               <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
             </div>
             <div className="ml-2 flex items-center gap-2 pl-2 border-l border-white/10">
-              <div className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-orange-500/70">
+              <div className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-white/40">
                 <Image
                   src={isaac3dAvatar}
                   alt="Operator"
@@ -319,7 +329,9 @@ Experience:
               </span>
             </div>
           </div>
-          <span className="text-[11px] font-mono-tech text-orange-400">bash 5.2</span>
+          <span className="text-[11px] font-mono-tech" style={{ color: "var(--theme-accent)" }}>
+            bash 5.2
+          </span>
         </div>
 
         <div
@@ -335,7 +347,7 @@ Experience:
                 <pre className="text-slate-300 whitespace-pre-wrap">{line.text}</pre>
               )}
               {line.type === "system" && (
-                <div className="text-orange-400">{line.text}</div>
+                <div style={{ color: "var(--theme-accent)" }}>{line.text}</div>
               )}
               {line.type === "error" && (
                 <div className="text-rose-400">{line.text}</div>
@@ -343,7 +355,7 @@ Experience:
             </div>
           ))}
           {loading && (
-            <div className="text-orange-400 flex items-center gap-2">
+            <div className="flex items-center gap-2" style={{ color: "var(--theme-accent)" }}>
               <span>Executing probe...</span>
             </div>
           )}
@@ -353,7 +365,11 @@ Experience:
           onSubmit={handleSubmit}
           className="p-3.5 bg-white/5 border-t border-white/10 flex items-center gap-3"
         >
-          <label htmlFor="terminal-cmd-input" className="font-mono-tech text-orange-400 text-xs pl-2 shrink-0">
+          <label
+            htmlFor="terminal-cmd-input"
+            className="font-mono-tech text-xs pl-2 shrink-0 font-semibold"
+            style={{ color: "var(--theme-accent)" }}
+          >
             isaac@lagos-edge:~$
           </label>
           <input
@@ -367,7 +383,7 @@ Experience:
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-1.5 rounded-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold transition-all cursor-pointer"
+            className="px-4 py-1.5 rounded-full neo-btn-primary text-xs font-bold cursor-pointer"
           >
             Run
           </button>

@@ -14,9 +14,11 @@ import Footer from "@/components/ui/Footer";
 import CommandPalette from "@/components/ui/CommandPalette";
 import ResumeModal from "@/components/ui/ResumeModal";
 import PhotoModal, { PhotoDetails } from "@/components/ui/PhotoModal";
+import ThemeSwitcherModal from "@/components/ui/ThemeSwitcherModal";
 import Toast, { ToastMessage } from "@/components/ui/Toast";
 import ScrollAvatar from "@/components/ui/ScrollAvatar";
 import { featuredProjects } from "@/lib/projects-data";
+import { usePortfolioTheme } from "@/components/ui/ThemeProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 import isaacPortrait from "@/public/images/isaac-portrait.jpg";
@@ -26,10 +28,12 @@ import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
 export default function Home() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
+  const [themeModalOpen, setThemeModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "web" | "network">("all");
   const [isCoverOpen, setIsCoverOpen] = useState(true);
+  const { effectiveAccent } = usePortfolioTheme();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -139,8 +143,14 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen text-[#090d16] selection:bg-orange-600 selection:text-white">
-      {/* 100dvh Editorial Cover Page with Explicit Open Action */}
+    <div
+      className="relative min-h-screen bg-memphis-canvas"
+      style={{
+        backgroundColor: "var(--theme-bg)",
+        color: "var(--theme-ink)",
+      }}
+    >
+      {/* 100dvh Editorial Cover Page */}
       <AnimatePresence>
         {isCoverOpen && (
           <motion.div
@@ -149,11 +159,14 @@ export default function Home() {
             exit={{
               opacity: 0,
               y: -80,
-              transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+              transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
             }}
             className="fixed inset-0 z-50 overflow-y-auto"
           >
-            <CoverPage onOpenPortfolio={handleOpenPortfolio} />
+            <CoverPage
+              onOpenPortfolio={handleOpenPortfolio}
+              onOpenThemeSwitcher={() => setThemeModalOpen(true)}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -163,7 +176,7 @@ export default function Home() {
         <Navbar
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
           onOpenResume={() => setResumeModalOpen(true)}
-          onCopyEmail={handleCopyEmail}
+          onOpenThemeSwitcher={() => setThemeModalOpen(true)}
           onShowCover={handleShowCover}
         />
       )}
@@ -172,27 +185,27 @@ export default function Home() {
       <ScrollAvatar />
 
       <main className="relative z-10">
-        {/* Split Executive Hero Section */}
+        {/* Creative Mints Isometric Studio Hero */}
         <HeroSection />
 
-        {/* Featured Projects Showcase (2x2 Balanced Grid) */}
+        {/* Featured Projects Showcase */}
         <section id="work" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div>
-              <div className="inline-flex items-center gap-2 text-[11px] font-mono-tech font-semibold uppercase tracking-[0.16em] text-[#ea580c] mb-3 px-3.5 py-1.5 rounded-full bg-[#090d16] border border-slate-800 shadow-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ea580c]" />
-                <span>Production Systems & Architecture</span>
+              <div className="inline-flex items-center gap-2 text-[11px] font-mono-tech font-bold uppercase tracking-[0.16em] mb-3 px-3.5 py-1.5 rounded-full neo-pill">
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: effectiveAccent }} />
+                <span>Production Systems &amp; Architecture</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
+              <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">
                 Selected Works
               </h2>
-              <p className="mt-3 text-base text-slate-700 max-w-[60ch] font-normal">
+              <p className="mt-3 text-base max-w-[60ch]" style={{ color: "var(--theme-muted)" }}>
                 Distributed web architectures, Cisco Packet Tracer enterprise topologies, and high-concurrency client platforms.
               </p>
             </div>
 
-            {/* Crystal Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-full bg-white/80 backdrop-blur-md shadow-xs border border-white">
+            {/* Filter Pills */}
+            <div className="flex flex-wrap items-center gap-2">
               {(
                 [
                   { id: "all", label: `All Works (${featuredProjects.length})` },
@@ -204,10 +217,8 @@ export default function Home() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveFilter(tab.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-                    activeFilter === tab.id
-                      ? "bg-[#090d16] text-white shadow-xs"
-                      : "text-slate-700 hover:text-[#090d16] hover:bg-slate-200/60"
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    activeFilter === tab.id ? "neo-btn-primary" : "neo-pill hover:opacity-80"
                   }`}
                 >
                   {tab.label}
@@ -216,7 +227,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 2x2 Balanced Projects Grid */}
           <motion.div layout className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
@@ -233,24 +243,21 @@ export default function Home() {
         <section id="terminal" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
-                Network Terminal & Topology
+              <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">
+                Network Terminal &amp; Topology
               </h2>
-              <p className="mt-3 text-base text-slate-700 max-w-[60ch] font-normal">
+              <p className="mt-3 text-base max-w-[60ch]" style={{ color: "var(--theme-muted)" }}>
                 Run live probes against the network edge, inspect HSRP gateway redundancy, or explore the interactive Cisco topology below.
               </p>
             </div>
 
-            <div className="px-4 py-2 rounded-full bg-[#090d16] border border-slate-800 text-xs font-mono-tech text-slate-200 flex items-center gap-2 shadow-xs">
+            <div className="px-4 py-2 rounded-full neo-console text-xs font-mono-tech flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Active Edge Node: Lagos</span>
             </div>
           </div>
 
-          {/* Interactive Cisco SVG Topology Inspector */}
           <CiscoTopologyViewer />
-
-          {/* Interactive Terminal Emulator */}
           <TerminalViewer />
         </section>
 
@@ -261,7 +268,6 @@ export default function Home() {
         <ContactSection />
       </main>
 
-      {/* Footer */}
       <Footer />
 
       {/* Global Command Palette (Cmd+K) */}
@@ -271,6 +277,20 @@ export default function Home() {
         onOpenResume={() => setResumeModalOpen(true)}
         onOpenPhoto={handleOpenPhoto}
         onCopyEmail={handleCopyEmail}
+        onOpenThemeSwitcher={() => setThemeModalOpen(true)}
+      />
+
+      {/* Workspace Theme Switcher Modal */}
+      <ThemeSwitcherModal
+        isOpen={themeModalOpen}
+        onClose={() => setThemeModalOpen(false)}
+        onSaved={(name) =>
+          setToast({
+            id: Date.now().toString(),
+            text: `Workspace theme saved: ${name}`,
+            type: "success",
+          })
+        }
       />
 
       {/* In-Browser Resume Quick Reader Modal */}

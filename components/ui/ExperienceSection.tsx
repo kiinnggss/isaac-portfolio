@@ -6,9 +6,11 @@ import { Briefcase, GraduationCap, Laptop, Maximize2 } from "lucide-react";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
 import isaacGraduation from "@/public/images/isaac-graduation.jpg";
 import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
+import { usePortfolioTheme } from "./ThemeProvider";
 
 export default function ExperienceSection() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
+  const { effectiveAccent } = usePortfolioTheme();
 
   const experiences = [
     {
@@ -78,12 +80,11 @@ export default function ExperienceSection() {
 
   return (
     <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Section Header (No Eyebrow per Restraint Rule) */}
-      <div className="mb-14 max-w-2xl">
-        <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
-          Experience & Education
+      <div className="mb-12 max-w-2xl">
+        <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">
+          Experience &amp; Education
         </h2>
-        <p className="mt-3 text-base text-slate-800 font-normal leading-relaxed">
+        <p className="mt-3 text-base leading-relaxed" style={{ color: "var(--theme-muted)" }}>
           Industry software delivery, computer science instruction, and university training.
         </p>
       </div>
@@ -94,68 +95,84 @@ export default function ExperienceSection() {
           return (
             <div
               key={exp.role + exp.organization}
-              className="crystal-surface crystal-surface-hover rounded-3xl p-7 sm:p-9"
+              className="neo-card neo-card-hover rounded-3xl p-6 sm:p-8"
             >
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-2xl bg-[#090d16] text-orange-500 flex items-center justify-center shrink-0 mt-1">
+                  <div
+                    className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 mt-1 border-2"
+                    style={{
+                      backgroundColor: effectiveAccent,
+                      color: "var(--theme-accent-text)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
                     <Icon className="w-5 h-5" />
                   </div>
 
                   <div>
                     <div className="flex flex-wrap items-center gap-2.5">
-                      <span className="px-3 py-1 rounded-full bg-[#090d16] text-white text-[11px] font-mono-tech uppercase tracking-wider">
+                      <span className="px-3 py-1 rounded-full neo-console text-[11px] font-mono-tech uppercase tracking-wider font-semibold">
                         {exp.period}
                       </span>
-                      <span className="text-xs font-mono-tech text-slate-600">
+                      <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
                         {exp.location}
                       </span>
                     </div>
 
-                    <h3 className="text-2xl font-bold text-[#090d16] mt-2.5 font-display">
+                    <h3 className="text-2xl font-extrabold mt-2.5 font-display uppercase tracking-wide">
                       {exp.role}
                     </h3>
-                    <div className="text-sm font-semibold text-orange-600 font-display">
+                    <div className="text-sm font-bold font-display" style={{ color: effectiveAccent }}>
                       {exp.organization}
-                    </div>
-
-                    <ul className="mt-4 space-y-2.5 max-w-3xl">
-                      {exp.highlights.map((h, idx) => (
-                        <li key={idx} className="text-sm text-slate-700 flex items-start gap-2.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-orange-600 shrink-0 mt-2" />
-                          <span className="leading-relaxed">{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-wrap gap-1.5 mt-6">
-                      {exp.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="crystal-pill px-3 py-1 rounded-full text-xs font-mono-tech text-slate-800 font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
                     </div>
                   </div>
                 </div>
 
                 {exp.photo && exp.photoDetails && (
                   <div
-                    onClick={() => setSelectedPhoto(exp.photoDetails)}
-                    className="relative w-28 sm:w-32 h-32 sm:h-36 rounded-2xl overflow-hidden shrink-0 cursor-pointer group bg-slate-900 shadow-md transition-transform hover:scale-105 self-start border border-white"
+                    onClick={() => setSelectedPhoto(exp.photoDetails!)}
+                    className="group relative w-full md:w-36 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 shrink-0"
+                    style={{ borderColor: "var(--theme-border)" }}
                   >
                     <Image
                       src={exp.photo}
                       alt={exp.photoDetails.alt}
-                      className="w-full h-full object-cover object-top"
+                      fill
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute top-2 right-2 p-1.5 rounded-full bg-[#090d16]/80 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Maximize2 className="w-3 h-3" />
+                    <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <Maximize2 className="w-4 h-4 text-white" />
                     </div>
                   </div>
                 )}
+              </div>
+
+              <ul className="mt-5 space-y-2 text-sm leading-relaxed" style={{ color: "var(--theme-ink)" }}>
+                {exp.highlights.map((bullet, bIdx) => (
+                  <li key={bIdx} className="flex items-start gap-2.5">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                      style={{ backgroundColor: effectiveAccent }}
+                    />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {exp.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 rounded-full text-[11px] font-mono-tech font-semibold border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           );

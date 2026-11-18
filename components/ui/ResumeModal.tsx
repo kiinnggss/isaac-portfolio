@@ -52,16 +52,25 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 15 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-4xl max-h-[90vh] bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
+            className="relative w-full max-w-4xl max-h-[90vh] neo-card rounded-2xl overflow-hidden flex flex-col z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header Toolbar */}
-            <div className="p-4 sm:p-5 border-b border-slate-800 bg-[#090d16] text-white flex items-center justify-between">
+            <div
+              className="p-4 sm:p-5 border-b-2 neo-console border-x-0 border-t-0 flex items-center justify-between"
+              style={{ borderColor: "var(--theme-border)" }}
+            >
               <div className="flex items-center gap-2.5">
-                <span className="px-2.5 py-1 rounded-md bg-[#ea580c]/15 text-[#fb923c] border border-[#ea580c]/30 text-[11px] font-mono-tech font-semibold uppercase tracking-wider">
+                <span
+                  className="px-2.5 py-1 rounded-md text-[11px] font-mono-tech font-bold uppercase tracking-wider"
+                  style={{
+                    backgroundColor: "var(--theme-accent)",
+                    color: "var(--theme-accent-text)",
+                  }}
+                >
                   Curriculum Vitae
                 </span>
-                <span className="text-xs text-slate-300 hidden sm:inline font-mono-tech">
+                <span className="text-xs opacity-75 hidden sm:inline font-mono-tech">
                   Gbodimowo Isaac / Verified Specification
                 </span>
               </div>
@@ -70,7 +79,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 hover:bg-slate-800 text-xs font-medium inline-flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-white/10 border border-white/15 hover:bg-white/20 text-xs font-medium inline-flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Print</span>
@@ -80,7 +89,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
                   target="_blank"
                   download="Gbodimowo_Isaac_Resume.pdf"
-                  className="px-3.5 py-1.5 rounded-lg bg-[#ea580c] text-white hover:bg-[#c2410c] text-xs font-semibold inline-flex items-center gap-1.5 transition-colors shadow-xs"
+                  className="px-3.5 py-1.5 rounded-lg neo-btn-primary text-xs font-bold inline-flex items-center gap-1.5"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download PDF</span>
@@ -89,7 +98,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                  className="p-1.5 rounded-lg bg-white/10 border border-white/15 hover:bg-white/20 transition-colors cursor-pointer"
                   aria-label="Close modal"
                 >
                   <X className="w-4 h-4" />

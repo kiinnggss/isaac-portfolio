@@ -16,9 +16,12 @@ import {
   Network,
   CheckCircle2,
   FileText,
+  Palette,
+  Play,
 } from "lucide-react";
 import isaacPortraitBust from "@/public/images/isaac-portrait-bust.png";
 import { getAssetPath } from "@/lib/paths";
+import { usePortfolioTheme } from "@/components/ui/ThemeProvider";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -42,9 +45,14 @@ function LinkedinIcon({ className = "w-4 h-4" }: { className?: string }) {
 
 interface CoverPageProps {
   onOpenPortfolio: (sectionHash?: string) => void;
+  onOpenThemeSwitcher: () => void;
 }
 
-export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
+export default function CoverPage({
+  onOpenPortfolio,
+  onOpenThemeSwitcher,
+}: CoverPageProps) {
+  const { theme, effectiveAccent } = usePortfolioTheme();
   const prefersReducedMotion = useReducedMotion();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -52,26 +60,17 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
   const springX = useSpring(mouseX, { stiffness: 150, damping: 22 });
   const springY = useSpring(mouseY, { stiffness: 150, damping: 22 });
 
-  const rotateX = useTransform(springY, [-0.5, 0.5], [6, -6]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-6, 6]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-5, 5]);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (e.deltaY > 35) {
-        onOpenPortfolio();
-      }
-    };
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === " ") {
+      if (e.deltaY > 40) {
         onOpenPortfolio();
       }
     };
     window.addEventListener("wheel", handleWheel, { passive: true });
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("wheel", handleWheel);
   }, [onOpenPortfolio]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -90,55 +89,73 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-[100dvh] w-full bg-[#a8b4bc] bg-architectural-grid text-[#090d16] flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-5 sm:py-7 overflow-hidden select-none"
+      className="relative min-h-[100dvh] w-full bg-memphis-canvas flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-5 sm:py-7 overflow-hidden select-none"
+      style={{
+        backgroundColor: "var(--theme-bg)",
+        color: "var(--theme-ink)",
+      }}
     >
-      {/* Top Architectural Bar */}
-      <header className="relative z-30 w-full max-w-7xl mx-auto h-14 flex items-center justify-between gap-4 border-b border-slate-900/10 pb-3">
-        <div className="flex items-center gap-2.5 font-display font-bold text-base sm:text-lg tracking-tight text-[#090d16]">
-          <span className="w-6 h-6 rounded-full bg-[#090d16] text-white flex items-center justify-center text-xs font-mono-tech">
+      {/* Top Studio Header */}
+      <header
+        className="relative z-30 w-full max-w-7xl mx-auto h-14 flex items-center justify-between gap-4 pb-3 border-b-2"
+        style={{ borderColor: "var(--theme-border)" }}
+      >
+        <div className="flex items-center gap-2.5 font-display font-extrabold text-lg sm:text-xl tracking-wide uppercase">
+          <span
+            className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-mono-tech font-bold border-2"
+            style={{
+              backgroundColor: "var(--theme-accent)",
+              color: "var(--theme-accent-text)",
+              borderColor: "var(--theme-border)",
+            }}
+          >
             GI
           </span>
           <span>gbodimowo.isaac</span>
         </div>
 
-        <nav className="hidden md:flex items-center gap-7 text-xs font-mono-tech uppercase tracking-wider text-slate-800">
-          <button
-            type="button"
-            onClick={() => onOpenPortfolio("work")}
-            className="hover:text-orange-600 transition-colors cursor-pointer"
-          >
-            Selected Works
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenPortfolio("skills")}
-            className="hover:text-orange-600 transition-colors cursor-pointer"
-          >
-            Systems Matrix
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenPortfolio("terminal")}
-            className="hover:text-orange-600 transition-colors cursor-pointer"
-          >
-            Cisco Topology
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenPortfolio("contact")}
-            className="hover:text-orange-600 transition-colors cursor-pointer"
-          >
-            Contact
-          </button>
+        <nav className="hidden md:flex items-center gap-6 text-xs font-mono-tech uppercase tracking-wider font-semibold">
+          {[
+            { label: "Works", hash: "work" },
+            { label: "Systems", hash: "skills" },
+            { label: "Topology", hash: "terminal" },
+            { label: "Contact", hash: "contact" },
+          ].map((item) => (
+            <button
+              key={item.hash}
+              type="button"
+              onClick={() => onOpenPortfolio(item.hash)}
+              className="hover:underline underline-offset-4 cursor-pointer"
+            >
+              {item.label}
+            </button>
+          ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onOpenThemeSwitcher}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full neo-pill text-xs font-semibold whitespace-nowrap cursor-pointer hover:opacity-90"
+            title="Customize workspace theme"
+          >
+            <span
+              className="w-3 h-3 rounded-full border"
+              style={{
+                backgroundColor: effectiveAccent,
+                borderColor: "var(--theme-border)",
+              }}
+            />
+            <Palette className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{theme.name}</span>
+          </button>
+
           <a
             href="https://github.com/kiinnggss"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="w-8 h-8 rounded-full bg-white/80 border border-white/90 flex items-center justify-center text-slate-900 hover:bg-[#090d16] hover:text-white transition-all shadow-xs"
+            className="w-8 h-8 rounded-full neo-pill flex items-center justify-center hover:opacity-80 transition-opacity"
           >
             <GithubIcon className="w-4 h-4" />
           </a>
@@ -147,7 +164,7 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="w-8 h-8 rounded-full bg-white/80 border border-white/90 flex items-center justify-center text-slate-900 hover:bg-[#090d16] hover:text-white transition-all shadow-xs"
+            className="w-8 h-8 rounded-full neo-pill flex items-center justify-center hover:opacity-80 transition-opacity"
           >
             <LinkedinIcon className="w-4 h-4" />
           </a>
@@ -156,73 +173,90 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
 
       {/* Main Cover Stage */}
       <main className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center my-4">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <span
-            aria-hidden="true"
-            className="font-display font-bold text-[14vw] sm:text-[15vw] tracking-tighter text-white/35 leading-none uppercase select-none text-center"
-          >
-            SYSTEMS
-          </span>
-        </div>
-
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column: 4-Element Hero Stack */}
-          <div className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left">
-            <div className="inline-flex items-center gap-2.5 self-start px-3.5 py-1.5 rounded-full bg-[#090d16] text-white text-xs font-mono-tech tracking-wider uppercase shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>B.Sc. Computer Science / CompTIA A+ / CCNA</span>
+        <div
+          className="rounded-[28px] p-6 sm:p-10 lg:p-12 border-2 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+          style={{
+            backgroundColor: "var(--theme-hero-bg)",
+            color: "var(--theme-hero-ink)",
+            borderColor: "var(--theme-border)",
+            boxShadow: "8px 8px 0 0 var(--theme-shadow)",
+          }}
+        >
+          {/* Left Column */}
+          <div className="lg:col-span-7 flex flex-col justify-center space-y-5 text-left">
+            <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full neo-pill text-[11px] font-mono-tech uppercase tracking-[0.18em] font-bold">
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: effectiveAccent }}
+              />
+              <span>Software Engineer & Network Specialist</span>
             </div>
 
-            <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl text-[#090d16] tracking-tight leading-[0.96] uppercase">
-              Gbodimowo
+            <h1 className="font-display font-extrabold text-6xl sm:text-7xl lg:text-[84px] tracking-tight leading-[0.88] uppercase">
+              GBODIMOWO
               <br />
-              <span className="text-orange-600">Isaac.</span>
+              ISAAC.
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-800 max-w-xl leading-relaxed font-normal">
-              Software Engineer and Network Systems Specialist building high-concurrency TypeScript platforms, Cisco IOS routing topologies, and fault-isolated hardware systems.
+            <p className="text-base sm:text-lg max-w-xl leading-relaxed font-medium opacity-95">
+              Building high-concurrency TypeScript web platforms, enterprise Cisco IOS routing topologies, and fault-isolated hardware systems from Lagos, Nigeria.
             </p>
 
-            {/* Primary Actions (Single Clear Intent per Button) */}
+            {/* Creative Mints Style Pill CTAs */}
             <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <button
                 type="button"
                 onClick={() => onOpenPortfolio()}
-                className="crystal-button px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide cursor-pointer inline-flex items-center gap-2.5"
+                className="px-6 py-3.5 rounded-full bg-white text-[#18181B] border-2 font-bold text-xs sm:text-sm uppercase tracking-wider inline-flex items-center gap-3 cursor-pointer transition-transform hover:-translate-y-0.5"
+                style={{
+                  borderColor: "var(--theme-border)",
+                  boxShadow: "4px 4px 0 0 var(--theme-shadow)",
+                }}
               >
-                <span>Enter Portfolio</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span
+                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{
+                    backgroundColor: effectiveAccent,
+                    color: "var(--theme-accent-text)",
+                  }}
+                >
+                  <Play className="w-3 h-3 fill-current ml-0.5" />
+                </span>
+                <span>Enter Studio</span>
               </button>
 
               <a
                 href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="crystal-button-secondary px-6 py-3.5 rounded-full text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3.5 rounded-full neo-pill text-xs sm:text-sm font-bold uppercase tracking-wider inline-flex items-center gap-2 cursor-pointer hover:opacity-90"
               >
-                <FileText className="w-4 h-4 text-orange-600" />
+                <FileText className="w-4 h-4" />
                 <span>View Resume</span>
               </a>
             </div>
 
             {/* Domain Capability Strip */}
-            <div className="grid grid-cols-3 gap-3 pt-4 max-w-lg border-t border-slate-900/10">
-              <div className="flex items-center gap-2 text-xs font-mono-tech text-slate-900">
-                <Network className="w-4 h-4 text-orange-600 shrink-0" />
+            <div
+              className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t-2"
+              style={{ borderColor: "rgba(255,255,255,0.22)" }}
+            >
+              <div className="flex items-center gap-2 text-xs font-mono-tech font-semibold">
+                <Network className="w-4 h-4 shrink-0" />
                 <span>Cisco HSRP & VLANs</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-mono-tech text-slate-900">
-                <Cpu className="w-4 h-4 text-orange-600 shrink-0" />
+              <div className="flex items-center gap-2 text-xs font-mono-tech font-semibold">
+                <Cpu className="w-4 h-4 shrink-0" />
                 <span>Next.js & FastAPI</span>
               </div>
-              <div className="flex items-center gap-2 text-xs font-mono-tech text-slate-900">
-                <Shield className="w-4 h-4 text-orange-600 shrink-0" />
-                <span>Hardware Diagnostics</span>
+              <div className="flex items-center gap-2 text-xs font-mono-tech font-semibold">
+                <Shield className="w-4 h-4 shrink-0" />
+                <span>CompTIA A+ Diagnostics</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Architectural Frosted Glass Portal */}
+          {/* Right Column: Framed Portrait Portal */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <motion.div
               style={
@@ -231,40 +265,61 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
                   : { rotateX, rotateY, transformStyle: "preserve-3d" }
               }
               onClick={() => onOpenPortfolio()}
-              className="relative w-[310px] sm:w-[370px] md:w-[400px] h-[460px] sm:h-[520px] rounded-3xl bg-white/45 border border-white/90 shadow-[0_32px_80px_-16px_rgba(9,13,22,0.24)] backdrop-blur-xl flex items-end justify-center overflow-hidden group cursor-pointer"
+              className="relative w-[290px] sm:w-[340px] h-[400px] sm:h-[450px] rounded-3xl neo-card flex items-end justify-center overflow-hidden group cursor-pointer"
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(234,88,12,0.22)_0%,rgba(255,255,255,0.45)_48%,transparent_75%)] pointer-events-none" />
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(var(--theme-border) 1.5px, transparent 1.5px)",
+                  backgroundSize: "18px 18px",
+                }}
+              />
 
-              <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#090d16]/90 text-white backdrop-blur-md text-[11px] font-mono-tech border border-white/15">
+              <div className="absolute top-3.5 left-3.5 right-3.5 z-20 flex items-center justify-between">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full neo-console text-[10px] font-mono-tech font-semibold">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   <span>VERIFIED ARCHITECT</span>
                 </div>
-                <span className="px-2.5 py-1 rounded-full bg-white/85 text-[#090d16] text-[10px] font-mono-tech font-semibold border border-white">
+                <span className="px-2.5 py-1 rounded-full neo-pill text-[10px] font-mono-tech font-bold">
                   Lagos, NG
                 </span>
               </div>
 
-              <div className="relative z-10 w-full h-[96%] flex items-end justify-center pointer-events-none">
+              <div className="relative z-10 w-full h-[94%] flex items-end justify-center pointer-events-none">
                 <Image
                   src={isaacPortraitBust}
                   alt="Gbodimowo Isaac"
                   priority
-                  className="h-full w-auto object-contain object-bottom select-none drop-shadow-[0_22px_44px_rgba(9,13,22,0.45)] translate-y-1 transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="h-full w-auto object-contain object-bottom select-none drop-shadow-[0_18px_28px_rgba(0,0,0,0.35)] translate-y-1 transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </div>
 
-              <div className="absolute bottom-0 inset-x-0 z-20 p-5 bg-gradient-to-t from-[#090d16]/95 via-[#090d16]/65 to-transparent text-white flex items-center justify-between">
+              <div
+                className="absolute bottom-0 inset-x-0 z-20 p-4 flex items-center justify-between border-t-2"
+                style={{
+                  backgroundColor: "var(--theme-console-bg)",
+                  color: "var(--theme-console-ink)",
+                  borderColor: "var(--theme-border)",
+                }}
+              >
                 <div>
-                  <div className="text-sm font-display font-bold tracking-wide">
+                  <div className="text-sm font-display font-bold tracking-wide uppercase">
                     Gbodimowo Isaac
                   </div>
-                  <div className="text-[11px] font-mono-tech text-slate-300">
-                    Software & Network Systems Engineer
+                  <div className="text-[11px] font-mono-tech opacity-80">
+                    Software & Network Systems
                   </div>
                 </div>
 
-                <span className="w-9 h-9 rounded-full bg-orange-600 text-white flex items-center justify-center group-hover:bg-white group-hover:text-[#090d16] transition-colors shadow-md">
+                <span
+                  className="w-9 h-9 rounded-full flex items-center justify-center border-2"
+                  style={{
+                    backgroundColor: effectiveAccent,
+                    color: "var(--theme-accent-text)",
+                    borderColor: "var(--theme-border)",
+                  }}
+                >
                   <ArrowUpRight className="w-4 h-4" />
                 </span>
               </div>
@@ -274,10 +329,13 @@ export default function CoverPage({ onOpenPortfolio }: CoverPageProps) {
       </main>
 
       {/* Bottom Status Bar */}
-      <footer className="relative z-20 w-full max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-slate-900/10 text-xs font-mono-tech text-slate-800">
-        <span>4 PRODUCTION ARCHITECTURES DEPLOYED</span>
-        <span className="hidden sm:inline text-slate-700">
-          PRESS ENTER OR SCROLL TO INSPECT WORKSPACE
+      <footer
+        className="relative z-20 w-full max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pt-3 border-t-2 text-xs font-mono-tech font-semibold"
+        style={{ borderColor: "var(--theme-border)" }}
+      >
+        <span>5 PRODUCTION ARCHITECTURES DEPLOYED</span>
+        <span className="hidden sm:inline opacity-80">
+          SCROLL OR CLICK ENTER STUDIO TO EXPLORE
         </span>
         <span>CISCO IOS / NEXT.JS 16 / FASTAPI</span>
       </footer>

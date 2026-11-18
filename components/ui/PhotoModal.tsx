@@ -47,32 +47,39 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10">
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[#090d16]/75 backdrop-blur-xs"
+            className="absolute inset-0 bg-black/70 backdrop-blur-xs"
           />
 
-          {/* Dialog Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 15 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-4xl max-h-[90vh] bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
+            className="relative w-full max-w-4xl max-h-[90vh] neo-card rounded-2xl overflow-hidden flex flex-col z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-[#090d16] text-white">
+            <div
+              className="p-4 sm:p-5 border-b-2 flex items-center justify-between neo-console border-x-0 border-t-0"
+              style={{ borderColor: "var(--theme-border)" }}
+            >
               <div className="flex items-center gap-2.5">
-                <span className="px-2.5 py-1 rounded-md bg-[#ea580c]/15 border border-[#ea580c]/30 text-[#fb923c] text-[11px] font-mono-tech font-semibold uppercase tracking-wider">
+                <span
+                  className="px-2.5 py-1 rounded-md text-[11px] font-mono-tech font-bold uppercase tracking-wider"
+                  style={{
+                    backgroundColor: "var(--theme-accent)",
+                    color: "var(--theme-accent-text)",
+                  }}
+                >
                   {photo.tag}
                 </span>
-                <span className="text-xs text-slate-300 hidden sm:flex items-center gap-1 font-mono-tech">
-                  <MapPin className="w-3.5 h-3.5 text-[#ea580c]" />
+                <span className="text-xs opacity-80 hidden sm:flex items-center gap-1 font-mono-tech">
+                  <MapPin className="w-3.5 h-3.5" style={{ color: "var(--theme-accent)" }} />
                   {photo.location}
                 </span>
               </div>
@@ -80,7 +87,7 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg bg-white/10 border border-white/15 hover:bg-white/20 transition-colors cursor-pointer"
                 aria-label="Close photo view"
               >
                 <X className="w-4 h-4" />
@@ -89,9 +96,11 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
 
             {/* Main Content Area */}
             <div className="p-5 sm:p-7 overflow-y-auto grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-              {/* Image Frame */}
               <div className="md:col-span-7 flex items-center justify-center">
-                <div className="relative w-full max-h-[62vh] rounded-xl overflow-hidden border border-slate-200 bg-[#090d16] flex items-center justify-center">
+                <div
+                  className="relative w-full max-h-[62vh] rounded-xl overflow-hidden border-2 bg-black flex items-center justify-center"
+                  style={{ borderColor: "var(--theme-border)" }}
+                >
                   <Image
                     src={photo.src}
                     alt={photo.alt}
@@ -102,47 +111,62 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
                 </div>
               </div>
 
-              {/* Information Column */}
               <div className="md:col-span-5 space-y-4">
                 <div>
-                  <div className="text-[11px] font-mono-tech font-semibold text-[#ea580c] uppercase tracking-wider mb-1">
+                  <div
+                    className="text-[11px] font-mono-tech font-bold uppercase tracking-wider mb-1"
+                    style={{ color: "var(--theme-accent)" }}
+                  >
                     Authentic Documentation
                   </div>
-                  <h3 className="text-xl font-display font-bold text-[#090d16] leading-snug">
+                  <h3 className="text-2xl font-display font-extrabold uppercase tracking-wide leading-snug">
                     {photo.title}
                   </h3>
-                  <div className="text-sm font-medium text-slate-600 mt-1">
+                  <div className="text-sm font-medium mt-1" style={{ color: "var(--theme-muted)" }}>
                     {photo.subtitle}
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
+                <div
+                  className="p-4 rounded-xl border-2 text-xs leading-relaxed"
+                  style={{
+                    backgroundColor: "var(--theme-surface-alt)",
+                    borderColor: "var(--theme-border)",
+                  }}
+                >
                   {photo.context}
                 </div>
 
-                <div className="pt-2 text-xs text-slate-600 space-y-1 font-mono-tech">
+                <div className="pt-2 text-xs space-y-1 font-mono-tech" style={{ color: "var(--theme-muted)" }}>
                   <div>
-                    <strong className="text-[#090d16]">Location:</strong> {photo.location}
+                    <strong style={{ color: "var(--theme-ink)" }}>Location:</strong> {photo.location}
                   </div>
                   {photo.date && (
                     <div>
-                      <strong className="text-[#090d16]">Context:</strong> {photo.date}
+                      <strong style={{ color: "var(--theme-ink)" }}>Context:</strong> {photo.date}
                     </div>
                   )}
                   <div>
-                    <strong className="text-[#090d16]">Subject:</strong> Gbodimowo Isaac
+                    <strong style={{ color: "var(--theme-ink)" }}>Subject:</strong> Gbodimowo Isaac
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+            <div
+              className="p-4 border-t-2 flex items-center justify-between text-xs"
+              style={{
+                borderColor: "var(--theme-border)",
+                backgroundColor: "var(--theme-surface-alt)",
+                color: "var(--theme-muted)",
+              }}
+            >
               <span className="font-mono-tech">Gbodimowo Isaac Portfolio Archive</span>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-lg bg-[#090d16] text-white hover:bg-[#ea580c] font-semibold transition-colors"
+                className="px-4 py-1.5 rounded-lg neo-btn-primary font-bold cursor-pointer"
               >
                 Close View
               </button>

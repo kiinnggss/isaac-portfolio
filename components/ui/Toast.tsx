@@ -33,22 +33,22 @@ export default function Toast({ toast, onDismiss }: ToastProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl bg-[#090d16] text-white shadow-xl border border-slate-800"
+            className="pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl neo-console"
           >
-            <div className="w-6 h-6 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0">
+            <div className="w-6 h-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
               {toast.type === "info" ? (
-                <Info className="w-3.5 h-3.5 text-[#ea580c]" />
+                <Info className="w-3.5 h-3.5" style={{ color: "var(--theme-accent)" }} />
               ) : (
                 <Check className="w-3.5 h-3.5 text-emerald-400" />
               )}
             </div>
-            <span className="text-xs font-mono-tech font-medium text-slate-100">
+            <span className="text-xs font-mono-tech font-medium">
               {toast.text}
             </span>
             <button
               type="button"
               onClick={onDismiss}
-              className="ml-2 text-slate-400 hover:text-white transition-colors"
+              className="ml-2 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
               aria-label="Dismiss notification"
             >
               <X className="w-3.5 h-3.5" />

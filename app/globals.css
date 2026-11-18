@@ -1,149 +1,136 @@
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #a8b4bc;
-  --background-deep: #96a4ae;
-  --foreground: #090d16;
-  --obsidian: #090d16;
-  --obsidian-elevated: #111827;
-  --accent: #ea580c;
-  --accent-hover: #c2410c;
-  --border-hairline: rgba(15, 23, 42, 0.12);
-  --border-specular: rgba(255, 255, 255, 0.78);
+  --theme-bg: #FFF4D6;
+  --theme-surface: #FFFFFF;
+  --theme-surface-alt: #FFE7B3;
+  --theme-hero-bg: #F25C48;
+  --theme-hero-ink: #FFFFFF;
+  --theme-ink: #18181B;
+  --theme-muted: #4B5563;
+  --theme-border: #18181B;
+  --theme-shadow: #18181B;
+  --theme-accent: #F25C48;
+  --theme-accent-text: #FFFFFF;
+  --theme-secondary: #FBBF24;
+  --theme-console-bg: #18181B;
+  --theme-console-ink: #FFFDF5;
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #a8b4bc;
-  color: var(--foreground);
-  color-scheme: light;
+  background-color: var(--theme-bg);
+  color: var(--theme-ink);
 }
 
 body {
-  background-color: #a8b4bc;
-  color: #090d16;
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--theme-bg);
+  color: var(--theme-ink);
+  font-family: var(--font-sans-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
-  background-image:
-    radial-gradient(at 12% 8%, rgba(255, 255, 255, 0.38) 0px, transparent 48%),
-    radial-gradient(at 88% 12%, rgba(148, 163, 184, 0.45) 0px, transparent 45%),
-    radial-gradient(at 50% 45%, rgba(226, 232, 240, 0.28) 0px, transparent 55%),
-    radial-gradient(at 15% 85%, rgba(148, 163, 184, 0.45) 0px, transparent 50%);
-  background-attachment: fixed;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
-  background-color: #ea580c;
-  color: #ffffff;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
 }
 
-/* Architectural Grid Overlay */
-.bg-architectural-grid {
-  background-size: 48px 48px;
-  background-image:
-    linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
-}
-
-/* Typography Utilities */
 .font-display {
-  font-family: 'Clash Display', var(--font-geist-sans), -apple-system, sans-serif;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display-condensed), var(--font-sans-body), sans-serif;
+  letter-spacing: -0.015em;
 }
 
 .font-mono-tech {
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono-code), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* Precision Machined Light Glass Surface */
-.crystal-surface {
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.88);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
-    0 20px 42px -12px rgba(9, 13, 22, 0.09),
-    0 4px 12px -2px rgba(9, 13, 22, 0.04);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Subtle Memphis Dot Grid Canvas Overlay */
+.bg-memphis-canvas {
+  background-image: radial-gradient(color-mix(in srgb, var(--theme-border) 14%, transparent) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
 }
 
-.crystal-surface-hover:hover {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(255, 255, 255, 1);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 1),
-    0 28px 56px -14px rgba(9, 13, 22, 0.14),
-    0 8px 20px -4px rgba(9, 13, 22, 0.06);
-  transform: translateY(-2px);
+/* Tactile Neo-Memphis Cards & Controls */
+.neo-card {
+  background-color: var(--theme-surface);
+  color: var(--theme-ink);
+  border: 2px solid var(--theme-border);
+  box-shadow: 5px 5px 0 0 var(--theme-shadow);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease;
 }
 
-/* High-Contrast Obsidian Instrument Surface */
-.obsidian-surface {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.98) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-    0 24px 48px -12px rgba(9, 13, 22, 0.35);
-  color: #f8fafc;
+.neo-card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 0 var(--theme-shadow);
 }
 
-.crystal-pill {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.92);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 1),
-    0 2px 8px -2px rgba(9, 13, 22, 0.06);
+.neo-card-alt {
+  background-color: var(--theme-surface-alt);
+  color: var(--theme-ink);
+  border: 2px solid var(--theme-border);
+  box-shadow: 4px 4px 0 0 var(--theme-shadow);
 }
 
-.crystal-button {
-  background: #090d16;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
-    0 10px 24px -6px rgba(9, 13, 22, 0.28);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+.neo-console {
+  background-color: var(--theme-console-bg);
+  color: var(--theme-console-ink);
+  border: 2px solid var(--theme-border);
+  box-shadow: 6px 6px 0 0 var(--theme-shadow);
 }
 
-.crystal-button:hover {
-  background: #ea580c;
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
-    0 14px 28px -6px rgba(234, 88, 12, 0.35);
-  transform: translateY(-1px);
+.neo-pill {
+  background-color: var(--theme-surface);
+  color: var(--theme-ink);
+  border: 2px solid var(--theme-border);
+  box-shadow: 2px 2px 0 0 var(--theme-shadow);
 }
 
-.crystal-button:active {
-  transform: scale(0.98);
+.neo-btn-primary {
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
+  border: 2px solid var(--theme-border);
+  box-shadow: 4px 4px 0 0 var(--theme-shadow);
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s cubic-bezier(0.16, 1, 0.3, 1), filter 0.16s ease;
 }
 
-.crystal-button-secondary {
-  background: rgba(255, 255, 255, 0.88);
-  color: #090d16;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.96);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 1),
-    0 6px 18px -4px rgba(9, 13, 22, 0.08);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+.neo-btn-primary:hover {
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 5.5px 5.5px 0 0 var(--theme-shadow);
+  filter: brightness(1.04);
 }
 
-.crystal-button-secondary:hover {
-  background: #ffffff;
-  border-color: #090d16;
-  transform: translateY(-1px);
+.neo-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1.5px 1.5px 0 0 var(--theme-shadow);
 }
 
-.crystal-button-secondary:active {
-  transform: scale(0.98);
+.neo-btn-secondary {
+  background-color: var(--theme-surface);
+  color: var(--theme-ink);
+  border: 2px solid var(--theme-border);
+  box-shadow: 4px 4px 0 0 var(--theme-shadow);
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-btn-secondary:hover {
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 5.5px 5.5px 0 0 var(--theme-shadow);
+}
+
+.neo-btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1.5px 1.5px 0 0 var(--theme-shadow);
+}
+
+.memphis-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--theme-accent),
+    var(--theme-accent) 4px,
+    transparent 4px,
+    transparent 9px
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -157,21 +144,20 @@ body {
   }
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--theme-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(15, 23, 42, 0.28);
+  background: var(--theme-border);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(234, 88, 12, 0.75);
+  background: var(--theme-accent);
 }

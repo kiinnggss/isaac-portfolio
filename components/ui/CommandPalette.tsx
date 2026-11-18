@@ -13,6 +13,7 @@ import {
   Terminal,
   ArrowRight,
   X,
+  Palette,
 } from "lucide-react";
 import { getAssetPath } from "@/lib/paths";
 
@@ -31,6 +32,7 @@ interface CommandPaletteProps {
   onOpenResume: () => void;
   onOpenPhoto: (photoType: "portrait" | "graduation" | "workspace") => void;
   onCopyEmail: () => void;
+  onOpenThemeSwitcher?: () => void;
 }
 
 export default function CommandPalette({
@@ -39,12 +41,29 @@ export default function CommandPalette({
   onOpenResume,
   onOpenPhoto,
   onCopyEmail,
+  onOpenThemeSwitcher,
 }: CommandPaletteProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const commands: CommandItem[] = [
+    // Theme Switcher
+    ...(onOpenThemeSwitcher
+      ? [
+          {
+            id: "theme-switcher",
+            title: "Customize Workspace Theme",
+            subtitle: "Switch between Coral Studio, Butter & Terracotta, Orange Mechanic, Purple Disco, Blue Powder, or Matcha Paper",
+            category: "Navigation" as const,
+            icon: Palette,
+            action: () => {
+              onClose();
+              onOpenThemeSwitcher();
+            },
+          },
+        ]
+      : []),
     // Documents
     {
       id: "resume-view",
@@ -270,12 +289,15 @@ export default function CommandPalette({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
+            className="relative w-full max-w-2xl neo-card rounded-2xl overflow-hidden flex flex-col z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search Input Bar */}
-            <div className="p-4 border-b border-slate-800 flex items-center gap-3 bg-[#090d16] text-white">
-              <Search className="w-5 h-5 text-[#ea580c] shrink-0" />
+            <div
+              className="p-4 border-b-2 flex items-center gap-3 neo-console border-x-0 border-t-0"
+              style={{ borderColor: "var(--theme-border)" }}
+            >
+              <Search className="w-5 h-5 shrink-0" style={{ color: "var(--theme-accent)" }} />
               <label htmlFor="command-palette-search" className="sr-only">
                 Search portfolio commands and sections
               </label>
@@ -285,16 +307,16 @@ export default function CommandPalette({
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Type a command, project, or section (e.g. resume, cisco, contact)..."
-                className="w-full bg-transparent text-sm sm:text-base text-white placeholder:text-slate-400 focus:outline-none"
+                placeholder="Type a command, project, or section (e.g. theme, resume, cisco)..."
+                className="w-full bg-transparent text-sm sm:text-base placeholder:opacity-55 focus:outline-none"
               />
-              <span className="hidden sm:inline px-2 py-0.5 rounded bg-slate-900 text-xs text-slate-300 border border-slate-700 font-mono-tech">
+              <span className="hidden sm:inline px-2 py-0.5 rounded bg-white/10 text-xs border border-white/15 font-mono-tech">
                 ESC
               </span>
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1 rounded-lg text-slate-400 hover:text-white sm:hidden"
+                className="p-1 rounded-lg opacity-70 hover:opacity-100 sm:hidden"
                 aria-label="Close command palette"
               >
                 <X className="w-4 h-4" />
@@ -302,9 +324,9 @@ export default function CommandPalette({
             </div>
 
             {/* Command Results List */}
-            <div className="max-h-[60vh] overflow-y-auto p-2 divide-y divide-slate-100">
+            <div className="max-h-[60vh] overflow-y-auto p-2 space-y-1">
               {filtered.length === 0 ? (
-                <div className="py-12 text-center text-xs text-slate-500">
+                <div className="py-12 text-center text-xs" style={{ color: "var(--theme-muted)" }}>
                   No matching results for &quot;{query}&quot;
                 </div>
               ) : (
@@ -316,30 +338,38 @@ export default function CommandPalette({
                       key={item.id}
                       onClick={() => item.action()}
                       onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`p-3 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition-colors ${
-                        isSelected
-                          ? "bg-orange-50/90 border border-orange-200"
-                          : "hover:bg-slate-50 border border-transparent"
-                      }`}
+                      className="p-3 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition-colors border-2"
+                      style={{
+                        backgroundColor: isSelected ? "var(--theme-surface-alt)" : "transparent",
+                        borderColor: isSelected ? "var(--theme-border)" : "transparent",
+                      }}
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                            isSelected
-                              ? "bg-[#ea580c] text-white"
-                              : "bg-slate-100 text-[#090d16]"
-                          }`}
+                          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border"
+                          style={{
+                            backgroundColor: isSelected ? "var(--theme-accent)" : "var(--theme-surface-alt)",
+                            color: isSelected ? "var(--theme-accent-text)" : "var(--theme-ink)",
+                            borderColor: "var(--theme-border)",
+                          }}
                         >
                           <Icon className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
-                          <div className="text-xs sm:text-sm font-semibold text-[#090d16] truncate flex items-center gap-2">
+                          <div className="text-xs sm:text-sm font-bold truncate flex items-center gap-2">
                             <span>{item.title}</span>
-                            <span className="text-[10px] font-mono-tech font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
+                            <span
+                              className="text-[10px] font-mono-tech font-semibold px-1.5 py-0.5 rounded border"
+                              style={{
+                                backgroundColor: "var(--theme-surface)",
+                                borderColor: "var(--theme-border)",
+                                color: "var(--theme-muted)",
+                              }}
+                            >
                               {item.category}
                             </span>
                           </div>
-                          <div className="text-xs text-slate-500 truncate mt-0.5">
+                          <div className="text-xs truncate mt-0.5" style={{ color: "var(--theme-muted)" }}>
                             {item.subtitle}
                           </div>
                         </div>
@@ -347,7 +377,10 @@ export default function CommandPalette({
 
                       <div className="flex items-center gap-1.5 shrink-0">
                         {isSelected && (
-                          <span className="text-xs font-semibold text-[#ea580c] flex items-center gap-1">
+                          <span
+                            className="text-xs font-bold flex items-center gap-1"
+                            style={{ color: "var(--theme-accent)" }}
+                          >
                             <span>Select</span>
                             <ArrowRight className="w-3 h-3" />
                           </span>
@@ -360,7 +393,14 @@ export default function CommandPalette({
             </div>
 
             {/* Footer Hints */}
-            <div className="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs font-mono-tech text-slate-500">
+            <div
+              className="p-3 border-t-2 flex items-center justify-between text-xs font-mono-tech"
+              style={{
+                borderColor: "var(--theme-border)",
+                backgroundColor: "var(--theme-surface-alt)",
+                color: "var(--theme-muted)",
+              }}
+            >
               <div className="flex items-center gap-3">
                 <span>↑↓ Navigate</span>
                 <span>/</span>
@@ -368,9 +408,7 @@ export default function CommandPalette({
                 <span>/</span>
                 <span>ESC Dismiss</span>
               </div>
-              <span className="text-slate-400 hidden sm:inline">
-                Navigation Launcher
-              </span>
+              <span className="hidden sm:inline">Navigation Launcher</span>
             </div>
           </motion.div>
         </div>

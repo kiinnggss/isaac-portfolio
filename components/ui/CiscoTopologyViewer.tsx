@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Network, Terminal, Copy, Check } from "lucide-react";
+import { usePortfolioTheme } from "./ThemeProvider";
 
 interface TopologyNode {
   id: string;
@@ -16,6 +17,7 @@ interface TopologyNode {
 export default function CiscoTopologyViewer() {
   const [selectedNodeId, setSelectedNodeId] = useState<string>("r1");
   const [copied, setCopied] = useState(false);
+  const { effectiveAccent } = usePortfolioTheme();
 
   const nodes: Record<string, TopologyNode> = {
     r1: {
@@ -118,275 +120,253 @@ interface GigabitEthernet0/0.30
     },
   };
 
-  const selectedNode = nodes[selectedNodeId] || nodes.r1;
+  const activeNode = nodes[selectedNodeId] || nodes.r1;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(selectedNode.cliSnippet);
+    navigator.clipboard.writeText(activeNode.cliSnippet);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="crystal-surface rounded-3xl p-7 sm:p-10">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-900/10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#090d16] flex items-center justify-center text-orange-500">
-            <Network className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-[#090d16] font-display">
-              Interactive Cisco IOS Topology Visualizer
-            </h3>
-            <div className="text-xs font-mono-tech text-slate-600">
-              Router-on-a-Stick / HSRP v2 Redundancy / 802.1Q Trunks / Extended ACLs
+    <div className="neo-card rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+      {/* Left Interactive NOC Schematic (7 cols) */}
+      <div
+        className="lg:col-span-7 p-6 sm:p-8 neo-console border-0 border-b-2 lg:border-b-0 lg:border-r-2 flex flex-col justify-between"
+        style={{ borderColor: "var(--theme-border)" }}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div className="flex items-center gap-2.5">
+            <div
+              className="w-8 h-8 rounded-xl flex items-center justify-center"
+              style={{
+                backgroundColor: effectiveAccent,
+                color: "var(--theme-accent-text)",
+              }}
+            >
+              <Network className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold font-display uppercase tracking-wide">
+                Enterprise Cisco Packet Tracer Topology
+              </h3>
+              <p className="text-[11px] font-mono-tech opacity-65">
+                Click any node to inspect IOS config &amp; HSRP state
+              </p>
             </div>
           </div>
+
+          <span className="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-mono-tech">
+            HSRP VIP: 192.168.20.1
+          </span>
         </div>
 
-        <span className="px-3.5 py-1.5 rounded-full bg-[#090d16] text-orange-400 text-xs font-mono-tech font-semibold">
-          Click any node to inspect running config
-        </span>
+        {/* SVG Schematic */}
+        <div className="w-full overflow-x-auto py-2">
+          <svg
+            viewBox="0 0 640 340"
+            className="w-full min-w-[460px] h-auto select-none"
+            role="img"
+            aria-label="Interactive Cisco HSRP multi-VLAN topology"
+          >
+            {/* Trunk & Access Links */}
+            <line x1="180" y1="78" x2="320" y2="165" stroke={effectiveAccent} strokeWidth="2.5" strokeDasharray="6 4" />
+            <line x1="460" y1="78" x2="320" y2="165" stroke="#64748b" strokeWidth="2" strokeDasharray="5 5" />
+            <line x1="180" y1="78" x2="460" y2="78" stroke={effectiveAccent} strokeWidth="2" />
+            <line x1="320" y1="165" x2="130" y2="270" stroke="#94a3b8" strokeWidth="2" />
+            <line x1="320" y1="165" x2="320" y2="270" stroke="#94a3b8" strokeWidth="2" />
+            <line x1="320" y1="165" x2="510" y2="270" stroke="#10b981" strokeWidth="2" />
+
+            {/* HSRP Link Label */}
+            <rect x="256" y="64" width="128" height="22" rx="11" fill="#1e293b" stroke={effectiveAccent} strokeWidth="1.2" />
+            <text x="320" y="79" textAnchor="middle" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="600">
+              HSRP v2 SYNC
+            </text>
+
+            {/* R1 Active */}
+            <g onClick={() => setSelectedNodeId("r1")} className="cursor-pointer">
+              <rect
+                x="110"
+                y="42"
+                width="140"
+                height="56"
+                rx="12"
+                fill={selectedNodeId === "r1" ? effectiveAccent : "#111827"}
+                stroke={effectiveAccent}
+                strokeWidth="2"
+              />
+              <text x="180" y="66" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="700">
+                R1-CORE-GW
+              </text>
+              <text x="180" y="84" textAnchor="middle" fill="#e2e8f0" fontSize="10" fontFamily="monospace">
+                Active (.2)
+              </text>
+            </g>
+
+            {/* R2 Standby */}
+            <g onClick={() => setSelectedNodeId("r2")} className="cursor-pointer">
+              <rect
+                x="390"
+                y="42"
+                width="140"
+                height="56"
+                rx="12"
+                fill={selectedNodeId === "r2" ? effectiveAccent : "#111827"}
+                stroke={selectedNodeId === "r2" ? effectiveAccent : "#475569"}
+                strokeWidth="2"
+              />
+              <text x="460" y="66" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="700">
+                R2-BACKUP-GW
+              </text>
+              <text x="460" y="84" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontFamily="monospace">
+                Standby (.3)
+              </text>
+            </g>
+
+            {/* SW1 Core */}
+            <g onClick={() => setSelectedNodeId("sw1")} className="cursor-pointer">
+              <rect
+                x="240"
+                y="140"
+                width="160"
+                height="52"
+                rx="12"
+                fill={selectedNodeId === "sw1" ? effectiveAccent : "#111827"}
+                stroke={selectedNodeId === "sw1" ? effectiveAccent : "#64748b"}
+                strokeWidth="2"
+              />
+              <text x="320" y="163" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="700">
+                SW1-DIST-CORE
+              </text>
+              <text x="320" y="179" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontFamily="monospace">
+                802.1Q Trunk
+              </text>
+            </g>
+
+            {/* VLAN 10 */}
+            <g onClick={() => setSelectedNodeId("vlan10")} className="cursor-pointer">
+              <rect
+                x="55"
+                y="246"
+                width="150"
+                height="52"
+                rx="12"
+                fill={selectedNodeId === "vlan10" ? effectiveAccent : "#111827"}
+                stroke={selectedNodeId === "vlan10" ? effectiveAccent : "#64748b"}
+                strokeWidth="2"
+              />
+              <text x="130" y="269" textAnchor="middle" fill="#ffffff" fontSize="11.5" fontWeight="700">
+                VLAN 10: ENG
+              </text>
+              <text x="130" y="285" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontFamily="monospace">
+                192.168.10.0/24
+              </text>
+            </g>
+
+            {/* VLAN 20 */}
+            <g onClick={() => setSelectedNodeId("vlan20")} className="cursor-pointer">
+              <rect
+                x="245"
+                y="246"
+                width="150"
+                height="52"
+                rx="12"
+                fill={selectedNodeId === "vlan20" ? effectiveAccent : "#111827"}
+                stroke={selectedNodeId === "vlan20" ? effectiveAccent : "#64748b"}
+                strokeWidth="2"
+              />
+              <text x="320" y="269" textAnchor="middle" fill="#ffffff" fontSize="11.5" fontWeight="700">
+                VLAN 20: MGMT
+              </text>
+              <text x="320" y="285" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontFamily="monospace">
+                192.168.20.0/24
+              </text>
+            </g>
+
+            {/* DMZ Server */}
+            <g onClick={() => setSelectedNodeId("server")} className="cursor-pointer">
+              <rect
+                x="435"
+                y="246"
+                width="150"
+                height="52"
+                rx="12"
+                fill={selectedNodeId === "server" ? effectiveAccent : "#111827"}
+                stroke={selectedNodeId === "server" ? effectiveAccent : "#10b981"}
+                strokeWidth="2"
+              />
+              <text x="510" y="269" textAnchor="middle" fill="#ffffff" fontSize="11.5" fontWeight="700">
+                SRV-DMZ-01
+              </text>
+              <text x="510" y="285" textAnchor="middle" fill="#6ee7b7" fontSize="10" fontFamily="monospace">
+                192.168.30.10
+              </text>
+            </g>
+          </svg>
+        </div>
       </div>
 
-      {/* Obsidian Network Operations Schematic Canvas */}
-      <div className="relative my-7 rounded-2xl obsidian-surface p-6 overflow-x-auto">
-        <svg
-          viewBox="0 0 740 320"
-          className="w-full min-w-[580px] h-auto select-none"
-        >
-          {/* Active & Standby Trunks */}
-          <line
-            x1="260"
-            y1="70"
-            x2="370"
-            y2="170"
-            stroke="#ea580c"
-            strokeWidth="2.5"
-            strokeDasharray="6 4"
-          />
-          <line
-            x1="480"
-            y1="70"
-            x2="370"
-            y2="170"
-            stroke="#475569"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          <line
-            x1="370"
-            y1="170"
-            x2="160"
-            y2="265"
-            stroke="#64748b"
-            strokeWidth="2"
-          />
-          <line
-            x1="370"
-            y1="170"
-            x2="370"
-            y2="265"
-            stroke="#64748b"
-            strokeWidth="2"
-          />
-          <line
-            x1="370"
-            y1="170"
-            x2="580"
-            y2="265"
-            stroke="#10b981"
-            strokeWidth="2.5"
-            strokeDasharray="6 4"
-          />
+      {/* Right Node Inspector (5 cols) */}
+      <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-5">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between gap-2">
+            <span
+              className="px-3 py-1 rounded-full text-[11px] font-mono-tech font-bold uppercase border"
+              style={{
+                backgroundColor: "var(--theme-surface-alt)",
+                borderColor: "var(--theme-border)",
+                color: effectiveAccent,
+              }}
+            >
+              {activeNode.type}
+            </span>
+            <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+              {activeNode.ip}
+            </span>
+          </div>
 
-          {/* R1 (Active) */}
-          <g onClick={() => setSelectedNodeId("r1")} className="cursor-pointer">
-            <rect
-              x="200"
-              y="35"
-              width="120"
-              height="55"
-              rx="14"
-              fill={selectedNodeId === "r1" ? "#1e293b" : "#0f172a"}
-              stroke={selectedNodeId === "r1" ? "#ea580c" : "#334155"}
-              strokeWidth={selectedNodeId === "r1" ? "2.5" : "1.5"}
-            />
-            <text x="260" y="58" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">
-              R1 (Active)
-            </text>
-            <text x="260" y="75" textAnchor="middle" fill="#fb923c" fontSize="10" fontWeight="600">
-              HSRP Pri 110
-            </text>
-          </g>
-
-          {/* R2 (Standby) */}
-          <g onClick={() => setSelectedNodeId("r2")} className="cursor-pointer">
-            <rect
-              x="420"
-              y="35"
-              width="120"
-              height="55"
-              rx="14"
-              fill={selectedNodeId === "r2" ? "#1e293b" : "#0f172a"}
-              stroke={selectedNodeId === "r2" ? "#ea580c" : "#334155"}
-              strokeWidth={selectedNodeId === "r2" ? "2.5" : "1.5"}
-            />
-            <text x="480" y="58" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">
-              R2 (Standby)
-            </text>
-            <text x="480" y="75" textAnchor="middle" fill="#94a3b8" fontSize="10">
-              HSRP Pri 100
-            </text>
-          </g>
-
-          {/* Virtual IP Tag */}
-          <rect
-            x="315"
-            y="20"
-            width="110"
-            height="26"
-            rx="13"
-            fill="#ea580c"
-          />
-          <text x="370" y="37" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="bold">
-            VIP: 192.168.20.1
-          </text>
-
-          {/* SW1 (Distribution Switch) */}
-          <g onClick={() => setSelectedNodeId("sw1")} className="cursor-pointer">
-            <rect
-              x="300"
-              y="140"
-              width="140"
-              height="55"
-              rx="14"
-              fill={selectedNodeId === "sw1" ? "#1e293b" : "#0f172a"}
-              stroke={selectedNodeId === "sw1" ? "#ea580c" : "#334155"}
-              strokeWidth={selectedNodeId === "sw1" ? "2.5" : "1.5"}
-            />
-            <text x="370" y="163" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">
-              SW1-DIST-CORE
-            </text>
-            <text x="370" y="180" textAnchor="middle" fill="#94a3b8" fontSize="10">
-              Catalyst 3650
-            </text>
-          </g>
-
-          {/* VLAN 10 */}
-          <g onClick={() => setSelectedNodeId("vlan10")} className="cursor-pointer">
-            <rect
-              x="100"
-              y="245"
-              width="120"
-              height="50"
-              rx="12"
-              fill={selectedNodeId === "vlan10" ? "#1e293b" : "#0f172a"}
-              stroke={selectedNodeId === "vlan10" ? "#ea580c" : "#334155"}
-              strokeWidth={selectedNodeId === "vlan10" ? "2.5" : "1.5"}
-            />
-            <text x="160" y="267" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">
-              VLAN 10: Eng
-            </text>
-            <text x="160" y="282" textAnchor="middle" fill="#94a3b8" fontSize="9">
-              192.168.10.0/24
-            </text>
-          </g>
-
-          {/* VLAN 20 */}
-          <g onClick={() => setSelectedNodeId("vlan20")} className="cursor-pointer">
-            <rect
-              x="310"
-              y="245"
-              width="120"
-              height="50"
-              rx="12"
-              fill={selectedNodeId === "vlan20" ? "#1e293b" : "#0f172a"}
-              stroke={selectedNodeId === "vlan20" ? "#ea580c" : "#334155"}
-              strokeWidth={selectedNodeId === "vlan20" ? "2.5" : "1.5"}
-            />
-            <text x="370" y="267" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">
-              VLAN 20: Corp
-            </text>
-            <text x="370" y="282" textAnchor="middle" fill="#94a3b8" fontSize="9">
-              192.168.20.0/24
-            </text>
-          </g>
-
-          {/* DMZ Server */}
-          <g onClick={() => setSelectedNodeId("server")} className="cursor-pointer">
-            <rect
-              x="520"
-              y="245"
-              width="120"
-              height="50"
-              rx="12"
-              fill={selectedNodeId === "server" ? "#1e293b" : "#0f172a"}
-              stroke={selectedNodeId === "server" ? "#ea580c" : "#334155"}
-              strokeWidth={selectedNodeId === "server" ? "2.5" : "1.5"}
-            />
-            <text x="580" y="267" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">
-              SRV-DMZ-01
-            </text>
-            <text x="580" y="282" textAnchor="middle" fill="#34d399" fontSize="9" fontWeight="bold">
-              192.168.30.10
-            </text>
-          </g>
-        </svg>
-      </div>
-
-      {/* Selected Node Metadata & IOS Config Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
-        <div className="lg:col-span-5 p-6 rounded-2xl bg-white/85 border border-white flex flex-col justify-between shadow-xs">
           <div>
-            <div className="text-[11px] font-mono-tech font-semibold text-orange-600 uppercase tracking-wider mb-1">
-              Selected Node Telemetry
-            </div>
-            <h4 className="text-xl font-bold text-[#090d16] font-display">
-              {selectedNode.name}
+            <h4 className="text-2xl font-extrabold font-display uppercase tracking-wide">
+              {activeNode.name}
             </h4>
-            <div className="text-xs font-mono-tech text-slate-800 mt-1.5 font-semibold">
-              IP: {selectedNode.ip}
+            <div className="text-xs font-mono-tech font-semibold mt-1" style={{ color: effectiveAccent }}>
+              {activeNode.status}
             </div>
-            <div className="text-xs text-slate-600 font-mono-tech mt-0.5">
-              {selectedNode.status}
-            </div>
-            <p className="mt-3.5 text-xs text-slate-700 leading-relaxed">
-              {selectedNode.detail}
-            </p>
           </div>
 
-          <div className="mt-5 pt-3 border-t border-slate-900/10 text-[11px] font-mono-tech text-slate-500">
-            Select R1, R2, SW1, VLANs, or DMZ Server above
-          </div>
+          <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "var(--theme-muted)" }}>
+            {activeNode.detail}
+          </p>
         </div>
 
-        <div className="lg:col-span-7 flex flex-col">
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-xs font-semibold text-[#090d16] flex items-center gap-2 font-display">
-              <Terminal className="w-4 h-4 text-orange-600" />
-              <span>Cisco IOS Running Configuration</span>
-            </div>
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-mono-tech font-bold flex items-center gap-1.5">
+              <Terminal className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
+              <span>IOS Running Config</span>
+            </span>
+
             <button
               type="button"
               onClick={handleCopy}
-              className="px-3 py-1 rounded-full bg-white/85 hover:bg-white border border-white text-xs font-mono-tech text-slate-800 inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+              className="px-3 py-1 rounded-lg neo-pill text-xs font-semibold inline-flex items-center gap-1.5 cursor-pointer"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-700">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-orange-600" />
-                  <span>Copy Snippet</span>
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Copy</span>
                 </>
               )}
             </button>
           </div>
-          <div className="flex-1 rounded-2xl obsidian-surface p-5 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed">
-            <pre>{selectedNode.cliSnippet}</pre>
+
+          <div className="p-4 rounded-2xl neo-console font-mono-tech text-[11px] leading-relaxed overflow-x-auto">
+            <pre>{activeNode.cliSnippet}</pre>
           </div>
         </div>
       </div>

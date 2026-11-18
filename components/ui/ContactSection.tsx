@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   AlertTriangle,
 } from "lucide-react";
+import { usePortfolioTheme } from "./ThemeProvider";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -48,6 +49,7 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const { effectiveAccent } = usePortfolioTheme();
 
   const {
     register,
@@ -72,9 +74,7 @@ export default function ContactSection() {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
@@ -89,9 +89,7 @@ export default function ContactSection() {
         throw new Error(resJson.error || "Failed to deliver message. Please try again.");
       }
 
-      setSubmitSuccess(
-        "Message delivered. I will review your inquiry and reply shortly."
-      );
+      setSubmitSuccess("Message delivered. I will review your inquiry and reply shortly.");
       reset();
 
       confetti({
@@ -101,7 +99,9 @@ export default function ContactSection() {
       });
     } catch (err) {
       setSubmitError(
-        err instanceof Error ? err.message : "Unable to reach endpoint. Please email isaacgbodimowo@gmail.com directly."
+        err instanceof Error
+          ? err.message
+          : "Unable to reach endpoint. Please email isaacgbodimowo@gmail.com directly."
       );
     } finally {
       setIsSubmitting(false);
@@ -110,200 +110,210 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="mb-14 max-w-2xl">
-        <div className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-widest text-orange-600 font-semibold mb-3 px-3.5 py-1.5 rounded-full bg-white/80 border border-white shadow-xs">
-          <span>Communication & Inquiries</span>
+      <div className="mb-12 max-w-2xl">
+        <div className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-widest font-bold mb-3 px-3.5 py-1.5 rounded-full neo-pill">
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: effectiveAccent }} />
+          <span>Communication &amp; Inquiries</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-display font-bold text-[#090d16] tracking-tight">
+        <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">
           Get in Touch
         </h2>
-        <p className="mt-3 text-base text-slate-800 font-normal leading-relaxed">
-          Available for software engineering roles, enterprise network architecture, and systems diagnostics.
+        <p className="mt-3 text-base leading-relaxed" style={{ color: "var(--theme-muted)" }}>
+          Available for software engineering roles, network architecture consulting, and systems diagnostics.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Obsidian Coordinates Card */}
-        <div className="lg:col-span-5 obsidian-surface rounded-3xl p-8 sm:p-9 space-y-6">
+        {/* Left Coordinates Card */}
+        <div className="lg:col-span-5 neo-console rounded-3xl p-7 sm:p-9 space-y-6">
           <div>
-            <h3 className="text-xl font-bold text-white font-display">
-              Direct Contact Channels
+            <h3 className="text-2xl font-display font-bold uppercase tracking-wide">
+              Direct Coordinates
             </h3>
-            <p className="mt-1 text-sm text-slate-300 font-normal">
-              Reach out directly by email or connect on GitHub and LinkedIn.
+            <p className="text-xs opacity-70 mt-1">
+              Reach out directly via email, LinkedIn, or GitHub.
             </p>
           </div>
 
-          <div className="space-y-3.5">
-            <a
-              href="mailto:isaacgbodimowo@gmail.com"
-              className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
-            >
-              <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shrink-0">
-                <Mail className="w-5 h-5" />
+          <div className="space-y-4 text-sm">
+            <div className="flex items-start gap-3">
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border"
+                style={{
+                  backgroundColor: effectiveAccent,
+                  color: "var(--theme-accent-text)",
+                  borderColor: "rgba(255,255,255,0.2)",
+                }}
+              >
+                <Mail className="w-4 h-4" />
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-mono-tech">PRIMARY EMAIL</div>
-                <div className="text-sm font-semibold text-white font-display">
+                <div className="text-[11px] font-mono-tech uppercase opacity-65">Email</div>
+                <a
+                  href="mailto:isaacgbodimowo@gmail.com"
+                  className="font-mono-tech text-xs sm:text-sm hover:underline"
+                >
                   isaacgbodimowo@gmail.com
-                </div>
-              </div>
-            </a>
-
-            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-orange-400 shrink-0">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="text-xs text-slate-400 font-mono-tech">LOCATION BASE</div>
-                <div className="text-sm font-semibold text-white font-display">
-                  Lagos, Nigeria (UTC+1)
-                </div>
+                </a>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-                <Clock className="w-5 h-5" />
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
+                <MapPin className="w-4 h-4" style={{ color: effectiveAccent }} />
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-mono-tech">AVAILABILITY</div>
-                <div className="text-sm font-semibold text-white font-display">
-                  Full-Time Software & Systems Roles
+                <div className="text-[11px] font-mono-tech uppercase opacity-65">Location</div>
+                <div className="text-xs sm:text-sm font-medium">Lagos, Nigeria (Remote Ready)</div>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
+                <Clock className="w-4 h-4 text-emerald-400" />
+              </div>
+              <div>
+                <div className="text-[11px] font-mono-tech uppercase opacity-65">Availability</div>
+                <div className="text-xs sm:text-sm font-medium">
+                  Full-Time Roles &amp; Systems Consulting
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-white/10 flex items-center gap-3">
+          <div className="pt-5 border-t flex items-center gap-3" style={{ borderColor: "rgba(255,255,255,0.14)" }}>
             <a
               href="https://github.com/kiinnggss"
               target="_blank"
               rel="noreferrer"
-              className="px-4 py-2 rounded-full bg-white/10 hover:bg-orange-600 text-white text-xs font-semibold inline-flex items-center gap-2 transition-all border border-white/15"
+              className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
             >
-              <GithubIcon className="w-4 h-4" />
+              <GithubIcon className="w-3.5 h-3.5" />
               <span>GitHub</span>
             </a>
-
             <a
               href="https://www.linkedin.com/in/isaac-gbodimowo-743152294/"
               target="_blank"
               rel="noreferrer"
-              className="px-4 py-2 rounded-full bg-white/10 hover:bg-orange-600 text-white text-xs font-semibold inline-flex items-center gap-2 transition-all border border-white/15"
+              className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold inline-flex items-center gap-2 transition-colors"
             >
-              <LinkedinIcon className="w-4 h-4" />
+              <LinkedinIcon className="w-3.5 h-3.5" />
               <span>LinkedIn</span>
             </a>
           </div>
         </div>
 
-        {/* Right High-Contrast Form Card */}
-        <div className="lg:col-span-7 crystal-surface rounded-3xl p-8 sm:p-9">
-          <h3 className="text-xl font-bold text-[#090d16] font-display mb-1">
-            Send a Direct Message
-          </h3>
-          <p className="text-sm text-slate-700 mb-7 font-normal">
-            Inquiries are validated and routed directly to the server message queue.
-          </p>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="contact-name" className="block text-xs font-semibold text-[#090d16] font-display">
-                  Your Name *
-                </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  {...register("name")}
-                  placeholder="e.g. Chidi Okonkwo"
-                  className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs"
-                />
-                {errors.name && (
-                  <p className="text-xs text-rose-700 font-medium">{errors.name.message}</p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="contact-email" className="block text-xs font-semibold text-[#090d16] font-display">
-                  Email Address *
-                </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  {...register("email")}
-                  placeholder="name@company.com"
-                  className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs"
-                />
-                {errors.email && (
-                  <p className="text-xs text-rose-700 font-medium">{errors.email.message}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label htmlFor="contact-subject" className="block text-xs font-semibold text-[#090d16] font-display">
-                Subject
+        {/* Right Form Card */}
+        <form onSubmit={handleSubmit(onSubmit)} className="lg:col-span-7 neo-card rounded-3xl p-7 sm:p-9 space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="space-y-1.5">
+              <label htmlFor="contact-name" className="text-xs font-mono-tech font-bold uppercase">
+                Full Name
               </label>
               <input
-                id="contact-subject"
+                id="contact-name"
                 type="text"
-                {...register("subject")}
-                placeholder="Software Engineering Role / Network Architecture"
-                className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs"
+                {...register("name")}
+                placeholder="Jane Doe"
+                className="w-full px-4 py-3 rounded-xl border-2 text-sm focus:outline-none transition-colors"
+                style={{
+                  backgroundColor: "var(--theme-surface-alt)",
+                  borderColor: "var(--theme-border)",
+                  color: "var(--theme-ink)",
+                }}
               />
-              {errors.subject && (
-                <p className="text-xs text-rose-700 font-medium">{errors.subject.message}</p>
+              {errors.name && (
+                <p className="text-xs text-rose-500 font-medium">{errors.name.message}</p>
               )}
             </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="contact-message" className="block text-xs font-semibold text-[#090d16] font-display">
-                Message Content *
+            <div className="space-y-1.5">
+              <label htmlFor="contact-email" className="text-xs font-mono-tech font-bold uppercase">
+                Email Address
               </label>
-              <textarea
-                id="contact-message"
-                rows={4}
-                {...register("message")}
-                placeholder="Describe project requirements, role scope, or technical inquiry..."
-                className="w-full px-4 py-3 rounded-2xl bg-white border border-slate-300 text-sm text-[#090d16] placeholder:text-slate-500 focus:outline-none focus:border-orange-600 transition-all shadow-xs resize-y"
+              <input
+                id="contact-email"
+                type="email"
+                {...register("email")}
+                placeholder="jane@company.com"
+                className="w-full px-4 py-3 rounded-xl border-2 text-sm focus:outline-none transition-colors"
+                style={{
+                  backgroundColor: "var(--theme-surface-alt)",
+                  borderColor: "var(--theme-border)",
+                  color: "var(--theme-ink)",
+                }}
               />
-              {errors.message && (
-                <p className="text-xs text-rose-700 font-medium">{errors.message.message}</p>
+              {errors.email && (
+                <p className="text-xs text-rose-500 font-medium">{errors.email.message}</p>
               )}
             </div>
+          </div>
 
-            {submitSuccess && (
-              <div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-600/30 text-xs text-emerald-900 font-medium flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span>{submitSuccess}</span>
-              </div>
+          <div className="space-y-1.5">
+            <label htmlFor="contact-subject" className="text-xs font-mono-tech font-bold uppercase">
+              Subject
+            </label>
+            <input
+              id="contact-subject"
+              type="text"
+              {...register("subject")}
+              placeholder="Software Engineering Role / Network Architecture Inquiry"
+              className="w-full px-4 py-3 rounded-xl border-2 text-sm focus:outline-none transition-colors"
+              style={{
+                backgroundColor: "var(--theme-surface-alt)",
+                borderColor: "var(--theme-border)",
+                color: "var(--theme-ink)",
+              }}
+            />
+            {errors.subject && (
+              <p className="text-xs text-rose-500 font-medium">{errors.subject.message}</p>
             )}
+          </div>
 
-            {submitError && (
-              <div className="p-4 rounded-2xl bg-rose-500/15 border border-rose-600/30 text-xs text-rose-900 font-medium flex items-start gap-2.5">
-                <AlertTriangle className="w-4 h-4 text-rose-700 shrink-0 mt-0.5" />
-                <span>{submitError}</span>
-              </div>
+          <div className="space-y-1.5">
+            <label htmlFor="contact-message" className="text-xs font-mono-tech font-bold uppercase">
+              Message
+            </label>
+            <textarea
+              id="contact-message"
+              rows={4}
+              {...register("message")}
+              placeholder="Share project details, role scope, or diagnostic requirements..."
+              className="w-full px-4 py-3 rounded-xl border-2 text-sm focus:outline-none transition-colors resize-none"
+              style={{
+                backgroundColor: "var(--theme-surface-alt)",
+                borderColor: "var(--theme-border)",
+                color: "var(--theme-ink)",
+              }}
+            />
+            {errors.message && (
+              <p className="text-xs text-rose-500 font-medium">{errors.message.message}</p>
             )}
+          </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full py-3.5 px-6 rounded-full crystal-button disabled:opacity-50 text-white text-sm font-semibold transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
-            >
-              {isSubmitting ? (
-                <span>Delivering message...</span>
-              ) : (
-                <>
-                  <span>Send Message</span>
-                  <Send className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
-        </div>
+          {submitSuccess && (
+            <div className="p-3.5 rounded-xl bg-emerald-500/15 border-2 border-emerald-500 text-xs font-semibold flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span>{submitSuccess}</span>
+            </div>
+          )}
+
+          {submitError && (
+            <div className="p-3.5 rounded-xl bg-rose-500/15 border-2 border-rose-500 text-xs font-semibold flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0" />
+              <span>{submitError}</span>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full neo-btn-primary text-xs sm:text-sm font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+          >
+            <Send className="w-4 h-4" />
+            <span>{isSubmitting ? "Transmitting..." : "Send Message"}</span>
+          </button>
+        </form>
       </div>
     </section>
   );
