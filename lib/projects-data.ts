@@ -19,8 +19,8 @@ export const featuredProjects: ProjectData[] = [
       "Route-split pricing module calculating fair operational cost division based on distance intervals and peak Lagos congestion hours.",
       "Streamlined driver cockpit architecture featuring one-tap morning/evening route presets, sequential pickup itinerary with Google Maps waypoints, 5-minute arrival broadcast alerts, and one-tap curbside boarding verification with automated escrow release.",
       "Real-time peer chat with full-screen distraction-free thread mode, pinned live ride cockpit banner, touch swipe-to-reply gestures, and voice note simulation with waveform playback.",
-      "60-30-10 color design system anchored in brand teal (#0F766E) and sunset amber (#F58A25) micro-sparks over clean slate canvas, eliminating border clutter and unbranded color artifacts.",
-      "Mobile-first responsive interface engineered with high-contrast dark mode slate tokens for on-the-go commuters.",
+      "Volt-Obsidian mobile UI architecture pairing Electric Volt Lime (#C8FF00), Pitch Obsidian (#0B0C0E), and Signal Amber (#FF9F0A) across full-bleed editorial portrait swipe cards, concentric-ring vector telemetry banners, and 2x2 Bento action matrices.",
+      "Live vehicle progress telemetry bar with split-pill seat reservation triggers and dark editorial trust dossiers.",
     ],
     topology: [
       "Client Layer: Mobile & Web Next.js client with low-bandwidth offline caching.",
