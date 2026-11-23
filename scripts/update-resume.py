@@ -143,6 +143,19 @@ def build_html_resume(projects):
     page2_p1 = build_project_entry(antigravity, antigravity_bullets)
     page2_p2 = build_project_entry(video_downloader, video_downloader_bullets)
 
+    sabbath_light = project_map.get("sabbath-light", {
+        "title": "Sabbath Light: SDA Worship & Study Companion PWA",
+        "category": "Progressive Web App & Digital Publishing",
+        "tags": ["React 19", "TypeScript", "Tailwind CSS", "Vite PWA", "Workbox", "Tone.js"],
+        "metrics": [{"label": "Offline Hymnal", "value": "920 Entries"}, {"label": "Bible Versions", "value": "6 Parallel"}, {"label": "Study Editions", "value": "3 Live"}],
+        "codeLink": "https://github.com/kiinnggss/sabbath-light"
+    })
+    sabbath_light_bullets = [
+        "<strong>Offline-First Worship PWA.</strong> Built a Workbox-cached React 19 PWA precaching the unified 920-entry 1985 SDA Hymnal (#1-695 hymns and #696-920 responsive worship aids) with fuzzy search, global font scaling, and Warm Nightlight dark mode.",
+        "<strong>Tone.js Synth &amp; Multi-Source Scripture.</strong> Implemented polyphonic Organ/Piano tune playback with live BPM control alongside live 3-edition Adventech Sabbath School quarterlies and 6-version Bolls/HelloAO Bible comparison.",
+    ]
+    page2_p3 = build_project_entry(sabbath_light, sabbath_light_bullets)
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -354,7 +367,7 @@ def build_html_resume(projects):
 
   /* Projects */
   .project-entry {{
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     break-inside: avoid;
   }}
 
@@ -424,13 +437,13 @@ def build_html_resume(projects):
   .bullet-list {{
     list-style-type: disc;
     padding-left: 15px;
-    font-size: 8.6pt;
+    font-size: 8.3pt;
     color: #334155;
-    line-height: 1.36;
+    line-height: 1.3;
   }}
 
   .bullet-list li {{
-    margin-bottom: 2.5px;
+    margin-bottom: 1.5px;
   }}
 
   .bullet-list li strong {{
@@ -609,11 +622,12 @@ def build_html_resume(projects):
         </div>
       </div>
 
-      <!-- Featured Systems 3 & 4 -->
+      <!-- Featured Systems 3, 4 & 5 -->
       <div class="section">
         <div class="section-title">Distributed AI &amp; Web Platforms</div>
         {page2_p1}
         {page2_p2}
+        {page2_p3}
       </div>
 
       <!-- Skills Matrix -->
