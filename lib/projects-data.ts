@@ -292,7 +292,7 @@ export async function POST(req: Request) {
       { label: "Study Editions", value: "3 Live", detail: "Adult (+Teacher), Inverse, and Cornerstone" },
     ],
     highlights: [
-      "Tactile Yoto-inspired hardware UI featuring a custom 5x7 SVG dot-matrix hymn badge, burnt-orange controls, global A-/A+ reading scale, and a warm Nightlight dark theme.",
+      "Tactile Yoto-inspired hardware UI with a custom 5x7 SVG dot-matrix hymn badge, 11 light/dark color themes with live accent overrides, 6 font presets with text-size scaling inside an Aa menu, and an expanding-pill bottom bar.",
       "Unified 1-920 Hymnal search with instant 1-tap number jumping, fuzzy title/tune/author matching, Lyrics vs. Story & Author views, and responsive Leader/Congregation worship aid formatting.",
       "Polyphonic Tone.js Web Audio tune synthesizer with Organ and Piano voices, real-time BPM tempo slider, progress scrubbing, and automatic player hiding on #696-920 readings.",
       "Dynamic Adventech Sabbath School integration auto-opening the current week and day with pinned Memory Text, Adult Teacher Comments, Archive picker, and Cornerstone PDF viewer.",
