@@ -269,4 +269,52 @@ export async function POST(req: Request) {
     demoLink: "https://github.com/kiinnggss/joyboy_sys#running-the-application",
     codeLink: "https://github.com/kiinnggss/joyboy_sys",
   },
+  {
+    id: "sabbath-light",
+    title: "Sabbath Light: SDA Worship & Study Companion PWA",
+    subtitle: "Offline-capable React PWA unifying the 1-920 SDA Hymnal, Tone.js tune player, Sabbath School, and multi-version Bible",
+    category: "Progressive Web App & Digital Publishing",
+    summary:
+      "A mobile-first, offline-ready Progressive Web App built with React 19, TypeScript, Tailwind CSS v4, and Workbox, combining the complete 1985 Seventh-day Adventist Hymnal (#1-920 hymns and responsive worship aids), live three-edition Sabbath School quarterlies (Adult, Inverse, and Cornerstone Connections), and a six-translation Bible reader with side-by-side comparison and local study persistence.",
+    tags: [
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vite PWA",
+      "Workbox",
+      "Tone.js",
+      "Web Audio API",
+      "REST APIs",
+    ],
+    metrics: [
+      { label: "Offline Hymnal", value: "920 Entries", detail: "Precached #1-695 hymns + #696-920 worship aids" },
+      { label: "Bible Versions", value: "6 Parallel", detail: "NKJV, KJV, ESV, NLT, WEB, and BSB compare" },
+      { label: "Study Editions", value: "3 Live", detail: "Adult (+Teacher), Inverse, and Cornerstone" },
+    ],
+    highlights: [
+      "Tactile Yoto-inspired hardware UI featuring a custom 5x7 SVG dot-matrix hymn badge, burnt-orange controls, global A-/A+ reading scale, and a warm Nightlight dark theme.",
+      "Unified 1-920 Hymnal search with instant 1-tap number jumping, fuzzy title/tune/author matching, Lyrics vs. Story & Author views, and responsive Leader/Congregation worship aid formatting.",
+      "Polyphonic Tone.js Web Audio tune synthesizer with Organ and Piano voices, real-time BPM tempo slider, progress scrubbing, and automatic player hiding on #696-920 readings.",
+      "Dynamic Adventech Sabbath School integration auto-opening the current week and day with pinned Memory Text, Adult Teacher Comments, Archive picker, and Cornerstone PDF viewer.",
+      "Multi-version Bible engine integrating Bolls and HelloAO APIs with Strong's tag sanitization, synchronized side-by-side comparison, verse highlights/bookmarks, and clickable scripture preview sheets.",
+    ],
+    topology: [
+      "Client Shell: Mobile-first React 19 + Tailwind CSS v4 interface with persistent localStorage preferences and accessible typography scaling.",
+      "Offline Layer: Workbox Service Worker precaching the 1.08 MB 920-entry hymnal dataset plus StaleWhileRevalidate/CacheFirst API caching.",
+      "Audio Engine: Singleton Tone.js PolySynth scheduler synchronizing melody and bass tracks with live transport BPM control.",
+      "Content Gateways: Direct CORS integration with Adventech v2 Sabbath School API, Bolls Bible API, and HelloAO Free Use Bible API.",
+    ],
+    protocols: [
+      "Workbox Service Worker precache and runtime CacheFirst/StaleWhileRevalidate strategies",
+      "Web Audio API polyphonic synthesis scheduled on Tone.Transport",
+      "RESTful JSON integration across Adventech v2, Bolls Bible, and HelloAO endpoints",
+      "Client-side DOM sanitization and regex scripture reference tokenization",
+    ],
+    cliSnippet: `// Build unified #1-920 SDA Hymnal offline dataset and run verification suite
+npm run build:hymnal
+npx vitest run
+npm run build`,
+    demoLink: "https://kiinnggss.github.io/sabbath-light/",
+    codeLink: "https://github.com/kiinnggss/sabbath-light",
+  },
 ];
