@@ -146,13 +146,13 @@ def build_html_resume(projects):
     sabbath_light = project_map.get("sabbath-light", {
         "title": "Sabbath Light: SDA Worship & Study Companion PWA",
         "category": "Progressive Web App & Digital Publishing",
-        "tags": ["React 19", "TypeScript", "Tailwind CSS", "Vite PWA", "Workbox", "Tone.js"],
+        "tags": ["React 19", "TypeScript", "Tailwind CSS", "Vite PWA", "Workbox", "Web Audio API"],
         "metrics": [{"label": "Offline Hymnal", "value": "920 Entries"}, {"label": "Bible Versions", "value": "6 Parallel"}, {"label": "Study Editions", "value": "3 Live"}],
         "codeLink": "https://github.com/kiinnggss/sabbath-light"
     })
     sabbath_light_bullets = [
         "<strong>Offline-First Worship PWA.</strong> Built a Workbox + IndexedDB React 19 PWA caching the 920-entry 1985 SDA Hymnal, 695 SATB MIDI tracks, 3-edition Sabbath School quarterlies, bulk Bible versions, and study notes with 11 themes.",
-        "<strong>Sampled Piano MIDI &amp; Notes Engine.</strong> Replaced synth audio with Salamander Grand Piano and Church Organ Tone.Sampler playback (@tonejs/midi with SATB deduplication and 0.75x-1.25x speed) plus JSON note backups.",
+        "<strong>Pre-Rendered WAV Piano Engine &amp; Notes.</strong> Synthesized 695 hymns on-device via a Float32Array PCM mixer over Salamander Grand Piano and Organ samples into soft-limited WAV audio for glitch-free 0.75x-1.25x playback.",
     ]
     page2_p3 = build_project_entry(sabbath_light, sabbath_light_bullets)
 

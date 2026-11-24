@@ -283,7 +283,7 @@ export async function POST(req: Request) {
       "Vite PWA",
       "Workbox",
       "IndexedDB",
-      "Tone.js",
+      "Web Audio API",
       "@tonejs/midi",
     ],
     metrics: [
@@ -293,7 +293,7 @@ export async function POST(req: Request) {
     ],
     highlights: [
       "Tactile Yoto-inspired hardware UI with a custom 5x7 SVG dot-matrix hymn badge, 11 light/dark themes with live accent overrides, 6 font presets with text scaling inside an Aa menu, and an expanding-pill bottom bar.",
-      "Complete 695-hymn SATB MIDI library played through sampled acoustic Grand Piano (Salamander) and Church Organ (FluidR3_GM) voices via @tonejs/midi + Tone.Sampler, with layered track deduplication, lead-in tempo trimming, 0.75x-1.25x speed control, and scrubbing.",
+      "Complete 695-hymn SATB MIDI library pre-rendered on-device via a Float32Array linear-interpolated PCM mixer into peak-normalized, soft-limited 16-bit WAV audio over Salamander Grand Piano and FluidR3_GM Church Organ samples, with GM bass stripping, 0.75x-1.25x pitch-preserved playback, and LRU Blob caching.",
       "Hybrid IndexedDB notes system across Bible verses, Sabbath School paragraphs and daily reflections, and Hymns, paired with a searchable My Notes drawer, 1-tap jump-back, and JSON export/import.",
       "Zero-backend offline auto-sync: requests persistent device storage, silently caches the default Bible translation, active 3-edition Sabbath School quarter, and all 695 hymnal MIDI files in background batches, and updates automatically on new quarters.",
       "Unified 1-920 Hymnal search with 1-tap number jumping, Lyrics vs. Story & Author views, Leader/Congregation responsive readings, and six-translation Bible compare with highlights and bookmarks.",
@@ -301,12 +301,12 @@ export async function POST(req: Request) {
     topology: [
       "Client Shell: Mobile-first React 19 + Tailwind CSS v4 interface with persistent preferences, theme tokens, and accessible typography presets.",
       "Offline Layer: Workbox Service Worker precaching 43 shell, hymnal, and soundfont sample assets plus CacheFirst runtime caching across all 695 MIDI files and IndexedDB stores for bulk Bible translations, quarterly lessons, and study notes.",
-      "Audio Engine: Singleton Tone.Sampler + @tonejs/midi scheduler with GM multi-track SATB deduplication driving real piano and organ samples across 0.75x-1.25x live transport speeds.",
+      "Audio Engine: Direct Float32Array PCM mixer decoding on-demand piano and organ samples, stripping GM bass tracks, and rendering peak-normalized WAV Blobs for glitch-free HTMLAudioElement playback.",
       "Content Gateways: Direct CORS integration with Adventech v2 Sabbath School API, Bolls bulk/verse APIs, and HelloAO Free Use Bible API.",
     ],
     protocols: [
       "Workbox Service Worker precaching (43 core assets) and CacheFirst/StaleWhileRevalidate runtime rules for 695 MIDI tracks",
-      "Standard MIDI (.mid) parsing via @tonejs/midi with SATB deduplication scheduled on Tone.Transport with Tone.Sampler",
+      "Standard MIDI (.mid) parsing via @tonejs/midi into on-device 24 kHz stereo WAV synthesis with 45 Hz high-pass filtering and pitch-preserved HTMLAudioElement playback",
       "IndexedDB object stores (notes, bibleChapters, bibleVersions, sabbathSchoolCache, syncMeta) + Cache Storage MIDI warm-up",
       "RESTful JSON integration across Adventech v2, Bolls Bible, and HelloAO endpoints",
     ],
