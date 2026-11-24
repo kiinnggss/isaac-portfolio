@@ -272,48 +272,49 @@ export async function POST(req: Request) {
   {
     id: "sabbath-light",
     title: "Sabbath Light: SDA Worship & Study Companion PWA",
-    subtitle: "Offline-capable React PWA unifying the 1-920 SDA Hymnal, Tone.js tune player, Sabbath School, and multi-version Bible",
+    subtitle: "Offline-first React PWA with sampled piano MIDI playback, IndexedDB study notes, Sabbath School, and multi-version Bible",
     category: "Progressive Web App & Digital Publishing",
     summary:
-      "A mobile-first, offline-ready Progressive Web App built with React 19, TypeScript, Tailwind CSS v4, and Workbox, combining the complete 1985 Seventh-day Adventist Hymnal (#1-920 hymns and responsive worship aids), live three-edition Sabbath School quarterlies (Adult, Inverse, and Cornerstone Connections), and a six-translation Bible reader with side-by-side comparison and local study persistence.",
+      "A mobile-first, offline-capable Progressive Web App built with React 19, TypeScript, Tailwind CSS v4, and Workbox, combining the 1985 Seventh-day Adventist Hymnal (#1-920) with Salamander Grand Piano MIDI playback, live three-edition Sabbath School quarterlies (Adult, Inverse, Cornerstone Connections), a six-translation Bible reader with bulk offline downloads, and a hybrid IndexedDB study notes system.",
     tags: [
       "React 19",
       "TypeScript",
       "Tailwind CSS",
       "Vite PWA",
       "Workbox",
+      "IndexedDB",
       "Tone.js",
-      "Web Audio API",
-      "REST APIs",
+      "@tonejs/midi",
     ],
     metrics: [
-      { label: "Offline Hymnal", value: "920 Entries", detail: "Precached #1-695 hymns + #696-920 worship aids" },
-      { label: "Bible Versions", value: "6 Parallel", detail: "NKJV, KJV, ESV, NLT, WEB, and BSB compare" },
-      { label: "Study Editions", value: "3 Live", detail: "Adult (+Teacher), Inverse, and Cornerstone" },
+      { label: "Offline Assets", value: "75 Precached", detail: "920 hymns, 30 piano/organ samples, 32 MIDI tracks" },
+      { label: "Bible Storage", value: "6 Versions", detail: "Full bulk IndexedDB sync + parallel compare" },
+      { label: "Study Notes", value: "IndexedDB + JSON", detail: "In-context Bible/SS/Hymn notes + 1-tap jump" },
     ],
     highlights: [
-      "Tactile Yoto-inspired hardware UI with a custom 5x7 SVG dot-matrix hymn badge, 11 light/dark color themes with live accent overrides, 6 font presets with text-size scaling inside an Aa menu, and an expanding-pill bottom bar.",
-      "Unified 1-920 Hymnal search with instant 1-tap number jumping, fuzzy title/tune/author matching, Lyrics vs. Story & Author views, and responsive Leader/Congregation worship aid formatting.",
-      "Polyphonic Tone.js Web Audio tune synthesizer with Organ and Piano voices, real-time BPM tempo slider, progress scrubbing, and automatic player hiding on #696-920 readings.",
-      "Dynamic Adventech Sabbath School integration auto-opening the current week and day with pinned Memory Text, Adult Teacher Comments, Archive picker, and Cornerstone PDF viewer.",
-      "Multi-version Bible engine integrating Bolls and HelloAO APIs with Strong's tag sanitization, synchronized side-by-side comparison, verse highlights/bookmarks, and clickable scripture preview sheets.",
+      "Tactile Yoto-inspired hardware UI with a custom 5x7 SVG dot-matrix hymn badge, 11 light/dark themes with live accent overrides, 6 font presets with text scaling inside an Aa menu, and an expanding-pill bottom bar.",
+      "Sampled acoustic Grand Piano (Salamander) and Church Organ (FluidR3_GM) MIDI player via @tonejs/midi + Tone.Sampler, with 0.75x-1.25x tempo presets, scrubbing, and missing-track fallback.",
+      "Hybrid IndexedDB notes system across Bible verses, Sabbath School paragraphs and daily reflections, and Hymns, paired with a searchable My Notes drawer, 1-tap jump-back, and JSON export/import.",
+      "Zero-backend offline auto-sync: requests persistent device storage, silently caches the default Bible translation and active 3-edition Sabbath School quarter on first open, and updates automatically on new quarters.",
+      "Unified 1-920 Hymnal search with 1-tap number jumping, Lyrics vs. Story & Author views, Leader/Congregation responsive readings, and six-translation Bible compare with highlights and bookmarks.",
     ],
     topology: [
-      "Client Shell: Mobile-first React 19 + Tailwind CSS v4 interface with persistent localStorage preferences and accessible typography scaling.",
-      "Offline Layer: Workbox Service Worker precaching the 1.08 MB 920-entry hymnal dataset plus StaleWhileRevalidate/CacheFirst API caching.",
-      "Audio Engine: Singleton Tone.js PolySynth scheduler synchronizing melody and bass tracks with live transport BPM control.",
-      "Content Gateways: Direct CORS integration with Adventech v2 Sabbath School API, Bolls Bible API, and HelloAO Free Use Bible API.",
+      "Client Shell: Mobile-first React 19 + Tailwind CSS v4 interface with persistent preferences, theme tokens, and accessible typography presets.",
+      "Offline Layer: Workbox Service Worker precaching 75 shell, hymnal, audio sample, and MIDI assets plus IndexedDB stores for bulk Bible translations, quarterly lessons, and study notes.",
+      "Audio Engine: Singleton Tone.Sampler + @tonejs/midi scheduler driving real piano and organ samples across 0.75x-1.25x live transport speeds.",
+      "Content Gateways: Direct CORS integration with Adventech v2 Sabbath School API, Bolls bulk/verse APIs, and HelloAO Free Use Bible API.",
     ],
     protocols: [
-      "Workbox Service Worker precache and runtime CacheFirst/StaleWhileRevalidate strategies",
-      "Web Audio API polyphonic synthesis scheduled on Tone.Transport",
+      "Workbox Service Worker precaching (75 assets) and runtime StaleWhileRevalidate/CacheFirst rules",
+      "Standard MIDI (.mid) parsing via @tonejs/midi scheduled on Tone.Transport with Tone.Sampler",
+      "IndexedDB object stores (notes, bibleChapters, bibleVersions, sabbathSchoolCache, syncMeta)",
       "RESTful JSON integration across Adventech v2, Bolls Bible, and HelloAO endpoints",
-      "Client-side DOM sanitization and regex scripture reference tokenization",
     ],
-    cliSnippet: `// Build unified #1-920 SDA Hymnal offline dataset and run verification suite
+    cliSnippet: `// Build hymnal data, download soundfonts, generate MIDI tracks, and verify
 npm run build:hymnal
-npx vitest run
-npm run build`,
+node scripts/download-soundfonts.mjs
+node scripts/generate-seed-midis.mjs
+npx vitest run && npm run build`,
     demoLink: "https://kiinnggss.github.io/sabbath-light/",
     codeLink: "https://github.com/kiinnggss/sabbath-light",
   },
