@@ -151,8 +151,8 @@ def build_html_resume(projects):
         "codeLink": "https://github.com/kiinnggss/sabbath-light"
     })
     sabbath_light_bullets = [
-        "<strong>Offline-First Worship PWA.</strong> Built a Workbox-cached React 19 PWA precaching the unified 920-entry 1985 SDA Hymnal (#1-695 hymns and #696-920 responsive worship aids) with fuzzy search, global font scaling, and Warm Nightlight dark mode.",
-        "<strong>Tone.js Synth &amp; Multi-Source Scripture.</strong> Implemented polyphonic Organ/Piano tune playback with live BPM control alongside live 3-edition Adventech Sabbath School quarterlies and 6-version Bolls/HelloAO Bible comparison.",
+        "<strong>Offline-First Worship PWA.</strong> Built a Workbox + IndexedDB React 19 PWA caching the 920-entry 1985 SDA Hymnal, 695 SATB MIDI tracks, 3-edition Sabbath School quarterlies, bulk Bible versions, and study notes with 11 themes.",
+        "<strong>Sampled Piano MIDI &amp; Notes Engine.</strong> Replaced synth audio with Salamander Grand Piano and Church Organ Tone.Sampler playback (@tonejs/midi with SATB deduplication and 0.75x-1.25x speed) plus JSON note backups.",
     ]
     page2_p3 = build_project_entry(sabbath_light, sabbath_light_bullets)
 

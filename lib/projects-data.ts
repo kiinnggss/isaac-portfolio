@@ -287,33 +287,33 @@ export async function POST(req: Request) {
       "@tonejs/midi",
     ],
     metrics: [
-      { label: "Offline Assets", value: "75 Precached", detail: "920 hymns, 30 piano/organ samples, 32 MIDI tracks" },
+      { label: "Offline Audio", value: "695 MIDIs", detail: "43 core precached assets + 695 CacheFirst SATB tracks" },
       { label: "Bible Storage", value: "6 Versions", detail: "Full bulk IndexedDB sync + parallel compare" },
       { label: "Study Notes", value: "IndexedDB + JSON", detail: "In-context Bible/SS/Hymn notes + 1-tap jump" },
     ],
     highlights: [
       "Tactile Yoto-inspired hardware UI with a custom 5x7 SVG dot-matrix hymn badge, 11 light/dark themes with live accent overrides, 6 font presets with text scaling inside an Aa menu, and an expanding-pill bottom bar.",
-      "Sampled acoustic Grand Piano (Salamander) and Church Organ (FluidR3_GM) MIDI player via @tonejs/midi + Tone.Sampler, with 0.75x-1.25x tempo presets, scrubbing, and missing-track fallback.",
+      "Complete 695-hymn SATB MIDI library played through sampled acoustic Grand Piano (Salamander) and Church Organ (FluidR3_GM) voices via @tonejs/midi + Tone.Sampler, with layered track deduplication, lead-in tempo trimming, 0.75x-1.25x speed control, and scrubbing.",
       "Hybrid IndexedDB notes system across Bible verses, Sabbath School paragraphs and daily reflections, and Hymns, paired with a searchable My Notes drawer, 1-tap jump-back, and JSON export/import.",
-      "Zero-backend offline auto-sync: requests persistent device storage, silently caches the default Bible translation and active 3-edition Sabbath School quarter on first open, and updates automatically on new quarters.",
+      "Zero-backend offline auto-sync: requests persistent device storage, silently caches the default Bible translation, active 3-edition Sabbath School quarter, and all 695 hymnal MIDI files in background batches, and updates automatically on new quarters.",
       "Unified 1-920 Hymnal search with 1-tap number jumping, Lyrics vs. Story & Author views, Leader/Congregation responsive readings, and six-translation Bible compare with highlights and bookmarks.",
     ],
     topology: [
       "Client Shell: Mobile-first React 19 + Tailwind CSS v4 interface with persistent preferences, theme tokens, and accessible typography presets.",
-      "Offline Layer: Workbox Service Worker precaching 75 shell, hymnal, audio sample, and MIDI assets plus IndexedDB stores for bulk Bible translations, quarterly lessons, and study notes.",
-      "Audio Engine: Singleton Tone.Sampler + @tonejs/midi scheduler driving real piano and organ samples across 0.75x-1.25x live transport speeds.",
+      "Offline Layer: Workbox Service Worker precaching 43 shell, hymnal, and soundfont sample assets plus CacheFirst runtime caching across all 695 MIDI files and IndexedDB stores for bulk Bible translations, quarterly lessons, and study notes.",
+      "Audio Engine: Singleton Tone.Sampler + @tonejs/midi scheduler with GM multi-track SATB deduplication driving real piano and organ samples across 0.75x-1.25x live transport speeds.",
       "Content Gateways: Direct CORS integration with Adventech v2 Sabbath School API, Bolls bulk/verse APIs, and HelloAO Free Use Bible API.",
     ],
     protocols: [
-      "Workbox Service Worker precaching (75 assets) and runtime StaleWhileRevalidate/CacheFirst rules",
-      "Standard MIDI (.mid) parsing via @tonejs/midi scheduled on Tone.Transport with Tone.Sampler",
-      "IndexedDB object stores (notes, bibleChapters, bibleVersions, sabbathSchoolCache, syncMeta)",
+      "Workbox Service Worker precaching (43 core assets) and CacheFirst/StaleWhileRevalidate runtime rules for 695 MIDI tracks",
+      "Standard MIDI (.mid) parsing via @tonejs/midi with SATB deduplication scheduled on Tone.Transport with Tone.Sampler",
+      "IndexedDB object stores (notes, bibleChapters, bibleVersions, sabbathSchoolCache, syncMeta) + Cache Storage MIDI warm-up",
       "RESTful JSON integration across Adventech v2, Bolls Bible, and HelloAO endpoints",
     ],
-    cliSnippet: `// Build hymnal data, download soundfonts, generate MIDI tracks, and verify
+    cliSnippet: `// Build hymnal data, download soundfonts, fetch & audit 695 SATB MIDIs, and verify
 npm run build:hymnal
 node scripts/download-soundfonts.mjs
-node scripts/generate-seed-midis.mjs
+npm run fetch:midis
 npx vitest run && npm run build`,
     demoLink: "https://kiinnggss.github.io/sabbath-light/",
     codeLink: "https://github.com/kiinnggss/sabbath-light",
