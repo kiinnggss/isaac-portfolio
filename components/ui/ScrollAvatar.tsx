@@ -30,13 +30,14 @@ export default function ScrollAvatar({
   const { scrollYProgress } = useScroll();
   const [statusLabel, setStatusLabel] = useState("Systems Studio");
   const [bounced, setBounced] = useState(false);
+  const [minimized, setMinimized] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileDockRef = useRef<HTMLDivElement>(null);
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 45,
-    damping: 20,
-    mass: 0.6,
+    stiffness: 55,
+    damping: 22,
+    mass: 0.55,
     restDelta: 0.001,
   });
 
@@ -66,28 +67,29 @@ export default function ScrollAvatar({
     };
   }, [mobileMenuOpen]);
 
-  const left = useTransform(
-    smoothProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    ["94vw", "6vw", "94vw", "6vw", "92vw"]
-  );
-
+  // Glide smoothly down the right viewport edge as the user scrolls
   const top = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    ["58vh", "60vh", "54vh", "60vh", "56vh"]
+    ["20vh", "34vh", "50vh", "64vh", "74vh"]
+  );
+
+  const x = useTransform(
+    smoothProgress,
+    [0, 0.25, 0.5, 0.75, 1],
+    [0, -8, 0, -6, 0]
   );
 
   const scale = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [0.96, 0.9, 1.0, 0.92, 0.96]
+    [0.96, 1.02, 0.97, 1.02, 0.98]
   );
 
   const rotate = useTransform(
     smoothProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [-3, 3, -3, 3, -2]
+    [-3, 3, -2, 3, -1]
   );
 
   const scrollToSection = (id: string) => {
@@ -106,56 +108,86 @@ export default function ScrollAvatar({
 
   return (
     <>
-      {/* Desktop (>= xl): Gliding 3D Clay Companion along outer margins */}
-      {!prefersReducedMotion && (
-        <div
-          aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none hidden xl:block"
-        >
+      {/* Desktop (>= xl): Scroll-gliding 3D Clay Companion along the right edge above content */}
+      {!prefersReducedMotion && !minimized && (
+        <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden select-none hidden xl:block">
           <motion.div
             style={{
-              left,
               top,
+              x,
               scale,
               rotate,
               transformOrigin: "center center",
             }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+            className="absolute right-4 2xl:right-7 -translate-y-1/2 flex flex-col items-end"
           >
-            <motion.button
-              type="button"
-              onClick={handleAvatarClick}
-              animate={
-                bounced
-                  ? { y: [0, -18, 0], scale: [1, 1.08, 1] }
-                  : { y: [0, -7, 0] }
-              }
-              transition={
-                bounced
-                  ? { duration: 0.45, ease: "easeOut" }
-                  : { duration: 3.6, repeat: Infinity, ease: "easeInOut" }
-              }
-              title="Jump to Contact"
-              className="pointer-events-auto group flex flex-col items-center cursor-pointer focus:outline-none"
-            >
-              <div className="mb-1.5 px-3 py-1 rounded-full neo-pill text-[10px] font-mono-tech font-bold uppercase tracking-wider flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                <span
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ backgroundColor: effectiveAccent }}
-                />
-                <span>{statusLabel}</span>
-              </div>
+            <div className="pointer-events-auto group relative flex flex-col items-center">
+              <button
+                type="button"
+                onClick={() => setMinimized(true)}
+                aria-label="Hide 3D companion"
+                title="Minimize companion"
+                className="absolute -top-2 -right-2 z-10 w-5 h-5 rounded-full neo-console flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+              >
+                <X className="w-3 h-3" />
+              </button>
 
-              <div className="h-[260px] w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src={isaacClayAvatar}
-                  alt="3D Clay Avatar of Gbodimowo Isaac"
-                  className="h-full w-auto object-contain select-none drop-shadow-[0_14px_22px_rgba(0,0,0,0.28)]"
-                />
-              </div>
-            </motion.button>
+              <motion.button
+                type="button"
+                onClick={handleAvatarClick}
+                animate={
+                  bounced
+                    ? { y: [0, -16, 0], scale: [1, 1.08, 1] }
+                    : { y: [0, -6, 0] }
+                }
+                transition={
+                  bounced
+                    ? { duration: 0.45, ease: "easeOut" }
+                    : { duration: 3.4, repeat: Infinity, ease: "easeInOut" }
+                }
+                title="Jump to Contact"
+                className="flex flex-col items-center cursor-pointer focus:outline-none"
+              >
+                <div className="mb-1.5 px-2.5 py-1 rounded-full neo-pill text-[10px] font-mono-tech font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm whitespace-nowrap">
+                  <span
+                    className="w-2 h-2 rounded-full animate-pulse"
+                    style={{ backgroundColor: effectiveAccent }}
+                  />
+                  <span>{statusLabel}</span>
+                </div>
+
+                <div className="h-[148px] 2xl:h-[195px] w-auto flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                  <Image
+                    src={isaacClayAvatar}
+                    alt="3D Clay Avatar of Gbodimowo Isaac"
+                    className="h-full w-auto object-contain select-none drop-shadow-[0_14px_22px_rgba(0,0,0,0.3)]"
+                  />
+                </div>
+              </motion.button>
+            </div>
           </motion.div>
         </div>
+      )}
+
+      {/* Desktop restore pill when minimized */}
+      {!prefersReducedMotion && minimized && (
+        <button
+          type="button"
+          onClick={() => setMinimized(false)}
+          aria-label="Show 3D companion"
+          title="Show 3D companion"
+          className="hidden xl:flex fixed bottom-5 right-5 z-30 w-12 h-12 rounded-full neo-pill p-0.5 items-center justify-center cursor-pointer hover:scale-105 transition-transform"
+        >
+          <div className="w-full h-full rounded-full overflow-hidden">
+            <Image
+              src={isaacClayBust}
+              alt="Show 3D Avatar"
+              width={48}
+              height={48}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </button>
       )}
 
       {/* Mobile & Laptop (< xl): Compact Floating Corner Avatar Dock */}

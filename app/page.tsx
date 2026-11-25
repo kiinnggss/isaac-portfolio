@@ -15,6 +15,7 @@ import ResumeModal from "@/components/ui/ResumeModal";
 import PhotoModal, { PhotoDetails } from "@/components/ui/PhotoModal";
 import ThemeSwitcherModal from "@/components/ui/ThemeSwitcherModal";
 import Toast, { ToastMessage } from "@/components/ui/Toast";
+import ScrollAvatar from "@/components/ui/ScrollAvatar";
 import { featuredProjects } from "@/lib/projects-data";
 import { usePortfolioTheme } from "@/components/ui/ThemeProvider";
 import { motion, AnimatePresence } from "framer-motion";
@@ -144,6 +145,12 @@ export default function Home() {
       <Navbar
         onOpenResume={() => setResumeModalOpen(true)}
         onOpenThemeSwitcher={() => setThemeModalOpen(true)}
+      />
+
+      {/* Scroll-gliding 3D Clay Companion */}
+      <ScrollAvatar
+        onOpenThemeSwitcher={() => setThemeModalOpen(true)}
+        onOpenResume={() => setResumeModalOpen(true)}
       />
 
       <main className="relative z-10">
