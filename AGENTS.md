@@ -88,6 +88,12 @@ Under no circumstances may an agent make changes that target the Linux system it
 - The primary agent must always be proactive within the user's scope: identify
   useful next steps, make safe, well-supported assumptions, and keep pursuing
   the requested outcome while meaningful in-scope work remains.
+- Never idle. While any subagent, background job, build, or external wait is
+  pending, keep doing useful in-scope work in parallel: the next independent
+  step, verification prep, or the following section. Blocking waits (a wait
+  call, polling, or `sleep`) are a last resort with a stated reason, never the
+  plan. Completion check: at every wait point, name the parallel work you are
+  doing, or state plainly that nothing in scope remains and why.
 - Delegate when at least two independent, bounded workstreams can run alongside
   useful work by the primary agent without shared writes or sequential
   dependencies. Keep smaller tasks local unless the user explicitly requests

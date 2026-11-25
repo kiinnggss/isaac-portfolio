@@ -107,24 +107,34 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             </div>
 
             {/* Document Body */}
-            <div className="p-6 sm:p-10 overflow-y-auto space-y-8 bg-white text-[#090d16]">
+            <div
+              className="resume-print-surface p-6 sm:p-10 overflow-y-auto space-y-8"
+              style={{ backgroundColor: "var(--theme-surface)", color: "var(--theme-ink)" }}
+            >
               {/* Document Header */}
-              <div className="border-b border-slate-200 pb-6">
-                <div className="text-[11px] font-mono-tech font-semibold text-[#ea580c] uppercase tracking-wider mb-1">
+              <div className="border-b-2 pb-6" style={{ borderColor: "var(--theme-border)" }}>
+                <div
+                  className="text-[11px] font-mono-tech font-bold uppercase tracking-wider mb-1"
+                  style={{ color: "var(--theme-accent)" }}
+                >
                   Candidate Profile
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-display font-bold text-[#090d16]">
+                <h1 className="text-2xl sm:text-3xl font-display font-bold">
                   GBODIMOWO ISAAC
                 </h1>
-                <div className="text-sm font-semibold text-slate-700 mt-1">
+                <div className="text-sm font-semibold mt-1" style={{ color: "var(--theme-ink)" }}>
                   Software Engineer & Network Systems Specialist
                 </div>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono-tech text-slate-500 mt-2.5">
+                <div
+                  className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono-tech mt-2.5"
+                  style={{ color: "var(--theme-muted)" }}
+                >
                   <span>Lagos, Nigeria</span>
                   <span>/</span>
                   <a
                     href="mailto:isaacgbodimowo@gmail.com"
-                    className="text-[#ea580c] hover:underline"
+                    className="hover:underline font-semibold"
+                    style={{ color: "var(--theme-accent)" }}
                   >
                     isaacgbodimowo@gmail.com
                   </a>
@@ -135,7 +145,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     href="https://github.com/kiinnggss"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[#ea580c] hover:underline"
+                    className="hover:underline font-semibold"
+                    style={{ color: "var(--theme-accent)" }}
                   >
                     github.com/kiinnggss
                   </a>
@@ -144,36 +155,53 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Executive Summary */}
               <div>
-                <h2 className="text-xs font-mono-tech font-bold uppercase tracking-wider text-slate-500 mb-2">
+                <h2
+                  className="text-xs font-mono-tech font-bold uppercase tracking-wider mb-2"
+                  style={{ color: "var(--theme-muted)" }}
+                >
                   Professional Summary
                 </h2>
-                <p className="text-sm text-slate-700 leading-relaxed">
+                <p className="text-sm leading-relaxed" style={{ color: "var(--theme-ink)" }}>
                   Dual-competency engineer bridging full-stack software development with enterprise Cisco network routing and hardware-level diagnostics. Experienced in building responsive TypeScript and Next.js platforms, designing high-availability network topologies (HSRP, Router-on-a-Stick, extended ACLs), and conducting CompTIA A+ certified fault isolation.
                 </p>
               </div>
 
               {/* Education & Certifications */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#090d16] mb-2">
-                    <GraduationCap className="w-4 h-4 text-[#ea580c]" />
+                <div
+                  className="p-4 rounded-xl border"
+                  style={{
+                    backgroundColor: "var(--theme-surface-alt)",
+                    borderColor: "var(--theme-border)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 text-xs font-semibold mb-2">
+                    <GraduationCap className="w-4 h-4" style={{ color: "var(--theme-accent)" }} />
                     <span>Education</span>
                   </div>
-                  <div className="text-sm font-bold text-[#090d16]">
+                  <div className="text-sm font-bold">
                     B.Sc. in Computer Science
                   </div>
-                  <div className="text-xs text-slate-600">Babcock University, Nigeria</div>
-                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                  <div className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                    Babcock University, Nigeria · 2021 - 2025
+                  </div>
+                  <p className="text-xs mt-2 leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                     Rigorous curriculum covering data structures, algorithm design, relational database models, operating systems, and computer networks.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#090d16] mb-2">
-                    <ShieldCheck className="w-4 h-4 text-[#ea580c]" />
+                <div
+                  className="p-4 rounded-xl border"
+                  style={{
+                    backgroundColor: "var(--theme-surface-alt)",
+                    borderColor: "var(--theme-border)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 text-xs font-semibold mb-2">
+                    <ShieldCheck className="w-4 h-4" style={{ color: "var(--theme-accent)" }} />
                     <span>Verified Certifications</span>
                   </div>
-                  <div className="space-y-1.5 text-xs text-slate-700">
+                  <div className="space-y-1.5 text-xs" style={{ color: "var(--theme-ink)" }}>
                     <div>
                       <strong>CompTIA A+ Certified</strong> (Hardware & Diagnostics)
                     </div>
@@ -189,36 +217,45 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Professional Experience */}
               <div>
-                <h2 className="text-xs font-mono-tech font-bold uppercase tracking-wider text-slate-500 mb-4">
+                <h2
+                  className="text-xs font-mono-tech font-bold uppercase tracking-wider mb-4"
+                  style={{ color: "var(--theme-muted)" }}
+                >
                   Experience
                 </h2>
                 <div className="space-y-5">
-                  <div className="border-l-2 border-[#ea580c] pl-4 py-1">
+                  <div className="border-l-2 pl-4 py-1" style={{ borderColor: "var(--theme-accent)" }}>
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h3 className="text-sm font-bold text-[#090d16]">Web Developer Intern</h3>
-                      <span className="text-xs font-mono-tech text-slate-500">Lagos, Nigeria</span>
+                      <h3 className="text-sm font-bold">
+                        Computer Science &amp; Programming Instructor
+                      </h3>
+                      <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+                        2025 · Lagos, Nigeria
+                      </span>
                     </div>
-                    <div className="text-xs font-semibold text-[#ea580c]">Hoffenheim Tech</div>
-                    <ul className="mt-2 space-y-1 text-xs text-slate-700 leading-relaxed list-disc list-inside">
-                      <li>Delivered production client web platforms with clean user experience and robust responsive layouts.</li>
-                      <li>Engineered backend API integrations, data intake forms, and webhook handlers with Zod schema validation.</li>
-                      <li>Collaborated on system maintenance, hardware servicing, and client handover documentation.</li>
+                    <div className="text-xs font-semibold" style={{ color: "var(--theme-accent)" }}>
+                      Edkints International School
+                    </div>
+                    <ul className="mt-2 space-y-1 text-xs leading-relaxed list-disc list-inside" style={{ color: "var(--theme-ink)" }}>
+                      <li>Taught core programming foundations, logic constructs, and Python algorithmic thinking.</li>
+                      <li>Guided students in hands-on computer hardware assembly, peripherals setup, and basic troubleshooting.</li>
                     </ul>
                   </div>
 
-                  <div className="border-l-2 border-slate-300 pl-4 py-1">
+                  <div className="border-l-2 pl-4 py-1" style={{ borderColor: "var(--theme-border)" }}>
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h3 className="text-sm font-bold text-[#090d16]">
-                        Computer Science & Programming Instructor
-                      </h3>
-                      <span className="text-xs font-mono-tech text-slate-500">Lagos, Nigeria</span>
+                      <h3 className="text-sm font-bold">Web Developer Intern</h3>
+                      <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+                        2023 · Lagos, Nigeria
+                      </span>
                     </div>
-                    <div className="text-xs font-semibold text-[#ea580c]">
-                      Edkints International School
+                    <div className="text-xs font-semibold" style={{ color: "var(--theme-accent)" }}>
+                      Hoffenheim Tech
                     </div>
-                    <ul className="mt-2 space-y-1 text-xs text-slate-700 leading-relaxed list-disc list-inside">
-                      <li>Taught core programming foundations, logic constructs, and Python algorithmic thinking.</li>
-                      <li>Guided students in hands-on computer hardware assembly, peripherals setup, and basic troubleshooting.</li>
+                    <ul className="mt-2 space-y-1 text-xs leading-relaxed list-disc list-inside" style={{ color: "var(--theme-ink)" }}>
+                      <li>Delivered production client web platforms with clean user experience and robust responsive layouts.</li>
+                      <li>Engineered backend API integrations, data intake forms, and webhook handlers with Zod schema validation.</li>
+                      <li>Collaborated on system maintenance, hardware servicing, and client handover documentation.</li>
                     </ul>
                   </div>
                 </div>
@@ -226,59 +263,86 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Featured Systems & Projects */}
               <div>
-                <h2 className="text-xs font-mono-tech font-bold uppercase tracking-wider text-slate-500 mb-4">
+                <h2
+                  className="text-xs font-mono-tech font-bold uppercase tracking-wider mb-4"
+                  style={{ color: "var(--theme-muted)" }}
+                >
                   Featured Systems & Architecture
                 </h2>
                 <div className="space-y-3">
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div
+                    className="p-3.5 rounded-xl border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h3 className="text-sm font-bold text-[#090d16]">
+                      <h3 className="text-sm font-bold">
                         Crystal: Mobile Video Downloader & Media Vault
                       </h3>
-                      <span className="text-xs font-mono-tech text-[#ea580c] font-semibold">
+                      <span className="text-xs font-mono-tech font-semibold" style={{ color: "var(--theme-accent)" }}>
                         FastAPI / React 19 / yt-dlp / SSE / HTTP 206
                       </span>
                     </div>
-                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                    <p className="mt-1.5 text-xs leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       Mobile-first video stream inspector and downloader with translucent crystal glassmorphism. Uses background worker threads, sub-50ms SSE live transfer telemetry (speed, ETA, byte counters), seekable HTTP 206 byte-range media streaming, and a PIN-secured private vault.
                     </p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div
+                    className="p-3.5 rounded-xl border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h3 className="text-sm font-bold text-[#090d16]">
+                      <h3 className="text-sm font-bold">
                         Google Antigravity Mobile Controller & Voice Assistant
                       </h3>
-                      <span className="text-xs font-mono-tech text-[#ea580c] font-semibold">
+                      <span className="text-xs font-mono-tech font-semibold" style={{ color: "var(--theme-accent)" }}>
                         FastAPI / PWA / Web Speech / SSE
                       </span>
                     </div>
-                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                    <p className="mt-1.5 text-xs leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       Mobile Progressive Web App and streaming supervisor driving host CLI agents over Cloudflare HTTPS tunnels. Includes real-time speech dictation and synthesis, an async subprocess runner with pipe deadlock mitigation, and a live slide-up terminal drawer.
                     </p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div
+                    className="p-3.5 rounded-xl border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h3 className="text-sm font-bold text-[#090d16]">
+                      <h3 className="text-sm font-bold">
                         CAR PULL: Distributed Transit & Carpooling
                       </h3>
-                      <span className="text-xs font-mono-tech text-[#ea580c] font-semibold">
+                      <span className="text-xs font-mono-tech font-semibold" style={{ color: "var(--theme-accent)" }}>
                         Next.js / TypeScript / Geospatial
                       </span>
                     </div>
-                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                    <p className="mt-1.5 text-xs leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       High-congestion ridesharing platform matching commuters across arterial Lagos corridors with sub-45ms spatial polygon indexing, route-split pricing, and dark-mode mobile cockpit.
                     </p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <div
+                    className="p-3.5 rounded-xl border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h3 className="text-sm font-bold text-[#090d16]">
+                      <h3 className="text-sm font-bold">
                         Enterprise Cisco Network & Defense Topology
                       </h3>
-                      <span className="text-xs font-mono-tech text-[#ea580c] font-semibold">
+                      <span className="text-xs font-mono-tech font-semibold" style={{ color: "var(--theme-accent)" }}>
                         Cisco IOS / HSRP v2 / 802.1Q / ACLs
                       </span>
                     </div>
-                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                    <p className="mt-1.5 text-xs leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       Multi-VLAN fault-tolerant infrastructure simulated in Cisco Packet Tracer with Router-on-a-Stick, sub-3s HSRP gateway failover, dynamic NAT overload (PAT), and port security.
                     </p>
                   </div>
@@ -287,27 +351,48 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Technical Skills Matrix */}
               <div>
-                <h2 className="text-xs font-mono-tech font-bold uppercase tracking-wider text-slate-500 mb-3">
+                <h2
+                  className="text-xs font-mono-tech font-bold uppercase tracking-wider mb-3"
+                  style={{ color: "var(--theme-muted)" }}
+                >
                   Technical Competencies
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <div className="font-semibold text-[#090d16] mb-1">Networking & Protocols</div>
-                    <div className="text-slate-600 leading-relaxed">
+                  <div
+                    className="p-3 rounded-lg border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
+                    <div className="font-semibold mb-1">Networking & Protocols</div>
+                    <div className="leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       Cisco IOS, HSRP v2, 802.1Q VLANs, Extended ACLs, NAT/PAT, Subnetting (VLSM), Packet Tracer
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <div className="font-semibold text-[#090d16] mb-1">Web Architecture</div>
-                    <div className="text-slate-600 leading-relaxed">
+                  <div
+                    className="p-3 rounded-lg border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
+                    <div className="font-semibold mb-1">Web Architecture</div>
+                    <div className="leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       TypeScript, Next.js, React 19, FastAPI, REST APIs, SSE, Tailwind CSS, Node.js
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <div className="font-semibold text-[#090d16] mb-1">Systems & Diagnostics</div>
-                    <div className="text-slate-600 leading-relaxed">
+                  <div
+                    className="p-3 rounded-lg border"
+                    style={{
+                      backgroundColor: "var(--theme-surface-alt)",
+                      borderColor: "var(--theme-border)",
+                    }}
+                  >
+                    <div className="font-semibold mb-1">Systems & Diagnostics</div>
+                    <div className="leading-relaxed" style={{ color: "var(--theme-muted)" }}>
                       CompTIA A+ fault isolation, Linux Mint/Ubuntu, Async Subprocesses, PostgreSQL, SQLite, Git, Shell scripting
                     </div>
                   </div>
@@ -316,12 +401,19 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+            <div
+              className="p-4 border-t-2 flex items-center justify-between text-xs"
+              style={{
+                borderColor: "var(--theme-border)",
+                backgroundColor: "var(--theme-surface-alt)",
+                color: "var(--theme-muted)",
+              }}
+            >
               <span className="font-mono-tech">Verified Candidate Specification / Lagos, Nigeria</span>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-lg bg-[#090d16] text-white hover:bg-[#ea580c] font-semibold transition-colors"
+                className="px-4 py-1.5 rounded-lg neo-btn-primary font-bold cursor-pointer"
               >
                 Close Document
               </button>

@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Terminal as TerminalIcon } from "lucide-react";
-import isaac3dAvatar from "@/public/images/isaac-clay-bust.png";
+import isaac3dAvatar from "@/public/images/isaac-clay-bust.webp";
+import { isStaticHosting } from "@/lib/paths";
 
 interface TerminalLine {
   id: string;
@@ -193,25 +194,30 @@ Experience:
 
       try {
         const start = performance.now();
-        const res = await fetch("/api/ping-check?target=" + encodeURIComponent(target));
-        const duration = Math.round(performance.now() - start);
+        let rtt: number;
+        let modeTag = "api";
 
-        let pingOutput = "";
-        if (res.ok) {
-          const json = await res.json();
-          const rtt = json.latencyMs || duration;
-          pingOutput = `64 bytes from ${target}: icmp_seq=1 ttl=117 time=${rtt} ms
-64 bytes from ${target}: icmp_seq=2 ttl=117 time=${rtt + 1} ms
-64 bytes from ${target}: icmp_seq=3 ttl=117 time=${Math.max(1, rtt - 1)} ms
---- ${target} ping statistics ---
-3 packets transmitted, 3 packets received, 0.0% packet loss, rtt avg = ${rtt} ms`;
+        if (isStaticHosting()) {
+          await fetch(window.location.href, { method: "HEAD", cache: "no-store" });
+          rtt = Math.max(4, Math.round(performance.now() - start));
+          modeTag = "edge-probe";
         } else {
-          pingOutput = `64 bytes from ${target}: icmp_seq=1 ttl=116 time=${duration} ms
-64 bytes from ${target}: icmp_seq=2 ttl=116 time=${duration + 2} ms
-64 bytes from ${target}: icmp_seq=3 ttl=116 time=${Math.max(2, duration - 1)} ms
---- ${target} ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, rtt avg = ${duration} ms`;
+          const res = await fetch("/api/ping-check?target=" + encodeURIComponent(target));
+          const duration = Math.round(performance.now() - start);
+          if (res.ok) {
+            const json = await res.json();
+            rtt = json.latencyMs || duration;
+          } else {
+            rtt = duration;
+            modeTag = "edge-probe";
+          }
         }
+
+        const pingOutput = `64 bytes from ${target} [${modeTag}]: icmp_seq=1 ttl=117 time=${rtt} ms
+64 bytes from ${target} [${modeTag}]: icmp_seq=2 ttl=117 time=${rtt + 1} ms
+64 bytes from ${target} [${modeTag}]: icmp_seq=3 ttl=117 time=${Math.max(2, rtt - 1)} ms
+--- ${target} ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, rtt avg = ${rtt} ms`;
 
         setLines((prev) => [
           ...prev,

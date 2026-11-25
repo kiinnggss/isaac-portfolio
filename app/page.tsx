@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/ui/Navbar";
-import CoverPage from "@/components/ui/CoverPage";
 import HeroSection from "@/components/ui/HeroSection";
 import ProjectCard from "@/components/ui/ProjectCard";
 import BentoGrid from "@/components/ui/BentoGrid";
@@ -16,14 +15,13 @@ import ResumeModal from "@/components/ui/ResumeModal";
 import PhotoModal, { PhotoDetails } from "@/components/ui/PhotoModal";
 import ThemeSwitcherModal from "@/components/ui/ThemeSwitcherModal";
 import Toast, { ToastMessage } from "@/components/ui/Toast";
-import ScrollAvatar from "@/components/ui/ScrollAvatar";
 import { featuredProjects } from "@/lib/projects-data";
 import { usePortfolioTheme } from "@/components/ui/ThemeProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
-import isaacPortrait from "@/public/images/isaac-portrait.jpg";
-import isaacGraduation from "@/public/images/isaac-graduation.jpg";
-import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
+import isaacPortrait from "@/public/images/isaac-portrait.webp";
+import isaacGraduation from "@/public/images/isaac-graduation.webp";
+import isaacWorkspace from "@/public/images/isaac-workspace.webp";
 
 export default function Home() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
@@ -32,8 +30,19 @@ export default function Home() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "web" | "network">("all");
-  const [isCoverOpen, setIsCoverOpen] = useState(true);
   const { effectiveAccent } = usePortfolioTheme();
+
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash) {
+      setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -123,25 +132,6 @@ export default function Home() {
     return true;
   });
 
-  const handleOpenPortfolio = (sectionHash?: string) => {
-    setIsCoverOpen(false);
-    if (sectionHash) {
-      setTimeout(() => {
-        const el = document.getElementById(sectionHash);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 120);
-    } else {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }
-  };
-
-  const handleShowCover = () => {
-    setIsCoverOpen(true);
-    window.scrollTo({ top: 0, behavior: "instant" });
-  };
-
   return (
     <div
       className="relative min-h-screen bg-memphis-canvas"
@@ -150,46 +140,18 @@ export default function Home() {
         color: "var(--theme-ink)",
       }}
     >
-      {/* 100dvh Editorial Cover Page */}
-      <AnimatePresence>
-        {isCoverOpen && (
-          <motion.div
-            key="editorial-cover"
-            initial={{ opacity: 1, y: 0 }}
-            exit={{
-              opacity: 0,
-              y: -80,
-              transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-            }}
-            className="fixed inset-0 z-50 overflow-y-auto"
-          >
-            <CoverPage
-              onOpenPortfolio={handleOpenPortfolio}
-              onOpenThemeSwitcher={() => setThemeModalOpen(true)}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Global Navigation */}
-      {!isCoverOpen && (
-        <Navbar
-          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-          onOpenResume={() => setResumeModalOpen(true)}
-          onOpenThemeSwitcher={() => setThemeModalOpen(true)}
-          onShowCover={handleShowCover}
-        />
-      )}
-
-      {/* Subtle Periphery Scroll Silhouette */}
-      <ScrollAvatar />
+      <Navbar
+        onOpenResume={() => setResumeModalOpen(true)}
+        onOpenThemeSwitcher={() => setThemeModalOpen(true)}
+      />
 
       <main className="relative z-10">
         {/* Creative Mints Isometric Studio Hero */}
-        <HeroSection />
+        <HeroSection onOpenResume={() => setResumeModalOpen(true)} />
 
         {/* Featured Projects Showcase */}
-        <section id="work" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <section id="work" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div>
               <div className="inline-flex items-center gap-2 text-[11px] font-mono-tech font-bold uppercase tracking-[0.16em] mb-3 px-3.5 py-1.5 rounded-full neo-pill">
@@ -240,7 +202,7 @@ export default function Home() {
         <BentoGrid />
 
         {/* Systems Terminal & Interactive Topology */}
-        <section id="terminal" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
+        <section id="terminal" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">

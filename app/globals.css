@@ -15,6 +15,55 @@
   --theme-secondary: #FBBF24;
   --theme-console-bg: #18181B;
   --theme-console-ink: #FFFDF5;
+
+  /* Default surface personality (Coral Studio) */
+  --theme-border-width: 2px;
+  --theme-shadow-card: 4px 4px 0 0 var(--theme-shadow);
+  --theme-shadow-card-hover: 6px 6px 0 0 var(--theme-shadow);
+  --theme-shadow-hero: 6px 6px 0 0 var(--theme-shadow);
+  --theme-shadow-btn: 3px 3px 0 0 var(--theme-shadow);
+  --theme-shadow-pill: 2px 2px 0 0 var(--theme-shadow);
+  --theme-canvas-pattern: radial-gradient(color-mix(in srgb, var(--theme-border) 10%, transparent) 1.4px, transparent 1.4px);
+  --theme-canvas-size: 28px 28px;
+}
+
+/* Paw Tinder personality: punchier offset ink shadows and denser Memphis dot grid */
+:root[data-theme="paw-butter"] {
+  --theme-border-width: 2px;
+  --theme-shadow-card: 5px 5px 0 0 var(--theme-shadow);
+  --theme-shadow-card-hover: 7px 7px 0 0 var(--theme-shadow);
+  --theme-shadow-hero: 8px 8px 0 0 var(--theme-shadow);
+  --theme-shadow-btn: 4px 4px 0 0 var(--theme-shadow);
+  --theme-shadow-pill: 2px 2px 0 0 var(--theme-shadow);
+  --theme-canvas-pattern: radial-gradient(color-mix(in srgb, var(--theme-border) 17%, transparent) 1.6px, transparent 1.6px);
+  --theme-canvas-size: 24px 24px;
+}
+
+/* Matcha Paper personality: refined editorial paper elevation and hairline grid */
+:root[data-theme="matcha-paper"] {
+  --theme-border-width: 1.5px;
+  --theme-shadow-card: 0 10px 26px -12px rgba(19, 34, 25, 0.16);
+  --theme-shadow-card-hover: 0 16px 32px -12px rgba(19, 34, 25, 0.22);
+  --theme-shadow-hero: 0 20px 44px -16px rgba(19, 34, 25, 0.24);
+  --theme-shadow-btn: 0 6px 16px -6px rgba(19, 34, 25, 0.26);
+  --theme-shadow-pill: 0 2px 8px -3px rgba(19, 34, 25, 0.12);
+  --theme-canvas-pattern: linear-gradient(to right, rgba(19, 34, 25, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(19, 34, 25, 0.045) 1px, transparent 1px);
+  --theme-canvas-size: 36px 36px;
+}
+
+/* Dark studio themes: sleek 1px borders, soft ambient depth, and subtle top radial glow */
+:root[data-theme="orange-mechanic"],
+:root[data-theme="purple-disco"],
+:root[data-theme="blue-powder"] {
+  --theme-border-width: 1px;
+  --theme-shadow-card: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 18px 40px -16px rgba(0, 0, 0, 0.6);
+  --theme-shadow-card-hover: inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 0 24px 48px -14px rgba(0, 0, 0, 0.72);
+  --theme-shadow-hero: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 24px 56px -16px rgba(0, 0, 0, 0.72);
+  --theme-shadow-btn: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+  --theme-shadow-pill: none;
+  --theme-canvas-pattern: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--theme-accent) 13%, transparent) 0%, transparent 55%);
+  --theme-canvas-size: 100% 680px;
 }
 
 html {
@@ -45,82 +94,83 @@ body {
   font-family: var(--font-mono-code), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* Subtle Memphis Dot Grid Canvas Overlay */
+/* Theme-Aware Canvas Backdrop */
 .bg-memphis-canvas {
-  background-image: radial-gradient(color-mix(in srgb, var(--theme-border) 14%, transparent) 1.5px, transparent 1.5px);
-  background-size: 28px 28px;
+  background-image: var(--theme-canvas-pattern);
+  background-size: var(--theme-canvas-size);
+  background-repeat: repeat;
 }
 
-/* Tactile Neo-Memphis Cards & Controls */
+/* Surface Tokens Adapting to Active Theme Personality */
 .neo-card {
   background-color: var(--theme-surface);
   color: var(--theme-ink);
-  border: 2px solid var(--theme-border);
-  box-shadow: 5px 5px 0 0 var(--theme-shadow);
+  border: var(--theme-border-width) solid var(--theme-border);
+  box-shadow: var(--theme-shadow-card);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .neo-card-hover:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0 0 var(--theme-shadow);
+  box-shadow: var(--theme-shadow-card-hover);
 }
 
 .neo-card-alt {
   background-color: var(--theme-surface-alt);
   color: var(--theme-ink);
-  border: 2px solid var(--theme-border);
-  box-shadow: 4px 4px 0 0 var(--theme-shadow);
+  border: var(--theme-border-width) solid var(--theme-border);
+  box-shadow: var(--theme-shadow-pill);
 }
 
 .neo-console {
   background-color: var(--theme-console-bg);
   color: var(--theme-console-ink);
-  border: 2px solid var(--theme-border);
-  box-shadow: 6px 6px 0 0 var(--theme-shadow);
+  border: var(--theme-border-width) solid var(--theme-border);
+  box-shadow: var(--theme-shadow-card);
 }
 
 .neo-pill {
   background-color: var(--theme-surface);
   color: var(--theme-ink);
-  border: 2px solid var(--theme-border);
-  box-shadow: 2px 2px 0 0 var(--theme-shadow);
+  border: var(--theme-border-width) solid var(--theme-border);
+  box-shadow: var(--theme-shadow-pill);
 }
 
 .neo-btn-primary {
   background-color: var(--theme-accent);
   color: var(--theme-accent-text);
-  border: 2px solid var(--theme-border);
-  box-shadow: 4px 4px 0 0 var(--theme-shadow);
+  border: var(--theme-border-width) solid var(--theme-border);
+  box-shadow: var(--theme-shadow-btn);
   transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s cubic-bezier(0.16, 1, 0.3, 1), filter 0.16s ease;
 }
 
 .neo-btn-primary:hover {
   transform: translate(-1.5px, -1.5px);
-  box-shadow: 5.5px 5.5px 0 0 var(--theme-shadow);
+  box-shadow: var(--theme-shadow-card-hover);
   filter: brightness(1.04);
 }
 
 .neo-btn-primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1.5px 1.5px 0 0 var(--theme-shadow);
+  transform: translate(1px, 1px);
+  box-shadow: var(--theme-shadow-pill);
 }
 
 .neo-btn-secondary {
   background-color: var(--theme-surface);
   color: var(--theme-ink);
-  border: 2px solid var(--theme-border);
-  box-shadow: 4px 4px 0 0 var(--theme-shadow);
+  border: var(--theme-border-width) solid var(--theme-border);
+  box-shadow: var(--theme-shadow-btn);
   transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .neo-btn-secondary:hover {
   transform: translate(-1.5px, -1.5px);
-  box-shadow: 5.5px 5.5px 0 0 var(--theme-shadow);
+  box-shadow: var(--theme-shadow-card-hover);
 }
 
 .neo-btn-secondary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1.5px 1.5px 0 0 var(--theme-shadow);
+  transform: translate(1px, 1px);
+  box-shadow: var(--theme-shadow-pill);
 }
 
 .memphis-stripes {
@@ -131,6 +181,30 @@ body {
     transparent 4px,
     transparent 9px
   );
+}
+
+@keyframes rackPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.rack-led-pulse {
+  animation: rackPulse 1.8s ease-in-out infinite;
+}
+
+@media print {
+  .resume-print-surface {
+    background-color: #ffffff !important;
+    color: #090d16 !important;
+    --theme-bg: #ffffff;
+    --theme-surface: #ffffff;
+    --theme-surface-alt: #f8fafc;
+    --theme-ink: #090d16;
+    --theme-muted: #475569;
+    --theme-border: #cbd5e1;
+    --theme-shadow: transparent;
+    --theme-accent: #ea580c;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

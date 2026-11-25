@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -10,6 +11,7 @@ import {
   Check,
   ExternalLink,
 } from "lucide-react";
+import ProjectPreview from "./ProjectPreview";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -53,6 +55,11 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const [activeTab, setActiveTab] = useState<"overview" | "architecture" | "cli">("overview");
   const [copied, setCopied] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -70,7 +77,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     };
   }, [isOpen, onClose]);
 
-  if (!project) return null;
+  if (!project || !mounted) return null;
 
   const handleCopyCli = () => {
     if (project.cliSnippet) {
@@ -80,7 +87,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     }
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-y-auto">
@@ -196,17 +203,29 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
+            <div
+              className="p-6 sm:p-8 overflow-y-auto space-y-6"
+              style={{ backgroundColor: "var(--theme-surface)", color: "var(--theme-ink)" }}
+            >
               {activeTab === "overview" && (
                 <div className="space-y-6">
+                  {/* Compact Visual Preview */}
+                  <ProjectPreview project={project} compact />
+
                   {/* Direct Action Banner */}
                   {(project.demoLink || project.codeLink) && (
-                    <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                    <div
+                      className="p-4 rounded-xl border flex flex-wrap items-center justify-between gap-3"
+                      style={{
+                        backgroundColor: "var(--theme-surface-alt)",
+                        borderColor: "var(--theme-border)",
+                      }}
+                    >
                       <div>
-                        <div className="text-xs font-bold text-[#090d16]">
+                        <div className="text-xs font-bold">
                           Deployment & Repository Access
                         </div>
-                        <div className="text-xs text-slate-600 mt-0.5">
+                        <div className="text-xs mt-0.5" style={{ color: "var(--theme-muted)" }}>
                           {project.demoLink
                             ? "Production application is active."
                             : "Repository source code available."}
@@ -219,7 +238,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                             href={project.demoLink}
                             target={project.demoLink.startsWith("#") ? "_self" : "_blank"}
                             rel="noreferrer"
-                            className="px-4 py-2 rounded-lg bg-[#090d16] text-white font-semibold text-xs hover:bg-[#ea580c] transition-colors inline-flex items-center gap-1.5 shadow-xs"
+                            className="px-4 py-2 rounded-lg neo-btn-primary font-bold text-xs inline-flex items-center gap-1.5"
                           >
                             <span>Open Project</span>
                             <ExternalLink className="w-3.5 h-3.5" />
@@ -230,7 +249,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                             href={project.codeLink}
                             target="_blank"
                             rel="noreferrer"
-                            className="px-3.5 py-2 rounded-lg bg-white border border-slate-300 text-[#090d16] text-xs font-semibold hover:border-[#090d16] inline-flex items-center gap-1.5 transition-colors"
+                            className="px-3.5 py-2 rounded-lg neo-pill text-xs font-bold inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                           >
                             <GithubIcon className="w-3.5 h-3.5" />
                             <span>GitHub</span>
@@ -241,10 +260,13 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   )}
 
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-2">
+                    <h4
+                      className="text-xs uppercase tracking-wider font-mono-tech font-semibold mb-2"
+                      style={{ color: "var(--theme-muted)" }}
+                    >
                       Engineering Scope
                     </h4>
-                    <p className="text-sm text-slate-700 leading-relaxed">
+                    <p className="text-sm leading-relaxed" style={{ color: "var(--theme-ink)" }}>
                       {project.summary}
                     </p>
                   </div>
@@ -254,15 +276,15 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                     {project.metrics.map((m, idx) => (
                       <div
                         key={idx}
-                        className="p-4 rounded-xl bg-[#090d16] text-white border border-slate-800"
+                        className="p-4 rounded-xl neo-console"
                       >
-                        <div className="text-[11px] font-mono-tech text-slate-400 uppercase tracking-wider">
+                        <div className="text-[11px] font-mono-tech opacity-70 uppercase tracking-wider">
                           {m.label}
                         </div>
-                        <div className="text-xl font-display font-bold text-white mt-1 tabular-nums">
+                        <div className="text-xl font-display font-bold mt-1 tabular-nums">
                           {m.value}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">
+                        <div className="text-xs mt-0.5" style={{ color: "var(--theme-accent)" }}>
                           {m.detail}
                         </div>
                       </div>
@@ -271,17 +293,27 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
                   {/* Key Engineering Highlights */}
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-3">
+                    <h4
+                      className="text-xs uppercase tracking-wider font-mono-tech font-semibold mb-3"
+                      style={{ color: "var(--theme-muted)" }}
+                    >
                       Core Implementation Highlights
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {project.highlights.map((highlight, idx) => (
                         <div
                           key={idx}
-                          className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-start gap-3"
+                          className="p-3.5 rounded-lg border flex items-start gap-3"
+                          style={{
+                            backgroundColor: "var(--theme-surface-alt)",
+                            borderColor: "var(--theme-border)",
+                          }}
                         >
-                          <CheckCircle2 className="w-4 h-4 text-[#ea580c] shrink-0 mt-0.5" />
-                          <span className="text-xs text-slate-700 leading-relaxed">
+                          <CheckCircle2
+                            className="w-4 h-4 shrink-0 mt-0.5"
+                            style={{ color: "var(--theme-accent)" }}
+                          />
+                          <span className="text-xs leading-relaxed" style={{ color: "var(--theme-ink)" }}>
                             {highlight}
                           </span>
                         </div>
@@ -294,17 +326,27 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               {activeTab === "architecture" && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-3">
+                    <h4
+                      className="text-xs uppercase tracking-wider font-mono-tech font-semibold mb-3"
+                      style={{ color: "var(--theme-muted)" }}
+                    >
                       Network Topology & Component Hierarchy
                     </h4>
                     <div className="space-y-2.5">
                       {project.topology.map((topo, idx) => (
                         <div
                           key={idx}
-                          className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-start gap-3"
+                          className="p-3.5 rounded-lg border flex items-start gap-3"
+                          style={{
+                            backgroundColor: "var(--theme-surface-alt)",
+                            borderColor: "var(--theme-border)",
+                          }}
                         >
-                          <Network className="w-4 h-4 text-[#ea580c] shrink-0 mt-0.5" />
-                          <div className="text-xs text-slate-800 leading-relaxed font-medium">
+                          <Network
+                            className="w-4 h-4 shrink-0 mt-0.5"
+                            style={{ color: "var(--theme-accent)" }}
+                          />
+                          <div className="text-xs leading-relaxed font-medium" style={{ color: "var(--theme-ink)" }}>
                             {topo}
                           </div>
                         </div>
@@ -313,14 +355,17 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   </div>
 
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider font-mono-tech font-semibold text-slate-500 mb-3">
+                    <h4
+                      className="text-xs uppercase tracking-wider font-mono-tech font-semibold mb-3"
+                      style={{ color: "var(--theme-muted)" }}
+                    >
                       Protocols & Standards Implemented
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {project.protocols.map((proto, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1.5 rounded-md text-xs font-mono-tech bg-[#090d16] text-slate-200 border border-slate-800"
+                          className="px-3 py-1.5 rounded-md text-xs font-mono-tech neo-console"
                         >
                           {proto}
                         </span>
@@ -333,29 +378,29 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               {activeTab === "cli" && project.cliSnippet && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="text-xs font-mono-tech text-slate-600">
+                    <div className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
                       Configuration syntax for Cisco IOS / Platform
                     </div>
                     <button
                       type="button"
                       onClick={handleCopyCli}
-                      className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs font-semibold text-[#090d16] inline-flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-1.5 rounded-lg neo-pill text-xs font-semibold inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer"
                     >
                       {copied ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="text-emerald-700">Copied</span>
+                          <Check className="w-3.5 h-3.5 text-emerald-500" />
+                          <span className="text-emerald-500">Copied</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3.5 h-3.5 text-slate-600" />
+                          <Copy className="w-3.5 h-3.5" style={{ color: "var(--theme-muted)" }} />
                           <span>Copy Config</span>
                         </>
                       )}
                     </button>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-[#090d16] border border-slate-800 text-slate-100 font-mono-tech text-xs overflow-x-auto leading-relaxed">
+                  <div className="p-4 rounded-xl neo-console font-mono-tech text-xs overflow-x-auto leading-relaxed">
                     <pre>{project.cliSnippet}</pre>
                   </div>
                 </div>
@@ -363,12 +408,19 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 sm:p-5 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+            <div
+              className="p-4 sm:p-5 border-t-2 flex items-center justify-between gap-3 text-xs"
+              style={{
+                borderColor: "var(--theme-border)",
+                backgroundColor: "var(--theme-surface-alt)",
+                color: "var(--theme-muted)",
+              }}
+            >
               <div className="flex flex-wrap gap-1.5">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700 font-mono-tech text-[11px]"
+                    className="px-2.5 py-0.5 rounded neo-pill font-mono-tech text-[11px]"
                   >
                     {tag}
                   </span>
@@ -378,7 +430,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-lg bg-[#090d16] text-white hover:bg-[#ea580c] text-xs font-semibold transition-colors"
+                className="px-4 py-1.5 rounded-lg neo-btn-primary text-xs font-bold shrink-0 cursor-pointer"
               >
                 Close
               </button>
@@ -386,6 +438,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

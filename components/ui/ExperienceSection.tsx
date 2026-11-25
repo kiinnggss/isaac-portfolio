@@ -2,44 +2,32 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Briefcase, GraduationCap, Laptop, Maximize2 } from "lucide-react";
+import { Briefcase, Calendar, GraduationCap, Laptop, Maximize2 } from "lucide-react";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
-import isaacGraduation from "@/public/images/isaac-graduation.jpg";
-import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
+import isaacGraduation from "@/public/images/isaac-graduation.webp";
 import { usePortfolioTheme } from "./ThemeProvider";
+
+interface ExperienceEntry {
+  period: string;
+  dates?: string;
+  role: string;
+  organization: string;
+  location: string;
+  icon: typeof Briefcase;
+  highlights: string[];
+  tags: string[];
+  photo?: typeof isaacGraduation;
+  photoDetails?: PhotoDetails;
+}
 
 export default function ExperienceSection() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const { effectiveAccent } = usePortfolioTheme();
 
-  const experiences = [
-    {
-      period: "Industry Experience",
-      role: "Web Developer Intern",
-      organization: "Hoffenheim Tech",
-      location: "Lagos, Nigeria",
-      icon: Briefcase,
-      highlights: [
-        "Delivered production websites, client portals, and administrative web tools for business clients.",
-        "Engineered API integrations, webhook consumers, and dynamic form submission pipelines with input sanitization.",
-        "Provided technical consulting and authored system handover documentation for client maintenance teams.",
-      ],
-      tags: ["React", "Next.js", "REST APIs", "Node.js", "Tailwind CSS", "CMS Pipelines"],
-      photo: isaacWorkspace,
-      photoDetails: {
-        src: isaacWorkspace,
-        alt: "Gbodimowo Isaac at developer workstation during industry tenure",
-        title: "Developer Workstation",
-        subtitle: "Hoffenheim Tech / Production Web Systems",
-        tag: "INDUSTRY TENURE",
-        location: "Lagos, Nigeria",
-        date: "Internship Tenure",
-        context:
-          "Gbodimowo Isaac at his developer workstation engineering full-stack client web solutions, data intake portals, and CMS workflows at Hoffenheim Tech.",
-      },
-    },
+  const experiences: ExperienceEntry[] = [
     {
       period: "Academic Instruction",
+      dates: "2025",
       role: "Computer Science & Programming Instructor",
       organization: "Edkints International School",
       location: "Lagos, Nigeria",
@@ -52,7 +40,22 @@ export default function ExperienceSection() {
       tags: ["Python", "Algorithms", "Curriculum Design", "Hardware Fundamentals"],
     },
     {
+      period: "Industry Experience",
+      dates: "2023",
+      role: "Web Developer Intern",
+      organization: "Hoffenheim Tech",
+      location: "Lagos, Nigeria",
+      icon: Briefcase,
+      highlights: [
+        "Delivered production websites, client portals, and administrative web tools for business clients.",
+        "Engineered API integrations, webhook consumers, and dynamic form submission pipelines with input sanitization.",
+        "Provided technical consulting and authored system handover documentation for client maintenance teams.",
+      ],
+      tags: ["React", "Next.js", "REST APIs", "Node.js", "Tailwind CSS", "CMS Pipelines"],
+    },
+    {
       period: "Higher Education",
+      dates: "2021 - 2025",
       role: "B.Sc. in Computer Science",
       organization: "Babcock University",
       location: "Ogun / Lagos, Nigeria",
@@ -71,7 +74,7 @@ export default function ExperienceSection() {
         subtitle: "Babcock University / B.Sc. in Computer Science",
         tag: "DEGREE CONFERRAL",
         location: "Babcock University, Nigeria",
-        date: "Degree Award",
+        date: "2021 - 2025",
         context:
           "Gbodimowo Isaac in academic regalia celebrating degree conferral at Babcock University. Coursework across algorithms, distributed systems, network engineering, and database management.",
       },
@@ -79,8 +82,8 @@ export default function ExperienceSection() {
   ];
 
   return (
-    <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="mb-12 max-w-2xl">
+    <section id="experience" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="mb-10 max-w-2xl">
         <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">
           Experience &amp; Education
         </h2>
@@ -89,15 +92,15 @@ export default function ExperienceSection() {
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         {experiences.map((exp) => {
           const Icon = exp.icon;
           return (
             <div
               key={exp.role + exp.organization}
-              className="neo-card neo-card-hover rounded-3xl p-6 sm:p-8"
+              className="neo-card neo-card-hover rounded-3xl p-5 sm:p-7"
             >
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-5">
                 <div className="flex items-start gap-4">
                   <div
                     className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 mt-1 border-2"
@@ -111,10 +114,22 @@ export default function ExperienceSection() {
                   </div>
 
                   <div>
-                    <div className="flex flex-wrap items-center gap-2.5">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="px-3 py-1 rounded-full neo-console text-[11px] font-mono-tech uppercase tracking-wider font-semibold">
                         {exp.period}
                       </span>
+                      {exp.dates && (
+                        <span
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono-tech font-semibold border"
+                          style={{
+                            backgroundColor: "var(--theme-surface-alt)",
+                            borderColor: "var(--theme-border)",
+                          }}
+                        >
+                          <Calendar className="w-3 h-3" style={{ color: effectiveAccent }} />
+                          <span>{exp.dates}</span>
+                        </span>
+                      )}
                       <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
                         {exp.location}
                       </span>
@@ -132,7 +147,7 @@ export default function ExperienceSection() {
                 {exp.photo && exp.photoDetails && (
                   <div
                     onClick={() => setSelectedPhoto(exp.photoDetails!)}
-                    className="group relative w-full md:w-36 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 shrink-0"
+                    className="group relative w-full md:w-32 h-36 md:h-28 rounded-2xl overflow-hidden cursor-pointer border-2 shrink-0"
                     style={{ borderColor: "var(--theme-border)" }}
                   >
                     <Image

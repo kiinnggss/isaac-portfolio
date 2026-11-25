@@ -2,8 +2,10 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
+  ACCENT_STORAGE_KEY,
   PORTFOLIO_THEMES,
   PortfolioTheme,
+  THEME_STORAGE_KEY,
   getContrastText,
   getThemeById,
   isValidHex,
@@ -21,8 +23,8 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-const STORAGE_THEME_KEY = "isaac-portfolio-theme-v1";
-const STORAGE_ACCENT_KEY = "isaac-portfolio-accent-v1";
+const STORAGE_THEME_KEY = THEME_STORAGE_KEY;
+const STORAGE_ACCENT_KEY = ACCENT_STORAGE_KEY;
 
 function applyThemeToDOM(theme: PortfolioTheme, customAccent: string | null) {
   const root = document.documentElement;

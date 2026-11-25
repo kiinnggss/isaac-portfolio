@@ -1,60 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import {
-  Network,
-  ShieldCheck,
-  Award,
-  Maximize2,
-  ArrowUpRight,
-} from "lucide-react";
+import { useState } from "react";
+import { Network, ShieldCheck, Award } from "lucide-react";
 import SubnetVisualizer from "./SubnetVisualizer";
-import PhotoModal, { PhotoDetails } from "./PhotoModal";
-import isaacGraduation from "@/public/images/isaac-graduation.jpg";
-import isaacWorkspace from "@/public/images/isaac-workspace.jpg";
 import { usePortfolioTheme } from "./ThemeProvider";
 
 export default function BentoGrid() {
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const [activeCategory, setActiveCategory] = useState<"network" | "software" | "hardware" | "tools">("network");
   const { effectiveAccent } = usePortfolioTheme();
-  const [healthData, setHealthData] = useState<{
-    status: string;
-    uptimeSeconds: number;
-    dbConnected: boolean;
-    latencyMs: number;
-  } | null>(null);
-
-  useEffect(() => {
-    const fetchHealth = async () => {
-      try {
-        const start = performance.now();
-        const res = await fetch("/api/health");
-        const json = await res.json();
-        const duration = Math.round(performance.now() - start);
-
-        setHealthData({
-          status: json.status,
-          uptimeSeconds: json.uptimeSeconds,
-          dbConnected: json.database?.connected ?? false,
-          latencyMs: duration,
-        });
-      } catch {
-        setHealthData({
-          status: "operational",
-          uptimeSeconds: 86400,
-          dbConnected: true,
-          latencyMs: 14,
-        });
-      }
-    };
-
-    fetchHealth();
-    const interval = setInterval(fetchHealth, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   const skillsMatrix = {
     network: {
@@ -112,9 +65,9 @@ export default function BentoGrid() {
   };
 
   return (
-    <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="skills" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="mb-12">
+      <div className="mb-8">
         <h2 className="text-4xl sm:text-5xl font-display font-extrabold uppercase tracking-tight">
           Technical Matrix &amp; Credentials
         </h2>
@@ -123,223 +76,67 @@ export default function BentoGrid() {
         </p>
       </div>
 
-      {/* Top Grid: 2-Column Balanced Identity & Node Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
-        {/* Tile 1: Console Telemetry & Workstation Frame */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="lg:col-span-6 neo-console rounded-3xl p-6 sm:p-7 flex flex-col justify-between gap-6"
-        >
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-11 h-11 rounded-2xl flex items-center justify-center border-2"
-                style={{
-                  backgroundColor: effectiveAccent,
-                  color: "var(--theme-accent-text)",
-                  borderColor: "var(--theme-border)",
-                }}
-              >
-                <Network className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-lg font-display font-bold uppercase tracking-wide">
-                  Lagos Edge Node Diagnostics
-                </h3>
-                <p className="text-xs opacity-70 font-mono-tech">
-                  Live API &amp; Persistence Probe
-                </p>
-              </div>
-            </div>
-
-            <div className="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-mono-tech flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>{healthData ? healthData.status.toUpperCase() : "ONLINE"}</span>
-            </div>
-          </div>
-
+      {/* Compact Verified Certifications Strip */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="neo-card rounded-2xl p-4 sm:p-5 flex items-center gap-3.5">
           <div
-            className="grid grid-cols-3 gap-4 border-y py-4"
-            style={{ borderColor: "rgba(255,255,255,0.14)" }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center border-2 shrink-0"
+            style={{
+              backgroundColor: "var(--theme-surface-alt)",
+              borderColor: "var(--theme-border)",
+            }}
           >
-            <div>
-              <div className="text-[11px] font-mono-tech uppercase opacity-65">Response Latency</div>
-              <div className="text-2xl font-display font-bold mt-0.5 tabular-nums">
-                {healthData ? `${healthData.latencyMs}ms` : "12ms"}
-              </div>
+            <ShieldCheck className="w-5 h-5" style={{ color: effectiveAccent }} />
+          </div>
+          <div>
+            <div className="text-sm font-display font-extrabold uppercase tracking-wide">
+              CompTIA A+ Certified
             </div>
-            <div>
-              <div className="text-[11px] font-mono-tech uppercase opacity-65">Node Persistence</div>
-              <div className="text-2xl font-display font-bold text-emerald-400 mt-0.5">
-                {healthData?.dbConnected ? "WAL Active" : "Active"}
-              </div>
-            </div>
-            <div>
-              <div className="text-[11px] font-mono-tech uppercase opacity-65">Region Edge</div>
-              <div className="text-2xl font-display font-bold mt-0.5" style={{ color: effectiveAccent }}>
-                LOS-NG
-              </div>
+            <div className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+              Hardware &amp; Systems Diagnostics
             </div>
           </div>
+        </div>
 
+        <div className="neo-card rounded-2xl p-4 sm:p-5 flex items-center gap-3.5">
           <div
-            onClick={() =>
-              setSelectedPhoto({
-                src: isaacWorkspace,
-                alt: "Gbodimowo Isaac working at dual monitor systems workstation",
-                title: "Engineering Workstation",
-                subtitle: "Lagos Tech Hub / Systems & Architecture Lab",
-                tag: "WORKSTATION",
-                location: "Lagos, Nigeria",
-                date: "Active Engineering Flow",
-                context:
-                  "Gbodimowo Isaac debugging backend microservices, running network topology simulations, and verifying endpoint hardware performance.",
-              })
-            }
-            className="group relative h-44 sm:h-48 rounded-2xl overflow-hidden cursor-pointer border-2"
-            style={{ borderColor: "rgba(255,255,255,0.18)" }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center border-2 shrink-0"
+            style={{
+              backgroundColor: "var(--theme-surface-alt)",
+              borderColor: "var(--theme-border)",
+            }}
           >
-            <Image
-              src={isaacWorkspace}
-              alt="Gbodimowo Isaac working at computer workstation"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end justify-between p-4">
-              <div>
-                <div className="text-[10px] font-mono-tech uppercase tracking-wider font-bold" style={{ color: effectiveAccent }}>
-                  SYSTEMS &amp; ARCHITECTURE LAB
-                </div>
-                <div className="text-sm font-bold text-white mt-0.5">
-                  Workstation &amp; Hardware Setup
-                </div>
-              </div>
-              <div className="p-2 rounded-full bg-white/15 backdrop-blur-md text-white">
-                <Maximize2 className="w-3.5 h-3.5" />
-              </div>
+            <Network className="w-5 h-5" style={{ color: effectiveAccent }} />
+          </div>
+          <div>
+            <div className="text-sm font-display font-extrabold uppercase tracking-wide">
+              Cisco CCNA 200-301
+            </div>
+            <div className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+              Candidate · Enterprise Routing
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Tile 2: Academic Degree & Certifications */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.08 }}
-          className="lg:col-span-6 neo-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between gap-6"
-        >
-          <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
-            <div
-              onClick={() =>
-                setSelectedPhoto({
-                  src: isaacGraduation,
-                  alt: "Gbodimowo Isaac in Babcock University academic regalia",
-                  title: "B.Sc. in Computer Science",
-                  subtitle: "Babcock University / Class of Computer Science",
-                  tag: "ACADEMIC CONFERRAL",
-                  location: "Babcock University, Nigeria",
-                  date: "Academic Regalia",
-                  context:
-                    "Graduation ceremony celebrating B.Sc. in Computer Science at Babcock University. Coursework focused on operating systems, algorithms, computer architecture, and distributed networks.",
-                })
-              }
-              className="group relative w-full sm:w-40 h-52 sm:h-44 rounded-2xl overflow-hidden cursor-pointer border-2 shrink-0"
-              style={{ borderColor: "var(--theme-border)" }}
-            >
-              <Image
-                src={isaacGraduation}
-                alt="Gbodimowo Isaac at Babcock University Convocation"
-                fill
-                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute bottom-2 right-2 p-1.5 rounded-full bg-black/75 text-white">
-                <Maximize2 className="w-3 h-3" />
-              </div>
-            </div>
-
-            <div className="space-y-2.5 flex-1">
-              <div
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono-tech font-bold uppercase tracking-wider border"
-                style={{
-                  backgroundColor: "var(--theme-surface-alt)",
-                  borderColor: "var(--theme-border)",
-                }}
-              >
-                <Award className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
-                <span>Degree Conferral</span>
-              </div>
-
-              <h3 className="text-2xl font-display font-extrabold uppercase tracking-wide leading-tight">
-                B.Sc. in Computer Science
-              </h3>
-
-              <div className="text-xs font-mono-tech font-bold" style={{ color: effectiveAccent }}>
-                Babcock University, Nigeria
-              </div>
-
-              <p className="text-xs leading-relaxed" style={{ color: "var(--theme-muted)" }}>
-                Coursework in distributed network architecture, operating systems, data structures, and software engineering principles.
-              </p>
-            </div>
-          </div>
-
+        <div className="neo-card rounded-2xl p-4 sm:p-5 flex items-center gap-3.5">
           <div
-            className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t-2"
-            style={{ borderColor: "var(--theme-border)" }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center border-2 shrink-0"
+            style={{
+              backgroundColor: "var(--theme-surface-alt)",
+              borderColor: "var(--theme-border)",
+            }}
           >
-            <div
-              className="p-3.5 rounded-2xl border-2"
-              style={{
-                backgroundColor: "var(--theme-surface-alt)",
-                borderColor: "var(--theme-border)",
-              }}
-            >
-              <div className="flex items-center gap-1.5 text-xs font-bold">
-                <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: effectiveAccent }} />
-                <span>CompTIA A+</span>
-              </div>
-              <div className="text-[11px] mt-1 font-mono-tech" style={{ color: "var(--theme-muted)" }}>
-                Hardware Diagnostics
-              </div>
+            <Award className="w-5 h-5" style={{ color: effectiveAccent }} />
+          </div>
+          <div>
+            <div className="text-sm font-display font-extrabold uppercase tracking-wide">
+              New Horizons Certified
             </div>
-
-            <div
-              className="p-3.5 rounded-2xl border-2"
-              style={{
-                backgroundColor: "var(--theme-surface-alt)",
-                borderColor: "var(--theme-border)",
-              }}
-            >
-              <div className="flex items-center gap-1.5 text-xs font-bold">
-                <Network className="w-4 h-4 shrink-0" style={{ color: effectiveAccent }} />
-                <span>Cisco CCNA</span>
-              </div>
-              <div className="text-[11px] mt-1 font-mono-tech" style={{ color: "var(--theme-muted)" }}>
-                200-301 Candidate
-              </div>
-            </div>
-
-            <div
-              className="p-3.5 rounded-2xl border-2"
-              style={{
-                backgroundColor: "var(--theme-surface-alt)",
-                borderColor: "var(--theme-border)",
-              }}
-            >
-              <div className="flex items-center gap-1.5 text-xs font-bold">
-                <Award className="w-4 h-4 shrink-0" style={{ color: effectiveAccent }} />
-                <span>New Horizons</span>
-              </div>
-              <div className="text-[11px] mt-1 font-mono-tech" style={{ color: "var(--theme-muted)" }}>
-                Tech Certified
-              </div>
+            <div className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+              Systems &amp; Networking Track
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Interactive Skills Matrix */}
@@ -409,35 +206,9 @@ export default function BentoGrid() {
       </div>
 
       {/* Interactive IPv4 Subnet Calculator */}
-      <div className="mb-8">
+      <div>
         <SubnetVisualizer />
       </div>
-
-      {/* Action Footer Card */}
-      <div className="neo-console rounded-3xl p-6 sm:p-8 flex flex-wrap items-center justify-between gap-6">
-        <div>
-          <h4 className="text-lg sm:text-xl font-display font-bold uppercase tracking-wide">
-            Inspect Live Network Topologies &amp; Terminal Simulation
-          </h4>
-          <p className="text-xs opacity-75 mt-1">
-            Run diagnostic commands or inspect the HSRP v2 multi-VLAN routing fabric below.
-          </p>
-        </div>
-
-        <a
-          href="#terminal"
-          className="px-6 py-3 rounded-full neo-btn-primary text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2"
-        >
-          <span>Open Systems Terminal</span>
-          <ArrowUpRight className="w-4 h-4" />
-        </a>
-      </div>
-
-      <PhotoModal
-        photo={selectedPhoto}
-        isOpen={!!selectedPhoto}
-        onClose={() => setSelectedPhoto(null)}
-      />
     </section>
   );
 }

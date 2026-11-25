@@ -20,3 +20,19 @@ export function getAssetPath(path: string): string {
 
   return cleanPath;
 }
+
+/**
+ * Returns true when running as a static GitHub Pages export without Next.js API routes.
+ */
+export function isStaticHosting(): boolean {
+  if (process.env.NEXT_PUBLIC_BASE_PATH) {
+    return true;
+  }
+  if (typeof window !== "undefined") {
+    return (
+      window.location.hostname.endsWith("github.io") ||
+      window.location.pathname.startsWith("/isaac-portfolio")
+    );
+  }
+  return false;
+}

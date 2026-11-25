@@ -12,8 +12,12 @@ import {
   Clock,
   CheckCircle2,
   AlertTriangle,
+  Copy,
+  Check,
+  ExternalLink,
 } from "lucide-react";
 import { usePortfolioTheme } from "./ThemeProvider";
+import { isStaticHosting } from "@/lib/paths";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -49,6 +53,8 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [fallbackMailto, setFallbackMailto] = useState<{ mailtoUrl: string; copyBody: string } | null>(null);
+  const [copiedFallback, setCopiedFallback] = useState(false);
   const { effectiveAccent } = usePortfolioTheme();
 
   const {
@@ -66,43 +72,98 @@ export default function ContactSection() {
     },
   });
 
+  const handleCopyFallbackMessage = () => {
+    if (!fallbackMailto) return;
+    navigator.clipboard.writeText(fallbackMailto.copyBody);
+    setCopiedFallback(true);
+    setTimeout(() => setCopiedFallback(false), 2000);
+  };
+
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     setSubmitError(null);
     setSubmitSuccess(null);
+    setFallbackMailto(null);
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+    const copyBody = `Subject: ${data.subject}\nFrom: ${data.name} (${data.email})\n\n${data.message}`;
+    const mailtoUrl = `mailto:isaacgbodimowo@gmail.com?subject=${encodeURIComponent(
+      data.subject
+    )}&body=${encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`;
 
-      const resJson = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          throw new Error(
-            resJson.error || "Rate limit exceeded. Please wait a moment before sending another message."
-          );
-        }
-        throw new Error(resJson.error || "Failed to deliver message. Please try again.");
-      }
-
-      setSubmitSuccess("Message delivered. I will review your inquiry and reply shortly.");
+    const activateMailtoFallback = () => {
+      setFallbackMailto({ mailtoUrl, copyBody });
+      setSubmitSuccess(
+        "Prepared your message for email delivery. Open your email client or copy the text below."
+      );
       reset();
-
       confetti({
         particleCount: 50,
         spread: 60,
         origin: { y: 0.8 },
       });
+      if (typeof window !== "undefined") {
+        window.location.href = mailtoUrl;
+      }
+    };
+
+    try {
+      const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
+      if (formspreeEndpoint) {
+        const response = await fetch(formspreeEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+          const resJson = await response.json().catch(() => ({}));
+          throw new Error(resJson.error || "Failed to deliver message. Please try again.");
+        }
+        setSubmitSuccess("Message delivered. I will review your inquiry and reply shortly.");
+        reset();
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+      } else if (!isStaticHosting()) {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        if (response.status === 404 || response.status === 405) {
+          activateMailtoFallback();
+          return;
+        }
+
+        const resJson = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error(
+              resJson.error || "Rate limit exceeded. Please wait a moment before sending another message."
+            );
+          }
+          throw new Error(resJson.error || "Failed to deliver message. Please try again.");
+        }
+
+        setSubmitSuccess("Message delivered. I will review your inquiry and reply shortly.");
+        reset();
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+      } else {
+        activateMailtoFallback();
+      }
     } catch (err) {
-      setSubmitError(
-        err instanceof Error
-          ? err.message
-          : "Unable to reach endpoint. Please email isaacgbodimowo@gmail.com directly."
-      );
+      if (err instanceof TypeError || isStaticHosting()) {
+        activateMailtoFallback();
+      } else {
+        setSubmitError(
+          err instanceof Error
+            ? err.message
+            : "Unable to reach endpoint. Please email isaacgbodimowo@gmail.com directly."
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -292,9 +353,39 @@ export default function ContactSection() {
           </div>
 
           {submitSuccess && (
-            <div className="p-3.5 rounded-xl bg-emerald-500/15 border-2 border-emerald-500 text-xs font-semibold flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-              <span>{submitSuccess}</span>
+            <div className="p-4 rounded-xl bg-emerald-500/15 border-2 border-emerald-500 text-xs font-semibold space-y-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>{submitSuccess}</span>
+              </div>
+              {fallbackMailto && (
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <a
+                    href={fallbackMailto.mailtoUrl}
+                    className="px-3.5 py-1.5 rounded-full neo-btn-primary text-[11px] font-bold inline-flex items-center gap-1.5"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    <span>Open Email Client</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyFallbackMessage}
+                    className="px-3.5 py-1.5 rounded-full neo-pill text-[11px] font-bold inline-flex items-center gap-1.5 cursor-pointer"
+                  >
+                    {copiedFallback ? (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-500" />
+                        <span>Copied Message</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3" />
+                        <span>Copy Message</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           )}
 

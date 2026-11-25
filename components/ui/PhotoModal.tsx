@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image, { StaticImageData } from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MapPin } from "lucide-react";
@@ -23,6 +24,12 @@ interface PhotoModalProps {
 }
 
 export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -41,9 +48,9 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
     };
   }, [isOpen, onClose]);
 
-  if (!photo) return null;
+  if (!photo || !mounted) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10">
@@ -174,6 +181,7 @@ export default function PhotoModal({ photo, isOpen, onClose }: PhotoModalProps) 
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

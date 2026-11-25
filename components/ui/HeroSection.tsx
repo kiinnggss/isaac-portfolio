@@ -2,35 +2,41 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Award, Download, Maximize2, Play, ShieldCheck, Network, Cpu } from "lucide-react";
+import { Download, FileText, Maximize2, Play, ShieldCheck, Network, Cpu } from "lucide-react";
 import IsometricStudio from "./IsometricStudio";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
-import isaacPortrait from "@/public/images/isaac-portrait.jpg";
+import isaacPortrait from "@/public/images/isaac-portrait.webp";
 import { getAssetPath } from "@/lib/paths";
 import { usePortfolioTheme } from "./ThemeProvider";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  onOpenResume?: () => void;
+}
+
+export default function HeroSection({ onOpenResume }: HeroSectionProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null);
   const { effectiveAccent } = usePortfolioTheme();
 
   return (
     <section
       id="overview"
-      className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+      className="relative pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
     >
       {/* Creative Mints Editorial Isometric Hero Card */}
       <div
-        className="rounded-[32px] p-6 sm:p-10 lg:p-14 border-2 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+        className="rounded-[32px] p-6 sm:p-10 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
         style={{
           backgroundColor: "var(--theme-hero-bg)",
           color: "var(--theme-hero-ink)",
           borderColor: "var(--theme-border)",
-          boxShadow: "8px 8px 0 0 var(--theme-shadow)",
+          borderStyle: "solid",
+          borderWidth: "var(--theme-border-width)",
+          boxShadow: "var(--theme-shadow-hero)",
         }}
       >
-        {/* Left Column: Tracked Eyebrow, Stacked Condensed Headline, Bio + Badge, Pill CTA */}
-        <div className="lg:col-span-6 space-y-6">
-          <div className="text-[11px] sm:text-xs font-mono-tech uppercase tracking-[0.3em] font-bold opacity-90">
+        {/* Left Column: Tracked Eyebrow, Stacked Condensed Headline, Bio, Pill CTAs */}
+        <div className="lg:col-span-6 space-y-5">
+          <div className="text-[11px] sm:text-xs font-mono-tech uppercase tracking-[0.28em] font-bold opacity-90">
             SOFTWARE &amp; NETWORK ARCHITECT
           </div>
 
@@ -40,18 +46,9 @@ export default function HeroSection() {
             ISAAC
           </h1>
 
-          <div className="flex items-start gap-4 max-w-md pt-1">
-            <p className="text-sm sm:text-base leading-relaxed font-medium opacity-95">
-              Full-stack TypeScript &amp; FastAPI engineer building resilient web platforms and enterprise Cisco IOS topologies.
-            </p>
-            <div
-              className="w-11 h-11 rounded-full border-2 flex items-center justify-center shrink-0"
-              style={{ borderColor: "var(--theme-hero-ink)" }}
-              title="B.Sc. Computer Science & CompTIA A+"
-            >
-              <Award className="w-5 h-5" />
-            </div>
-          </div>
+          <p className="text-sm sm:text-base leading-relaxed font-medium opacity-95 max-w-lg pt-1">
+            Full-stack TypeScript &amp; FastAPI engineer building resilient web platforms, enterprise Cisco IOS routing topologies, and fault-isolated hardware systems from Lagos, Nigeria.
+          </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3.5">
             <a
@@ -74,15 +71,26 @@ export default function HeroSection() {
               <span>Explore Works</span>
             </a>
 
-            <a
-              href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3.5 rounded-full neo-pill text-xs font-extrabold uppercase tracking-wider inline-flex items-center gap-2 hover:opacity-90 transition-opacity"
-            >
-              <Download className="w-4 h-4" />
-              <span>Resume PDF</span>
-            </a>
+            {onOpenResume ? (
+              <button
+                type="button"
+                onClick={onOpenResume}
+                className="px-6 py-3.5 rounded-full neo-pill text-xs font-extrabold uppercase tracking-wider inline-flex items-center gap-2 hover:opacity-90 transition-opacity cursor-pointer"
+              >
+                <FileText className="w-4 h-4" />
+                <span>View Resume</span>
+              </button>
+            ) : (
+              <a
+                href={getAssetPath("/Gbodimowo_Isaac_Resume.pdf")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3.5 rounded-full neo-pill text-xs font-extrabold uppercase tracking-wider inline-flex items-center gap-2 hover:opacity-90 transition-opacity"
+              >
+                <Download className="w-4 h-4" />
+                <span>Resume PDF</span>
+              </a>
+            )}
           </div>
         </div>
 
@@ -129,33 +137,34 @@ export default function HeroSection() {
           <div className="flex-1 min-w-0 space-y-1.5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span
-                className="text-[10px] font-mono-tech font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border"
+                className="inline-flex items-center gap-1.5 text-[10px] font-mono-tech font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md border"
                 style={{
                   backgroundColor: "var(--theme-surface-alt)",
                   borderColor: "var(--theme-border)",
                 }}
               >
-                B.Sc. Computer Science
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                Open to Roles &amp; Consulting
               </span>
               <span className="text-[11px] font-mono-tech" style={{ color: "var(--theme-muted)" }}>
-                Lagos, Nigeria
+                Lagos, Nigeria (Remote Ready)
               </span>
             </div>
             <h2 className="text-lg font-display font-bold uppercase tracking-wide">
-              Babcock University Graduate
+              Full-Stack &amp; Network Systems Engineer
             </h2>
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium">
               <span className="inline-flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
-                CompTIA A+
+                <Cpu className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
+                Next.js &amp; FastAPI
               </span>
               <span className="inline-flex items-center gap-1">
                 <Network className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
-                Cisco CCNA
+                Cisco IOS &amp; HSRP
               </span>
               <span className="inline-flex items-center gap-1">
-                <Cpu className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
-                Next.js &amp; FastAPI
+                <ShieldCheck className="w-3.5 h-3.5" style={{ color: effectiveAccent }} />
+                CompTIA A+
               </span>
             </div>
           </div>

@@ -19,8 +19,9 @@ import {
   Palette,
   Play,
 } from "lucide-react";
-import isaacPortraitBust from "@/public/images/isaac-portrait-bust.png";
+import isaacPortraitBust from "@/public/images/isaac-portrait-bust.webp";
 import { getAssetPath } from "@/lib/paths";
+import { featuredProjects } from "@/lib/projects-data";
 import { usePortfolioTheme } from "@/components/ui/ThemeProvider";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -174,12 +175,14 @@ export default function CoverPage({
       {/* Main Cover Stage */}
       <main className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center my-4">
         <div
-          className="rounded-[28px] p-6 sm:p-10 lg:p-12 border-2 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+          className="rounded-[28px] p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
           style={{
             backgroundColor: "var(--theme-hero-bg)",
             color: "var(--theme-hero-ink)",
             borderColor: "var(--theme-border)",
-            boxShadow: "8px 8px 0 0 var(--theme-shadow)",
+            borderStyle: "solid",
+            borderWidth: "var(--theme-border-width)",
+            boxShadow: "var(--theme-shadow-hero)",
           }}
         >
           {/* Left Column */}
@@ -333,7 +336,7 @@ export default function CoverPage({
         className="relative z-20 w-full max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pt-3 border-t-2 text-xs font-mono-tech font-semibold"
         style={{ borderColor: "var(--theme-border)" }}
       >
-        <span>5 PRODUCTION ARCHITECTURES DEPLOYED</span>
+        <span>{featuredProjects.length} PRODUCTION ARCHITECTURES DEPLOYED</span>
         <span className="hidden sm:inline opacity-80">
           SCROLL OR CLICK ENTER STUDIO TO EXPLORE
         </span>

@@ -161,6 +161,22 @@ export function getContrastText(hex: string): string {
   return L > 0.42 ? "#111315" : "#FFFFFF";
 }
 
+export const THEME_STORAGE_KEY = "isaac-portfolio-theme-v1";
+export const ACCENT_STORAGE_KEY = "isaac-portfolio-accent-v1";
+
 export function getThemeById(id: string): PortfolioTheme {
   return PORTFOLIO_THEMES.find((t) => t.id === id) || PORTFOLIO_THEMES[0];
+}
+
+/**
+ * Generates an inline script to apply persisted theme tokens before first paint
+ * so reloading on dark themes never flashes the light fallback theme.
+ */
+export function buildThemeInitScript(): string {
+  const serializedThemes = JSON.stringify(PORTFOLIO_THEMES);
+  return `(function(){try{var themes=${serializedThemes};var tid=localStorage.getItem(${JSON.stringify(
+    THEME_STORAGE_KEY
+  )});var acc=localStorage.getItem(${JSON.stringify(
+    ACCENT_STORAGE_KEY
+  )});var t=themes.find(function(x){return x.id===tid})||themes[0];var validHex=/^#[0-9A-Fa-f]{6}$/;var a=(acc&&validHex.test(acc))?acc:t.accent;var c=a.slice(1);var r=parseInt(c.slice(0,2),16)/255,g=parseInt(c.slice(2,4),16)/255,b=parseInt(c.slice(4,6),16)/255;var lin=function(v){return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)};var L=0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b);var at=L>0.42?"#111315":"#FFFFFF";var d=document.documentElement;var s=d.style;s.setProperty("--theme-bg",t.bg);s.setProperty("--theme-surface",t.surface);s.setProperty("--theme-surface-alt",t.surfaceAlt);s.setProperty("--theme-hero-bg",t.heroBg);s.setProperty("--theme-hero-ink",t.heroInk);s.setProperty("--theme-ink",t.ink);s.setProperty("--theme-muted",t.muted);s.setProperty("--theme-border",t.border);s.setProperty("--theme-shadow",t.shadow);s.setProperty("--theme-accent",a);s.setProperty("--theme-accent-text",at);s.setProperty("--theme-secondary",t.secondary);s.setProperty("--theme-console-bg",t.consoleBg);s.setProperty("--theme-console-ink",t.consoleInk);s.colorScheme=t.isDark?"dark":"light";d.dataset.theme=t.id;}catch(e){}})();`;
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ExternalLink, Terminal } from "lucide-react";
 import ProjectModal, { type ProjectData } from "./ProjectModal";
+import ProjectPreview from "./ProjectPreview";
 import { usePortfolioTheme } from "./ThemeProvider";
 
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -39,13 +40,13 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.4, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-        className="neo-card neo-card-hover rounded-3xl p-6 sm:p-8 flex flex-col justify-between group"
+        className="neo-card neo-card-hover rounded-3xl p-5 sm:p-6 flex flex-col justify-between group"
       >
         <div>
           {/* Top Meta Header */}
-          <div className="flex items-center justify-between gap-3 mb-5">
+          <div className="flex items-center justify-between gap-3 mb-4">
             <span
-              className="px-3.5 py-1 rounded-full neo-console text-[11px] font-mono-tech uppercase tracking-wider font-semibold"
+              className="px-3 py-1 rounded-full neo-console text-[11px] font-mono-tech uppercase tracking-wider font-semibold"
             >
               {project.category}
             </span>
@@ -81,70 +82,52 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {/* Title & Subtitle */}
           <h3
             onClick={() => setModalOpen(true)}
-            className="text-2xl sm:text-3xl font-extrabold font-display uppercase tracking-wide leading-tight cursor-pointer transition-opacity hover:opacity-80"
+            className="text-xl sm:text-2xl font-extrabold font-display uppercase tracking-wide leading-tight cursor-pointer transition-opacity hover:opacity-80"
           >
             {project.title}
           </h3>
           <p
-            className="mt-2 text-sm leading-relaxed"
+            className="mt-1.5 text-sm leading-relaxed"
             style={{ color: "var(--theme-muted)" }}
           >
             {project.subtitle}
           </p>
 
-          {/* Real Quantified Metrics Strip (Theme Console Panel) */}
+          {/* Visual Preview Frame */}
+          <div className="mt-4">
+            <ProjectPreview project={project} onClick={() => setModalOpen(true)} />
+          </div>
+
+          {/* Quantified Metrics Strip (Full labels, no ellipsis truncation) */}
           <div
             onClick={() => setModalOpen(true)}
-            className="mt-5 p-4 rounded-2xl neo-console cursor-pointer"
+            className="mt-4 p-3.5 sm:p-4 rounded-2xl neo-console cursor-pointer"
           >
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-3 items-start">
               {project.metrics.map((metric, mIdx) => (
                 <div
                   key={mIdx}
                   className={mIdx > 0 ? "border-l pl-3" : ""}
                   style={mIdx > 0 ? { borderColor: "rgba(255,255,255,0.16)" } : undefined}
                 >
-                  <div className="text-[10px] font-mono-tech uppercase tracking-wider opacity-70 truncate">
+                  <div className="text-[10px] font-mono-tech uppercase tracking-wider opacity-75 leading-snug">
                     {metric.label}
                   </div>
-                  <div className="text-lg sm:text-xl font-display font-bold mt-0.5 tabular-nums">
-                    {metric.value}
-                  </div>
                   <div
-                    className="text-[10px] font-mono-tech truncate"
-                    style={{ color: effectiveAccent }}
+                    className="text-lg sm:text-xl font-display font-bold mt-1 tabular-nums"
+                    style={{ color: mIdx === 0 ? effectiveAccent : undefined }}
                   >
-                    {metric.detail}
+                    {metric.value}
                   </div>
                 </div>
               ))}
             </div>
-
-            {project.topology.length > 0 && (
-              <div
-                className="mt-3.5 pt-3 border-t space-y-1.5"
-                style={{ borderColor: "rgba(255,255,255,0.14)" }}
-              >
-                {project.topology.slice(0, 2).map((layer, lIdx) => (
-                  <div
-                    key={lIdx}
-                    className="flex items-start gap-2 text-[11px] font-mono-tech opacity-90"
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
-                      style={{ backgroundColor: effectiveAccent }}
-                    />
-                    <span className="line-clamp-1">{layer}</span>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
 
         {/* Bottom Tags & Inspect Action */}
-        <div className="mt-6">
-          <div className="flex flex-wrap gap-1.5 mb-5">
+        <div className="mt-5">
+          <div className="flex flex-wrap gap-1.5 mb-4">
             {project.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag}
@@ -160,7 +143,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
 
           <div
-            className="pt-4 border-t-2 flex items-center justify-between gap-3"
+            className="pt-3.5 border-t-2 flex items-center justify-between gap-3"
             style={{ borderColor: "var(--theme-border)" }}
           >
             <button
@@ -176,7 +159,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               type="button"
               onClick={() => setModalOpen(true)}
               aria-label={`Inspect ${project.title}`}
-              className="w-9 h-9 rounded-full neo-btn-primary flex items-center justify-center cursor-pointer"
+              className="w-8 h-8 rounded-full neo-btn-primary flex items-center justify-center cursor-pointer"
             >
               <ArrowUpRight className="w-4 h-4" />
             </button>
