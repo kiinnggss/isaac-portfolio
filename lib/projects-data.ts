@@ -318,4 +318,53 @@ npx vitest run && npm run build`,
     demoLink: "https://kiinnggss.github.io/sabbath-light/",
     codeLink: "https://github.com/kiinnggss/sabbath-light",
   },
+  {
+    id: "narc-website",
+    title: "Nigerian Action Rangers Corps: Civic Portal & Intake",
+    subtitle: "Zero-build GitHub Pages static web portal with gallery lightbox and Google Sheets Apps Script intake",
+    category: "Static Web Architecture & Civic Portals",
+    summary:
+      "A lightweight, zero-backend informational and free recruitment website for the Nigerian Action Rangers Corps hosted entirely on GitHub Pages. Built with semantic HTML5, responsive ceremonial green-and-gold CSS, an accessible keyboard-navigable photo gallery lightbox, client-side Nigerian phone and 36-state + FCT validation, and a drop-in Google Apps Script endpoint that appends submissions directly into Google Sheets with formula-injection neutralization and plain-text phone formatting.",
+    tags: [
+      "HTML5",
+      "CSS3",
+      "Vanilla JavaScript",
+      "GitHub Pages",
+      "GitHub Actions",
+      "Google Apps Script",
+      "Google Sheets API",
+    ],
+    metrics: [
+      { label: "Hosting Cost", value: "$0 / mo", detail: "Pure GitHub Pages static deployment" },
+      { label: "Build Overhead", value: "0 KB", detail: "Zero external JS framework dependencies" },
+      { label: "State Coverage", value: "36 + FCT", detail: "Full Nigerian state intake validation" },
+    ],
+    highlights: [
+      "Designed a ceremonial forest-green, gold, and crimson visual system derived directly from the official Nigerian Action Rangers Corps emblem.",
+      "Built a responsive photo gallery with a keyboard-accessible lightbox viewer (Escape and arrow navigation) and modular asset replacement.",
+      "Engineered a free membership registration form with Nigerian phone validation, 36 states plus FCT Abuja selection, optional next-of-kin grouping, and an in-card confirmation flow.",
+      "Authored a standalone Google Apps Script web app endpoint that auto-creates the Registrations sheet header, neutralizes spreadsheet formula injection, and formats phone columns as plain text so leading zeros stay intact.",
+      "Automated static asset checks and GitHub Pages publication through GitHub Actions workflows with zero external hosting dependencies.",
+    ],
+    topology: [
+      "Static Edge Delivery: GitHub Pages serving HTML5, CSS3, vanilla JavaScript, and local image assets over HTTPS.",
+      "Client Intake Layer: Browser form validation for full name, Nigerian phone numbers, state selection, and optional next-of-kin details.",
+      "Serverless Sheet Bridge: Google Apps Script Web App handling POST form payloads with formula sanitization and Lagos timestamps.",
+      "Command Register: Shared Google Sheets workbook allowing corps officers to filter and review applicants with no custom admin backend.",
+    ],
+    protocols: [
+      "HTTPS static delivery via GitHub Pages and Actions Pages deployment",
+      "Multipart FormData POST dispatch to Google Apps Script Web App",
+      "Spreadsheet formula-injection prefix neutralization (=, +, -, @)",
+      "Plain-text cell formatting preserving leading-zero Nigerian phone numbers",
+    ],
+    cliSnippet: `// Google Apps Script intake handler preserving leading-zero phone numbers
+sheet.getRange(nextRow, 3).setNumberFormat("@");
+sheet.getRange(nextRow, 6).setNumberFormat("@");
+sheet.getRange(nextRow, 1, 1, HEADERS.length).setValues([
+  [submittedAt, fullName, phone, state, nextOfKinName, nextOfKinPhone],
+]);`,
+    demoLink: "https://kiinnggss.github.io/narc-website/",
+    codeLink: "https://github.com/kiinnggss/narc-website",
+  },
 ];

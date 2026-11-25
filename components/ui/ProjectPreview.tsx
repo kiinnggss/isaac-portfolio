@@ -4,6 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import { type ProjectData } from "./ProjectModal";
 import carPullPreview from "@/public/images/projects/car-pull.webp";
 import sabbathLightPreview from "@/public/images/projects/sabbath-light.webp";
+import narcWebsitePreview from "@/public/images/projects/narc-website.webp";
 
 interface ProjectPreviewProps {
   project: ProjectData;
@@ -25,6 +26,11 @@ const SCREENSHOT_MAP: Record<
     img: sabbathLightPreview,
     domain: "kiinnggss.github.io/sabbath-light",
     alt: "Sabbath Light SDA worship and hymnal companion PWA preview",
+  },
+  "narc-website": {
+    img: narcWebsitePreview,
+    domain: "kiinnggss.github.io/narc-website",
+    alt: "Nigerian Action Rangers Corps informational portal and registration website preview",
   },
 };
 

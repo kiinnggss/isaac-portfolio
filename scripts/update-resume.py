@@ -677,6 +677,16 @@ def build_html_resume(projects):
             <div class="repo-card-desc">Mobile video inspector, SSE telemetry downloader, and private vault</div>
             <a href="https://github.com/kiinnggss/video-downloader" class="repo-card-link">github.com/kiinnggss/video-downloader</a>
           </div>
+          <div class="repo-card">
+            <div class="repo-card-title">kiinnggss/sabbath-light</div>
+            <div class="repo-card-desc">Offline-first SDA worship PWA with 695 sampled piano MIDI hymns</div>
+            <a href="https://github.com/kiinnggss/sabbath-light" class="repo-card-link">github.com/kiinnggss/sabbath-light</a>
+          </div>
+          <div class="repo-card">
+            <div class="repo-card-title">kiinnggss/narc-website</div>
+            <div class="repo-card-desc">Zero-build GitHub Pages civic portal with Google Sheets intake</div>
+            <a href="https://github.com/kiinnggss/narc-website" class="repo-card-link">github.com/kiinnggss/narc-website</a>
+          </div>
         </div>
       </div>
     </div>
