@@ -40,14 +40,14 @@ export default function BentoGrid() {
     },
     hardware: {
       title: "Systems & Hardware Diagnostics",
-      desc: "CompTIA A+ verified hardware maintenance, component testing, and fault isolation.",
+      desc: "Hands-on CompTIA A+ hardware repair, Cisco field deployments, and structured cabling.",
       items: [
-        { name: "CompTIA A+ Diagnostics", level: "Certified", desc: "Motherboard, CPU, RAM, PSU fault isolation" },
-        { name: "Endpoint Hardening", level: "Proficient", desc: "BIOS/UEFI setup, disk partitioning, secure boot" },
+        { name: "PC, Printer & UPS Servicing", level: "Field Proven", desc: "Workstation, printer, PSU, and UPS backup fault repair" },
+        { name: "Cisco Switch & Radio Setup", level: "Field Proven", desc: "Installing Cisco switches, network hubs, and wireless radios" },
+        { name: "RJ45 Crimping & Cabling", level: "Field Proven", desc: "Connector termination, Cat5e/Cat6 runs, and link testing" },
+        { name: "CompTIA A+ Diagnostics", level: "Certified", desc: "Motherboard, CPU, RAM, and storage fault isolation" },
         { name: "Linux System Admin", level: "Proficient", desc: "Mint/Ubuntu process management and bash scripting" },
-        { name: "Peripheral Networking", level: "Proficient", desc: "Print servers, PoE switching, CAT6 cabling" },
-        { name: "Firmware & Drivers", level: "Proficient", desc: "Clean driver rollouts and OS image recovery" },
-        { name: "Thermal Optimization", level: "Hands-on", desc: "Thermal paste servicing and airflow tuning" },
+        { name: "Endpoint Hardening", level: "Proficient", desc: "BIOS/UEFI setup, disk partitioning, and OS recovery" },
       ],
     },
     tools: {

@@ -168,14 +168,15 @@ VLAN  Name                    Status    Ports
 Lagos, Nigeria | isaacgbodimowo@gmail.com
 
 Education:
-  * B.Sc. Computer Science - Babcock University
+  * B.Sc. Computer Science - Babcock University (2021 - 2025)
 Certifications:
   * CompTIA A+ Certified
   * Cisco CCNA Candidate (200-301)
   * New Horizons Technical Certification
 Experience:
-  * Web Developer Intern - Hoffenheim Tech
-  * CS & Programming Instructor - Edkints International School`,
+  * IT & Network Infrastructure Support (NYSC) - Tosett Agro Allied Industry (2026 - Present)
+  * CS & Programming Instructor - Edkints International School (2025)
+  * Web Developer Intern - Hoffenheim Tech (2023)`,
       });
       setLines(newLines);
       setInput("");

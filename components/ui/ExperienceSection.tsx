@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Briefcase, Calendar, GraduationCap, Laptop, Maximize2 } from "lucide-react";
+import { Briefcase, Calendar, GraduationCap, Laptop, Maximize2, Wrench } from "lucide-react";
 import PhotoModal, { PhotoDetails } from "./PhotoModal";
 import isaacGraduation from "@/public/images/isaac-graduation.webp";
 import { usePortfolioTheme } from "./ThemeProvider";
@@ -25,6 +25,27 @@ export default function ExperienceSection() {
   const { effectiveAccent } = usePortfolioTheme();
 
   const experiences: ExperienceEntry[] = [
+    {
+      period: "NYSC · Infrastructure",
+      dates: "2026 - Present",
+      role: "IT & Network Infrastructure Support (NYSC)",
+      organization: "Tosett Agro Allied Industry",
+      location: "Ogun State, Nigeria",
+      icon: Wrench,
+      highlights: [
+        "Diagnosed and repaired desktop computers, office printers, and UPS power backup units to keep workplace endpoints running.",
+        "Installed and commissioned Cisco switches, network hubs, and wireless radios to expand and maintain site connectivity.",
+        "Crimped and terminated RJ45 connectors, ran structured cabling, and verified physical-layer links across workstations and network racks.",
+      ],
+      tags: [
+        "Cisco Switching",
+        "Wireless Radios",
+        "UPS & Printers",
+        "RJ45 Crimping",
+        "Structured Cabling",
+        "Hardware Diagnostics",
+      ],
+    },
     {
       period: "Academic Instruction",
       dates: "2025",

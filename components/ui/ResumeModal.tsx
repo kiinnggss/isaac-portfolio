@@ -227,6 +227,25 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <div className="border-l-2 pl-4 py-1" style={{ borderColor: "var(--theme-accent)" }}>
                     <div className="flex flex-wrap items-center justify-between gap-1">
                       <h3 className="text-sm font-bold">
+                        IT &amp; Network Infrastructure Support (NYSC)
+                      </h3>
+                      <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
+                        2026 - Present · Ogun State, Nigeria
+                      </span>
+                    </div>
+                    <div className="text-xs font-semibold" style={{ color: "var(--theme-accent)" }}>
+                      Tosett Agro Allied Industry
+                    </div>
+                    <ul className="mt-2 space-y-1 text-xs leading-relaxed list-disc list-inside" style={{ color: "var(--theme-ink)" }}>
+                      <li>Diagnosed and repaired desktop computers, office printers, and UPS power backup units.</li>
+                      <li>Installed and commissioned Cisco switches, network hubs, and wireless radios across site facilities.</li>
+                      <li>Terminated RJ45 connectors, crimped structured cabling runs, and verified physical-layer links.</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 pl-4 py-1" style={{ borderColor: "var(--theme-border)" }}>
+                    <div className="flex flex-wrap items-center justify-between gap-1">
+                      <h3 className="text-sm font-bold">
                         Computer Science &amp; Programming Instructor
                       </h3>
                       <span className="text-xs font-mono-tech" style={{ color: "var(--theme-muted)" }}>
